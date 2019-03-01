@@ -1,0 +1,60 @@
+Name,Code,Type,FIPS,Region ID,Division ID
+Alabama,AL,state,01,3,6
+Alaska,AK,state,02,4,9
+Arizona,AZ,state,04,4,8
+Arkansas,AR,state,05,3,7
+California,CA,state,06,4,9
+Colorado,CO,state,08,4,8
+Connecticut,CT,state,09,1,1
+Delaware,DE,state,10,3,5
+Florida,FL,state,12,3,5
+Georgia,GA,state,13,3,5
+Hawaii,HI,state,15,4,9
+Idaho,ID,state,16,4,8
+Illinois,IL,state,17,2,3
+Indiana,IN,state,18,2,3
+Iowa,IA,state,19,2,4
+Kansas,KS,state,20,2,4
+Kentucky,KY,state,21,3,6
+Louisiana,LA,state,22,3,7
+Maine,ME,state,23,1,1
+Maryland,MD,state,24,3,5
+Massachusetts,MA,state,25,1,1
+Michigan,MI,state,26,2,3
+Minnesota,MN,state,27,2,4
+Mississippi,MS,state,28,3,6
+Missouri,MO,state,29,2,4
+Montana,MT,state,30,4,8
+Nebraska,NE,state,31,2,4
+Nevada,NV,state,32,4,8
+New Hampshire,NH,state,33,1,1
+New Jersey,NJ,state,34,1,2
+New Mexico,NM,state,35,4,8
+New York,NY,state,36,1,2
+North Carolina,NC,state,37,3,5
+North Dakota,ND,state,38,2,4
+Ohio,OH,state,39,2,3
+Oklahoma,OK,state,40,3,7
+Oregon,OR,state,41,4,9
+Pennsylvania,PA,state,42,1,2
+Rhode Island,RI,state,44,1,1
+South Carolina,SC,state,45,3,5
+South Dakota,SD,state,46,2,4
+Tennessee,TN,state,47,3,6
+Texas,TX,state,48,3,7
+Utah,UT,state,49,4,8
+Vermont,VT,state,50,1,1
+Virginia,VA,state,51,3,5
+Washington,WA,state,53,4,9
+West Virginia,WV,state,54,3,5
+Wisconsin,WI,state,55,2,3
+Wyoming,WY,state,56,4,8
+District of Columbia,DC,district,11,3,5
+Puerto Rico,PR,territory,72
+U.S. Virgin Islands,VI,territory,74
+American Samoa,AS,territory,60
+Guam,GU,territory,66
+Northern Mariana Islands,MP,territory,69
+Federated States of Micronesia,FM,territory,64
+Marshall Islands,MH,territory,68
+Palau,PW,territory,70
