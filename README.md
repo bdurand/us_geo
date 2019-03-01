@@ -1,7 +1,7 @@
 # USGeo
 
 [![Build Status](https://travis-ci.com/bdurand/us_geo.svg?branch=master)](https://travis-ci.com/bdurand/us_geo)
-[![Maintainability](https://api.codeclimate.com/v1/badges/18797b64151284648a05/maintainability)](https://codeclimate.com/github/bdurand/us_geo/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a01ffc7f707686416c0d/maintainability)](https://codeclimate.com/github/bdurand/us_geo/maintainability)
 
 This gem provides a variety of U.S. geographic data ActiveRecord models. It is designed to provide a normalized way to access the data from a relational database. This is by no means a complete set of data. The primary purpose it was built is to provide a way to match most ZIP codes to higher level geographic entities.
 
