@@ -35,6 +35,10 @@ module USGeo
     validates :metropolitan_division_geoid, length: {is: 5}, allow_nil: true
     validates :cbsa_geoid, length: {is: 5}, allow_nil: true
     validates :dma_code, length: {is: 3}, allow_nil: true
+    validates :land_area, numericality: true, allow_nil: true
+    validates :water_area, numericality: true, allow_nil: true
+    validates :population, numericality: {only_integer: true}, allow_nil: true
+    validates :housing_units, numericality: {only_integer: true}, allow_nil: true
 
     class << self
       def load!(uri = nil)

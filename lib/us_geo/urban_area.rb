@@ -21,6 +21,10 @@ module USGeo
     validates :primary_county_geoid, length: {is: 5}
     validates :name, length: {maximum: 90}
     validates :short_name, length: {maximum: 60}
+    validates :land_area, numericality: true, presence: true
+    validates :water_area, numericality: true, presence: true
+    validates :population, numericality: {only_integer: true}, presence: true
+    validates :housing_units, numericality: {only_integer: true}, presence: true
 
     delegate :core_based_statistical_area, :designated_market_area, :state, :state_code, :time_zone, to: :primary_county, allow_nil: true
 

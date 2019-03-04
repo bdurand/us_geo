@@ -14,6 +14,10 @@ module USGeo
     validates :geoid, length: {is: 10}
     validates :name, length: {maximum: 60}
     validates :fips_class_code, length: {is: 2}
+    validates :land_area, numericality: true, allow_nil: true
+    validates :water_area, numericality: true, allow_nil: true
+    validates :population, numericality: {only_integer: true}, allow_nil: true
+    validates :housing_units, numericality: {only_integer: true}, allow_nil: true
 
     class << self
       def load!(uri = nil)

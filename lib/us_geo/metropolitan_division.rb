@@ -14,11 +14,15 @@ module USGeo
 
     validates :geoid, length: {is: 5}
     validates :name, length: {maximum: 60}
+    validates :land_area, numericality: true, presence: true
+    validates :water_area, numericality: true, presence: true
+    validates :population, numericality: {only_integer: true}, presence: true
+    validates :housing_units, numericality: {only_integer: true},  presence: true
 
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "metropolitan_divisions.csv.gz")
-        
+
         mark_removed! do
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|

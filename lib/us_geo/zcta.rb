@@ -31,13 +31,17 @@ module USGeo
     has_many :places, through: :zcta_places
 
     validates :zipcode, length: {is: 5}
+    validates :land_area, numericality: true, presence: true
+    validates :water_area, numericality: true, presence: true
+    validates :population, numericality: {only_integer: true}, presence: true
+    validates :housing_units, numericality: {only_integer: true}, presence: true
 
     delegate :core_based_statistical_area, :designated_market_area, :state, :state_code, :time_zone, to: :primary_county, allow_nil: true
 
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "zctas.csv.gz")
-        
+
         mark_removed! do
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"]) do |record|
