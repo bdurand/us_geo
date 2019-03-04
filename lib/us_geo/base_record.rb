@@ -12,13 +12,11 @@ module USGeo
   # Base class that all models inherit from.
   class BaseRecord < ::ActiveRecord::Base
 
-    BASE_DATA_URI = "https://raw.githubusercontent.com/bdurand/us_geo/master/data/dist"
-
     self.abstract_class = true
     self.table_name_prefix = "us_geo_"
 
     class << self
-      def load!(uri = nil)
+      def load!(location = nil, gzipped: true)
         raise NotImplementedError
       end
 
@@ -28,6 +26,7 @@ module USGeo
       def load_record!(criteria, &block)
         record = find_or_initialize_by(criteria)
         record.removed = false if record.respond_to?(:removed=)
+        record.updated_at = Time.now if record.respond_to?(:updated_at=)
         yield(record)
         record.save!
       end
@@ -43,12 +42,14 @@ module USGeo
         end
       end
 
-      def delete_unmodified!(&block)
-        start_time = Time.at(Time.now.to_i.floor)
-        yield
-        raise LoadError.new("No data found") unless where("updated_at >= ?", start_time).exists?
-        where("updated_at < ?", start_time).each do
-          STDERR.puts("WARNING: #{table_name} #{record.attributes.inspect} has been deleted")
+      def data_uri(path)
+        path = path.to_s if path
+        if path.start_with?("/") || path.include?(":")
+          path
+        elsif USGeo.base_data_uri.include?(":")
+          "#{USGeo.base_data_uri}/#{path}"
+        else
+          File.join(USGeo.base_data_uri, path)
         end
       end
 
@@ -61,7 +62,15 @@ module USGeo
         end
         begin
           reader = (location.end_with?(".gz") ? Zlib::GzipReader.new(file) : file)
-          CSV.new(reader, headers: true).each(&block)
+          rows = []
+          CSV.new(reader, headers: true).each do |row|
+            rows << row
+            if rows.size >= 50
+              transaction { rows.each(&block) }
+              rows.clear
+            end
+          end
+          transaction { rows.each(&block) } unless rows.empty?
         ensure
           file.close if file && !file.closed?
         end

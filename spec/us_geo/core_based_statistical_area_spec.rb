@@ -30,11 +30,11 @@ describe USGeo::CoreBasedStatisticalArea do
 
     it "should load the fixture data" do
       data = File.read(File.expand_path("../../data/dist/core_based_statistical_areas.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo::BaseRecord::BASE_DATA_URI}/core_based_statistical_areas.csv.gz").to_return(body: data)
+      stub_request(:get, "#{USGeo.base_data_uri}/core_based_statistical_areas.csv.gz").to_return(body: data)
       USGeo::CoreBasedStatisticalArea.load!
-      expect(USGeo::CoreBasedStatisticalArea.count).to be > 1
+      expect(USGeo::CoreBasedStatisticalArea.count).to be > 900
       expect(USGeo::CoreBasedStatisticalArea.where(removed: true).count).to eq 0
- 
+
       chicagoarea = USGeo::CoreBasedStatisticalArea.find("16980")
       expect(chicagoarea).to be_a(USGeo::MetropolitanArea)
       expect(chicagoarea.name).to eq "Chicago-Naperville-Elgin, IL-IN-WI"

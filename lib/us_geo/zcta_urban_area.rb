@@ -14,32 +14,50 @@ module USGeo
     validates :urban_area_geoid, length: {is: 5}
 
     class << self
-      def load!(location = nil)
-        location ||= "#{BaseRecord::BASE_DATA_URI}/zcta_urban_areas.csv.gz"
-        load_data_file(location) do |row|
-          load_record!(zipcode: row["ZCTA5"], urban_area_geoid: row["Urban Area GEOID"]) do |record|
-            record.population = row["Population"]
-            record.housing_units = row["Housing Units"]
-            record.land_area = area_meters_to_miles(row["Land Area"])
-            record.water_area = area_meters_to_miles(row["Water Area"])
+      def load!(uri = nil)
+        location = data_uri(uri || "zcta_urban_areas.csv.gz")
+
+        mark_removed! do
+          load_data_file(location) do |row|
+            load_record!(zipcode: row["ZCTA5"], urban_area_geoid: row["Urban Area GEOID"]) do |record|
+              record.population = row["Population"]
+              record.housing_units = row["Housing Units"]
+              record.land_area = area_meters_to_miles(row["Land Area"])
+              record.water_area = area_meters_to_miles(row["Water Area"])
+            end
           end
         end
       end
     end
 
-    # Percentage of the ZCTA population in the urban area.
-    def percent_population
+    # Percentage of the ZCTA population.
+    def percent_zcta_population
       population.to_f / zcta.population.to_f
     end
 
-    # Percentage of the ZCTA land area in the urban area.
-    def percent_land_area
+    # Percentage of the ZCTA land area.
+    def percent_zcta_land_area
       land_area / zcta.land_area
     end
 
-    # Percentage of the ZCTA total area in the urban area.
-    def percent_total_area
+    # Percentage of the ZCTA total area.
+    def percent_zcta_total_area
       total_area / zcta.total_area
+    end
+
+    # Percentage of the urban area population.
+    def percent_urban_area_population
+      population.to_f / urban_area.population.to_f
+    end
+
+    # Percentage of the urban area land area.
+    def percent_urban_area_land_area
+      land_area / urban_area.land_area
+    end
+
+    # Percentage of the urban area total area.
+    def percent_urban_area_total_area
+      total_area / urban_area.total_area
     end
 
   end

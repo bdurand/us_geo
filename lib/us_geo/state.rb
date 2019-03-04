@@ -15,6 +15,7 @@ module USGeo
     belongs_to :region, optional: -> { territory? }, inverse_of: :states
     belongs_to :division, optional: -> { territory? }, inverse_of: :states
     has_many :counties, foreign_key: :state_code, inverse_of: :state
+    has_many :places, foreign_key: :state_code, inverse_of: :state
 
     validates :code, length: {is: 2}
     validates :fips, length: {is: 2}
@@ -22,8 +23,9 @@ module USGeo
     validates :type, inclusion: [STATE_TYPE, DISTRICT_TYPE, TERRITORY_TYPE]
 
     class << self
-      def load!(location = nil)
-        location ||= "#{BaseRecord::BASE_DATA_URI}/states.csv"
+      def load!(uri = nil)
+        location = data_uri(uri || "states.csv.gz")
+        
         mark_removed! do
           load_data_file(location) do |row|
             load_record!(code: row["Code"]) do |record|

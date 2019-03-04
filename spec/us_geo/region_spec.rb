@@ -22,12 +22,12 @@ describe USGeo::Region do
     after { USGeo::Region.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/divisions.csv", __dir__))
-      stub_request(:get, "#{USGeo::BaseRecord::BASE_DATA_URI}/divisions.csv").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/divisions.csv.gz", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/divisions.csv.gz").to_return(body: data)
       USGeo::Region.load!
-      expect(USGeo::Region.count).to be > 1
+      expect(USGeo::Region.count).to eq 4
       expect(USGeo::Region.where(removed: true).count).to eq 0
- 
+
       region = USGeo::Region.find(2)
       expect(region.name).to eq "Midwest"
     end

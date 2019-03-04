@@ -11,10 +11,15 @@ namespace :us_geo do
       core_based_statistical_areas: USGeo::CoreBasedStatisticalArea,
       metropolitan_divisions: USGeo::MetropolitanDivision,
       counties: USGeo::County,
+      county_subdivisions: USGeo::CountySubdivision,
+      urban_areas: USGeo::UrbanArea,
+      places: USGeo::Place,
       zctas: USGeo::Zcta,
       zcta_counties: USGeo::ZctaCounty,
       zcta_urban_areas: USGeo::ZctaUrbanArea,
-      urban_area_counties: USGeo::UrbanAreaCounty
+      zcta_places: USGeo::ZctaPlace,
+      urban_area_counties: USGeo::UrbanAreaCounty,
+      place_counties: USGeo::PlaceCounty
     }
     klasses.each do |name, klass|
       desc "Import data for #{klass}"

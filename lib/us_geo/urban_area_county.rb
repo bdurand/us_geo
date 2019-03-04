@@ -14,9 +14,10 @@ module USGeo
     validates :urban_area_geoid, length: {is: 5}
 
     class << self
-      def load!(location = nil)
-        location ||= "#{BaseRecord::BASE_DATA_URI}/urban_area_counties.csv.gz"
-        delete_unmodified! do
+      def load!(uri = nil)
+        location = data_uri(uri || "urban_area_counties.csv.gz")
+        
+        mark_removed! do
           load_data_file(location) do |row|
             load_record!(urban_area_geoid: row["Urban Area GEOID"], county_geoid: row["County GEOID"]) do |record|
               record.population = row["Population"]
@@ -29,19 +30,34 @@ module USGeo
       end
     end
 
-    # Percentage of the urban area population in the county.
-    def percent_population
+    # Percentage of the urban area population.
+    def percent_urban_area_population
       population.to_f / urban_area.population.to_f
     end
 
-    # Percentage of the urban area land area in the county.
-    def percent_land_area
+    # Percentage of the urban area land area.
+    def percent_urban_area_land_area
       land_area / urban_area.land_area
     end
 
-    # Percentage of the urban area total area in the county.
-    def percent_total_area
+    # Percentage of the urban area total area.
+    def percent_urban_area_total_area
       total_area / urban_area.total_area
+    end
+
+    # Percentage of the county population.
+    def percent_county_population
+      population.to_f / county.population.to_f
+    end
+
+    # Percentage of the county land area.
+    def percent_county_land_area
+      land_area / county.land_area
+    end
+
+    # Percentage of the county total area.
+    def percent_county_total_area
+      total_area / county.total_area
     end
 
   end

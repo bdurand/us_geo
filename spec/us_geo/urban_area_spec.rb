@@ -69,9 +69,9 @@ describe USGeo::UrbanArea do
 
     it "should load the fixture data" do
       data = File.read(File.expand_path("../../data/dist/urban_areas.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo::BaseRecord::BASE_DATA_URI}/urban_areas.csv.gz").to_return(body: data)
+      stub_request(:get, "#{USGeo.base_data_uri}/urban_areas.csv.gz").to_return(body: data)
       USGeo::UrbanArea.load!
-      expect(USGeo::UrbanArea.count).to be > 1
+      expect(USGeo::UrbanArea.count).to be > 3500
       expect(USGeo::UrbanArea.where(removed: true).count).to eq 0
 
       chicago = USGeo::UrbanizedArea.find("16264")

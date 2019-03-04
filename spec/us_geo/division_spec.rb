@@ -22,10 +22,10 @@ describe USGeo::Division do
     after { USGeo::Division.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/divisions.csv", __dir__))
-      stub_request(:get, "#{USGeo::BaseRecord::BASE_DATA_URI}/divisions.csv").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/divisions.csv.gz", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/divisions.csv.gz").to_return(body: data)
       USGeo::Division.load!
-      expect(USGeo::Division.count).to be > 1
+      expect(USGeo::Division.count).to eq 9
       expect(USGeo::Division.where(removed: true).count).to eq 0
 
       division = USGeo::Division.find(2)

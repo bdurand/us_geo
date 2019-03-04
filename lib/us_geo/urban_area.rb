@@ -29,8 +29,9 @@ module USGeo
     end
     
     class << self
-      def load!(location = nil)
-        location ||= "#{BaseRecord::BASE_DATA_URI}/urban_areas.csv.gz"
+      def load!(uri = nil)
+        location = data_uri(uri || "urban_areas.csv.gz")
+       
         mark_removed! do
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|

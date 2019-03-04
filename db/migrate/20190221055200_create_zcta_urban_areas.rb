@@ -9,6 +9,7 @@ class CreateZctaUrbanAreas < ActiveRecord::Migration[5.0]
       t.integer :population, null: false
       t.integer :housing_units, null: false
       t.datetime :updated_at, null: false
+      t.boolean :removed, null: false, default: false
     end
 
     add_index :us_geo_zcta_urban_areas, [:urban_area_geoid, :zipcode], name: :index_us_geo_urban_area_zctas_uniq, unique: true

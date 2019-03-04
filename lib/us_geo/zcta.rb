@@ -27,13 +27,17 @@ module USGeo
     has_many :urban_areas, through: :zcta_urban_areas
     belongs_to :primary_urban_area, foreign_key: :primary_urban_area_geoid, class_name: "USGeo::UrbanArea"
 
+    has_many :zcta_places, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
+    has_many :places, through: :zcta_places
+
     validates :zipcode, length: {is: 5}
 
     delegate :core_based_statistical_area, :designated_market_area, :state, :state_code, :time_zone, to: :primary_county, allow_nil: true
 
     class << self
-      def load!(location = nil)
-        location ||= "#{BaseRecord::BASE_DATA_URI}/zctas.csv.gz"
+      def load!(uri = nil)
+        location = data_uri(uri || "zctas.csv.gz")
+        
         mark_removed! do
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"]) do |record|

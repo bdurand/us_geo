@@ -8,17 +8,17 @@ module USGeo
 
     # Population per square mile.
     def population_density
-      population.to_f / land_area
+      population.to_f / land_area if population && land_area
     end
 
     # Total area of both land an water in square miles
     def total_area
-      land_area + water_area
+      land_area.to_f + water_area.to_f if land_area
     end
 
     # The fraction of the area that is composed of land instead of water.
     def percent_land
-      land_area / total_area
+      land_area / total_area if land_area
     end
 
   end

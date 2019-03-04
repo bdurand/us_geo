@@ -23,9 +23,9 @@ describe USGeo::MetropolitanDivision do
 
     it "should load the fixture data" do
       data = File.read(File.expand_path("../../data/dist/metropolitan_divisions.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo::BaseRecord::BASE_DATA_URI}/metropolitan_divisions.csv.gz").to_return(body: data)
+      stub_request(:get, "#{USGeo.base_data_uri}/metropolitan_divisions.csv.gz").to_return(body: data)
       USGeo::MetropolitanDivision.load!
-      expect(USGeo::MetropolitanDivision.count).to be > 1
+      expect(USGeo::MetropolitanDivision.count).to be > 25
       expect(USGeo::MetropolitanDivision.where(removed: true).count).to eq 0
 
       division = USGeo::MetropolitanDivision.find("16984")

@@ -14,9 +14,10 @@ module USGeo
     validates :county_geoid, length: {is: 5}
 
     class << self
-      def load!(location = nil)
-        location ||= "#{BaseRecord::BASE_DATA_URI}/zcta_counties.csv.gz"
-        delete_unmodified! do
+      def load!(uri = nil)
+        location = data_uri(uri || "zcta_counties.csv.gz")
+        
+        mark_removed! do
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"], county_geoid: row["GEOID"]) do |record|
               record.population = row["Population"]
@@ -29,19 +30,34 @@ module USGeo
       end
     end
 
-    # Percentage of the ZCTA population in the county.
-    def percent_population
+    # Percentage of the ZCTA population.
+    def percent_zcta_population
       population.to_f / zcta.population.to_f
     end
 
-    # Percentage of the ZCTA land area in the county.
-    def percent_land_area
+    # Percentage of the ZCTA land area.
+    def percent_zcta_land_area
       land_area / zcta.land_area
     end
 
-    # Percentage of the ZCTA total area in the county.
-    def percent_total_area
+    # Percentage of the ZCTA total area.
+    def percent_zcta_total_area
       total_area / zcta.total_area
+    end
+
+    # Percentage of the county population.
+    def percent_county_population
+      population.to_f / county.population.to_f
+    end
+
+    # Percentage of the county land area.
+    def percent_county_land_area
+      land_area / county.land_area
+    end
+
+    # Percentage of the county total area.
+    def percent_county_total_area
+      total_area / county.total_area
     end
 
   end

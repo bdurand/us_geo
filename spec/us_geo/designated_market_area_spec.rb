@@ -15,10 +15,10 @@ describe USGeo::DesignatedMarketArea do
     after { USGeo::DesignatedMarketArea.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/dmas.csv", __dir__))
-      stub_request(:get, "#{USGeo::BaseRecord::BASE_DATA_URI}/dmas.csv").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/dmas.csv.gz", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/dmas.csv.gz").to_return(body: data)
       USGeo::DesignatedMarketArea.load!
-      expect(USGeo::DesignatedMarketArea.count).to be > 1
+      expect(USGeo::DesignatedMarketArea.count).to be > 200
       expect(USGeo::DesignatedMarketArea.where(removed: true).count).to eq 0
 
       dma = USGeo::DesignatedMarketArea.find("602")

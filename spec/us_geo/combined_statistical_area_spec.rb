@@ -16,11 +16,11 @@ describe USGeo::CombinedStatisticalArea do
 
     it "should load the fixture data" do
       data = File.read(File.expand_path("../../data/dist/combined_statistical_areas.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo::BaseRecord::BASE_DATA_URI}/combined_statistical_areas.csv.gz").to_return(body: data)
+      stub_request(:get, "#{USGeo.base_data_uri}/combined_statistical_areas.csv.gz").to_return(body: data)
       USGeo::CombinedStatisticalArea.load!
-      expect(USGeo::CombinedStatisticalArea.count).to be > 1
+      expect(USGeo::CombinedStatisticalArea.count).to be > 150
       expect(USGeo::CombinedStatisticalArea.where(removed: true).count).to eq 0
-      
+
       chicagoland = USGeo::CombinedStatisticalArea.find("176")
       expect(chicagoland.name).to eq "Chicago-Naperville, IL-IN-WI"
       expect(chicagoland.population).to be > 8_000_000

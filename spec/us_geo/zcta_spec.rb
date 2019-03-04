@@ -79,9 +79,9 @@ describe USGeo::Zcta do
 
     it "should load the fixture data" do
       data = File.read(File.expand_path("../../data/dist/zctas.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo::BaseRecord::BASE_DATA_URI}/zctas.csv.gz").to_return(body: data)
+      stub_request(:get, "#{USGeo.base_data_uri}/zctas.csv.gz").to_return(body: data)
       USGeo::Zcta.load!
-      expect(USGeo::Zcta.count).to be > 1
+      expect(USGeo::Zcta.count).to be > 30_000
       expect(USGeo::Zcta.where(removed: true).count).to eq 0
 
       zcta = USGeo::Zcta.find("60305")

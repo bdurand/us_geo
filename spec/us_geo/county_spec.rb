@@ -50,6 +50,21 @@ describe USGeo::County do
       expect(county.urban_area_counties.build).to be_a(USGeo::UrbanAreaCounty)
     end
 
+    it "should have places" do
+      county = USGeo::County.new
+      county.geoid = "00001"
+      expect{ county.places }.to_not raise_error
+      expect{ county.place_counties }.to_not raise_error
+      expect(county.place_counties.build).to be_a(USGeo::PlaceCounty)
+    end
+
+    it "should have subdivisions" do
+      county = USGeo::County.new
+      county.geoid = "00001"
+      expect{ county.subdivisions }.to_not raise_error
+      expect(county.subdivisions.build).to be_a(USGeo::CountySubdivision)
+    end
+
     it "should have a designated market area" do
       county = USGeo::County.new
       county.geoid = "00001"
@@ -63,13 +78,14 @@ describe USGeo::County do
 
     it "should load the fixture data" do
       data = File.read(File.expand_path("../../data/dist/counties.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo::BaseRecord::BASE_DATA_URI}/counties.csv.gz").to_return(body: data)
+      stub_request(:get, "#{USGeo.base_data_uri}/counties.csv.gz").to_return(body: data)
       USGeo::County.load!
-      expect(USGeo::County.count).to be > 1
+      expect(USGeo::County.count).to be > 3000
       expect(USGeo::County.where(removed: true).count).to eq 0
 
       cook = USGeo::County.find("17031")
       expect(cook.name).to eq "Cook County"
+      expect(cook.short_name).to eq "Cook"
       expect(cook.dma_code).to eq "602"
       expect(cook.cbsa_geoid).to eq "16980"
       expect(cook.state_code).to eq "IL"

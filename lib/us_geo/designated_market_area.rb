@@ -13,8 +13,9 @@ module USGeo
     validates :name, length: {maximum: 60}
 
     class << self
-      def load!(location = nil)
-        location ||= "#{BaseRecord::BASE_DATA_URI}/dmas.csv"
+      def load!(uri = nil)
+        location = data_uri(uri || "dmas.csv.gz")
+       
         mark_removed! do
           load_data_file(location) do |row|
             load_record!(code: row["Code"]) do |record|

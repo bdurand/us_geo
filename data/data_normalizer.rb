@@ -15,27 +15,42 @@ module USGeo
   # Gazetteer files: https://www.census.gov/geo/maps-data/data/gazetteer2018.html
   # Relationship files: https://www.census.gov/geo/maps-data/data/relationship.html
   # CBSA Deliniation file: https://www.census.gov/geographies/reference-files/time-series/demo/metro-micro/delineation-files.html
+  # USGS GNIS names with federal codes: https://geonames.usgs.gov/domestic/download_data.htm
   class DataNormalizer
 
     def initialize(
         cbsa_gazetteer: "2018_Gaz_cbsa_national.txt",
         zcta_gazetteer: "2018_Gaz_zcta_national.txt",
         county_gazetteer: "2018_Gaz_counties_national.txt",
+        subdivision_gazetteer: "2018_Gaz_cousubs_national.txt",
+        place_gazetteer: "2018_Gaz_place_national.txt",
         ua_gazetteer: "2018_Gaz_ua_national.txt",
         cbsa_deliniation: "list1_Sep_2018.csv",
         zcta_county_rel: "zcta_county_rel_10.txt",
+        zcta_cousub_rel: "zcta_cousub_rel_10.txt",
+        zcta_place_rel: "zcta_place_rel_10.txt",
         ua_county_rel: "ua_county_rel_10.txt",
+        ua_place_rel: "ua_place_rel_10.txt",
         ua_zcta_rel: "ua_zcta_rel_10.txt"
       )
       @base_dir = File.join(__dir__, "raw")
       @cbsa_gazetteer_file = File.join(@base_dir, cbsa_gazetteer)
       @county_gazetteer_file = File.join(@base_dir, county_gazetteer)
+      @subdivision_gazetteer_file = File.join(@base_dir, subdivision_gazetteer)
+      @place_gazetteer_file = File.join(@base_dir, place_gazetteer)
       @zcta_gazetteer_file = File.join(@base_dir, zcta_gazetteer)
       @ua_gazetteer_file = File.join(@base_dir, ua_gazetteer)
       @cbsa_deliniation_file = File.join(@base_dir, cbsa_deliniation)
       @zcta_county_rel_file = File.join(@base_dir, zcta_county_rel)
+      @zcta_cousub_rel_file = File.join(@base_dir, zcta_cousub_rel)
+      @zcta_place_rel_file = File.join(@base_dir, zcta_place_rel)
       @ua_county_rel_file = File.join(@base_dir, ua_county_rel)
       @ua_zcta_rel_file = File.join(@base_dir, ua_zcta_rel)
+      @ua_place_rel_file = File.join(@base_dir, ua_place_rel)
+    end
+
+    def processed_dir
+      File.expand_path("processed", __dir__)
     end
 
     def dump(dir = nil)
@@ -44,12 +59,114 @@ module USGeo
       gzip(File.join(dir, "core_based_statistical_areas.csv.gz")) { |f| core_based_statistical_areas(f) }
       gzip(File.join(dir, "metropolitan_divisions.csv.gz")) { |f| metropolitan_divisions(f) }
       gzip(File.join(dir, "counties.csv.gz")) { |f| counties(f) }
+      gzip(File.join(dir, "county_subdivisions.csv.gz")) { |f| county_subdivisions(f) }
+      gzip(File.join(dir, "places.csv.gz")) { |f| places(f) }
       gzip(File.join(dir, "zctas.csv.gz")) { |f| zctas(f) }
       gzip(File.join(dir, "urban_areas.csv.gz")) { |f| urban_areas(f) }
-      gzip(File.join(dir, "zcta_counties.csv.gz")) { |f| zcta_counties(f) }
-      gzip(File.join(dir, "zcta_urban_areas.csv.gz")) { |f| zcta_urban_areas(f) }
-      gzip(File.join(dir, "urban_area_counties.csv.gz")) { |f| urban_area_counties(f) }
+
+      zcta_list = Set.new
+      gunzip(File.join(dir, "zctas.csv.gz")) do |f|
+        foreach(f, headers: true) do |row|
+          zcta_list << row["ZCTA5"]
+        end
+      end
+
+      urban_area_list = Set.new
+      gunzip(File.join(dir, "urban_areas.csv.gz")) do |f|
+        foreach(f, headers: true) do |row|
+          urban_area_list << row["GEOID"]
+        end
+      end
+
+      county_list = Set.new
+      gunzip(File.join(dir, "counties.csv.gz")) do |f|
+        foreach(f, headers: true) do |row|
+          county_list << row["GEOID"]
+        end
+      end
+
+      place_list = Set.new
+      gunzip(File.join(dir, "places.csv.gz")) do |f|
+        foreach(f, headers: true) do |row|
+          place_list << row["GEOID"]
+        end
+      end
+
+      gzip(File.join(dir, "zcta_counties.csv.gz")) { |f| zcta_counties(f, zctas: zcta_list, counties: county_list) }
+      gzip(File.join(dir, "zcta_urban_areas.csv.gz")) { |f| zcta_urban_areas(f, zctas: zcta_list, urban_areas: urban_area_list) }
+      gzip(File.join(dir, "zcta_places.csv.gz")) { |f| zcta_places(f, zctas: zcta_list, places: place_list) }
+      gzip(File.join(dir, "urban_area_counties.csv.gz")) { |f| urban_area_counties(f, urban_areas: urban_area_list, counties: county_list) }
+      gzip(File.join(dir, "place_counties.csv.gz")) { |f| place_counties(f, places: place_list, counties: county_list) }
       nil
+    end
+
+    # Parse out the data from the USGS names with federal codes file into more manageable chunks.
+    def parse_gnis_data(gnis_file)
+      county_file = File.open(File.join(processed_dir, "gnis_counties.csv"), "w")
+      subdivision_file = File.open(File.join(processed_dir, "gnis_subdivisions.csv"), "w")
+      place_file = File.open(File.join(processed_dir, "gnis_places.csv"), "w")
+      place_counties_file = File.open(File.join(processed_dir, "gnis_place_counties.csv"), "w")
+
+      begin
+        county_csv = CSV.new(county_file)
+        subdivision_csv = CSV.new(subdivision_file)
+        place_csv = CSV.new(place_file)
+        place_counties_csv = CSV.new(place_counties_file)
+
+        county_csv << ["GNIS ID", "GEOID", "Name", "Short Name", "State", "FIPS Class", "Latitude", "Longitude"]
+        subdivision_csv << ["GNIS ID", "GEOID", "Name", "State", "FIPS Class", "County GEOID", "Latitude", "Longitude"]
+        place_csv << ["GNIS ID", "GEOID", "Name", "State", "FIPS Class", "County GEOID", "Latitude", "Longitude"]
+        place_counties_csv << ["Place GEOID", "County GEOID"]
+
+        mapping = {
+          "C1" => :place,
+          "C2" => :place,
+          "C3" => :place,
+          "C4" => :place,
+          "C5" => :place,
+          "C6" => :place,
+          "C7" => :place,
+          "U1" => :place,
+          "U2" => :place,
+          "H1" => :county,
+          "H5" => :county,
+          "H6" => :county,
+          "T1" => :subdivision,
+          "T2" => :subdivision,
+          "T5" => :subdivision
+        }
+        # TODO INACTIVE_CODES = ["C9", "H4", "T9"] or Z*
+        foreach(gnis_file, headers: true, col_sep: "|") do |row|
+          fips_class_code = row["CENSUS_CLASS_CODE"]
+          classificaton = mapping[fips_class_code]
+          next unless classificaton
+          gnis_id = row["FEATURE_ID"].to_i
+          name = row["FEATURE_NAME"]
+          state_fips = row["STATE_NUMERIC"]
+          state_code = row["STATE_ALPHA"]
+          geoid = "#{state_fips}#{row['CENSUS_CODE']}"
+          county_geoid = "#{state_fips}#{row['COUNTY_NUMERIC']}"
+          lat = row["PRIMARY_LATITUDE"]
+          lng = row["PRIMARY_LONGITUDE"]
+          if classificaton == :county
+            county_csv << [gnis_id, county_geoid, name, row["COUNTY_NAME"], state_code, fips_class_code, lat, lng]
+          elsif classificaton == :subdivision
+            geoid = "#{state_fips}#{row['COUNTY_NUMERIC']}#{row['CENSUS_CODE']}"
+            subdivision_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
+          elsif classificaton == :place
+            county_num = row["COUNTY_SEQUENCE"].to_i
+            if county_num == 1
+              place_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
+            end
+            place_counties_csv << [geoid, county_geoid]
+          end
+        end
+      ensure
+        county_file.close
+        subdivision_file.close
+        place_file.close
+        place_counties_file.close
+      end
     end
 
     def combined_statistical_areas(output)
@@ -169,18 +286,40 @@ module USGeo
 
     def counties(output)
       counties = {}
+      foreach(File.join(processed_dir, "gnis_counties.csv"), headers: true, col_sep: ",") do |row|
+        counties[row["GEOID"]] = {
+          gnis_id: row["GNIS ID"],
+          fips_class: row["FIPS Class"],
+          name: row["Name"],
+          short_name: row["Short Name"],
+          state: row["State"],
+          lat: row["Latitude"].to_f,
+          lng: row["Longitude"].to_f
+        }
+      end
+
+      foreach(File.expand_path("processed/county_info.csv", __dir__), headers: true, col_sep: ",") do |row|
+        county_geoid = row["GEOID"]
+        data = counties[county_geoid]
+        unless data
+          data = {name: row["Full Name"], state: row["State"]}
+          counties[county_geoid] = data
+        end
+
+        data[:short_name] ||= row["Short Name"]
+        data[:dma_code] = row["DMA Code"]
+        data[:time_zone] = row["Time Zone"]
+        data[:fips_class] ||= row["FIPS Class"]
+      end
+
       foreach(@county_gazetteer_file, headers: true, col_sep: "\t") do |row|
         county_geoid = row["GEOID"]
-        counties[county_geoid] = {
-          name: row["NAME"],
-          population: 0,
-          housing_units: 0,
-          land_area: row["ALAND"].to_i,
-          water_area: row["AWATER"].to_i,
-          state: row["USPS"],
-          lat: row["INTPTLAT"].to_f,
-          lng: row["INTPTLONG"].to_f
-        }
+        data = counties[county_geoid]
+        data[:gnis_id] ||= row["ANSICODE"].gsub(/\A0+/, '').to_i
+        data[:land_area] = row["ALAND"].to_i
+        data[:water_area] = row["AWATER"].to_i
+        data[:lat] ||= row["INTPTLAT"].to_i
+        data[:lng] ||= row["INTPTLONG"].to_i
       end
 
       foreach(@cbsa_deliniation_file, headers: true, col_sep: ",") do |row|
@@ -189,19 +328,6 @@ module USGeo
         data[:cbsa_code] = row["CBSA Code"]
         data[:central] = row["Central/Outlying County"].to_s.include?("Central")
         counties[county_geoid] = data
-      end
-
-      foreach(File.join(@base_dir, "county_info.csv"), headers: true, col_sep: ",") do |row|
-        county_geoid = row["GEOID"]
-        data = counties[county_geoid]
-        if data
-          data[:short_name] = row["Short Name"]
-          data[:dma_code] = row["DMA Code"]
-          data[:time_zone] = row["Time Zone"]
-          data[:fips_class] = row["FIPS Class"]
-        else
-          raise "Missing #{row.inspect}" unless ["GU", "AS", "MP", "VI"].include?(row["State"])
-        end
       end
 
       counties.each do |county_geoid, data|
@@ -215,13 +341,15 @@ module USGeo
       end
 
       csv = CSV.new(output)
-      csv << ["GEOID", "Name", "Short Name", "State", "CBSA", "Central", "DMA", "Time Zone", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "CBSA", "Central", "DMA", "Time Zone", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       counties.each do |geoid, data|
-        unless data[:time_zone]
-          raise "Missing time zone for #{geoid} #{data[:name]}, #{data[:state]}"
+        unless data[:time_zone] && data[:gnis_id] && data[:fips_class]
+          puts "Missing data for #{geoid} #{data[:name]}, #{data[:state]}: #{data.inspect}"
+          next
         end
         csv << [
           geoid,
+          data[:gnis_id],
           data[:name],
           data[:short_name],
           data[:state],
@@ -229,6 +357,141 @@ module USGeo
           data[:central] ? "T" : "F",
           data[:dma_code],
           data[:time_zone],
+          data[:fips_class],
+          data[:population],
+          data[:housing_units],
+          data[:land_area],
+          data[:water_area],
+          data[:lat],
+          data[:lng]
+        ]
+      end
+    end
+
+    def county_subdivisions(output)
+      subdivisions = {}
+      foreach(File.join(processed_dir, "gnis_subdivisions.csv"), headers: true, col_sep: ",") do |row|
+        subdivisions[row["GEOID"]] = {
+          gnis_id: row["GNIS ID"],
+          fips_class: row["FIPS Class"],
+          name: row["Name"],
+          county_geoid: row["County GEOID"],
+          lat: row["Latitude"].to_f,
+          lng: row["Longitude"].to_f
+        }
+      end
+
+      foreach(@subdivision_gazetteer_file, headers: true, col_sep: "\t") do |row|
+        geoid = row["GEOID"]
+        data = subdivisions[geoid]
+        unless data
+          data = {name: row["NAME"], county_geoid: geoid[0, 5]}
+          subdivisions[geoid] = data
+        end
+        data[:gnis_id] ||= row["ANSICODE"].gsub(/\A0+/, '').to_i
+        data[:land_area] = row["ALAND"].to_i
+        data[:water_area] = row["AWATER"].to_i
+        data[:lat] ||= row["INTPTLAT"].to_i
+        data[:lng] ||= row["INTPTLONG"].to_i
+      end
+
+      foreach(@zcta_cousub_rel_file, headers: true, col_sep: ",", encoding: "iso8859-1") do |row|
+        data = subdivisions[row["GEOID"]]
+        if data
+          data[:fips_class] ||= row["CLASSFP"]
+          data[:population] ||= row["CSPOP"].to_i
+          data[:housing_units] ||= row["CSHU"].to_i
+          data[:land_area] ||= row["CSAREALAND"].to_i
+          data[:water_area] ||= row["CSAREA"].to_i - row["CSAREALAND"].to_i
+        end
+      end
+
+      csv = CSV.new(output)
+      csv << ["GEOID", "GNIS ID", "Name", "County GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      subdivisions.each do |geoid, data|
+        unless data[:gnis_id] && data[:fips_class]
+          puts "Missing data for #{geoid} #{data[:name]}: #{data.inspect}"
+          next
+        end
+        csv << [
+          geoid,
+          data[:gnis_id],
+          data[:name],
+          data[:county_geoid],
+          data[:fips_class],
+          data[:population],
+          data[:housing_units],
+          data[:land_area],
+          data[:water_area],
+          data[:lat],
+          data[:lng]
+        ]
+      end
+    end
+
+    def places(output)
+      places = {}
+      foreach(File.join(processed_dir, "gnis_places.csv"), headers: true, col_sep: ",") do |row|
+        places[row["GEOID"]] = {
+          gnis_id: row["GNIS ID"],
+          fips_class: row["FIPS Class"],
+          name: row["Name"],
+          state: row["State"],
+          county_geoid: row["County GEOID"],
+          lat: row["Latitude"].to_f,
+          lng: row["Longitude"].to_f
+        }
+      end
+
+      foreach(@place_gazetteer_file, headers: true, col_sep: "\t") do |row|
+        geoid = row["GEOID"]
+        data = places[geoid]
+        unless data
+          data = {name: row["NAME"], state: row["USPS"]}
+          places[geoid] = data
+        end
+        data[:gnis_id] ||= row["ANSICODE"].gsub(/\A0+/, '').to_i
+        data[:land_area] = row["ALAND"].to_i
+        data[:water_area] = row["AWATER"].to_i
+        data[:lat] ||= row["INTPTLAT"].to_i
+        data[:lng] ||= row["INTPTLONG"].to_i
+      end
+
+      foreach(@zcta_place_rel_file, headers: true, col_sep: ",", encoding: "iso8859-1") do |row|
+        data = places[row['GEOID']]
+        if data
+          data[:population] ||= row["PLPOP"].to_i
+          data[:housing_units] ||= row["PLHU"].to_i
+          data[:land_area] ||= row["PLAREALAND"].to_i
+          data[:water_area] ||= row["PLAREA"].to_i - row["PLAREALAND"].to_i
+        end
+      end
+
+      foreach(@ua_place_rel_file, headers: true, col_sep: ",", encoding: "iso8859-1") do |row|
+        data = places[row['GEOID']]
+        if data
+          data[:urban_area_geoid] = row["UA"] unless row["UA"] == "99999"
+        end
+      end
+
+      csv = CSV.new(output)
+      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "County GEOID", "Urban Area GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      places.each do |geoid, data|
+        unless data[:gnis_id] && data[:fips_class]
+          puts "Missing data for #{geoid} #{data[:name]}, #{data[:state]}: #{data.inspect}"
+          next
+        end
+        short_name = data[:name].sub(/\A.*? of /i, "").sub(/ Census Designated Place/i, "").sub(/ \(historical\)/i, "")
+        short_name = short_name.sub(/ Metro Government/i, "")
+        data[:short_name] = short_name
+        csv << [
+          geoid,
+          data[:gnis_id],
+          data[:name],
+          data[:short_name],
+          data[:state],
+          data[:county_geoid],
+          data[:urban_area_geoid],
           data[:fips_class],
           data[:population],
           data[:housing_units],
@@ -280,23 +543,6 @@ module USGeo
           data[:lat],
           data[:lng]
         ]
-      end
-    end
-
-    def zcta_counties(output)
-      csv = CSV.new(output)
-      csv << ["ZCTA5", "GEOID", "Population", "Housing Units", "Land Area", "Water Area"]
-      zcta_stats.each do |zcta5, zcta_data|
-        zcta_data[:counties].each do |county_geoid, data|
-          csv << [
-            zcta5,
-            county_geoid,
-            data[:population],
-            data[:housing_units],
-            data[:land_area],
-            data[:water_area]
-          ]
-        end
       end
     end
 
@@ -353,21 +599,65 @@ module USGeo
       end
     end
 
-    def zcta_urban_areas(output)
+    def zcta_counties(output, zctas: nil, counties: nil)
+      csv = CSV.new(output)
+      csv << ["ZCTA5", "GEOID", "Population", "Housing Units", "Land Area", "Water Area"]
+      zcta_stats.each do |zcta5, zcta_data|
+        zcta_data[:counties].each do |county_geoid, data|
+          next if zctas && !zctas.include?(zcta5)
+          next if counties && !counties.include?(county_geoid)
+          csv << [
+            zcta5,
+            county_geoid,
+            data[:population],
+            data[:housing_units],
+            data[:land_area],
+            data[:water_area]
+          ]
+        end
+      end
+    end
+
+    def zcta_urban_areas(output, zctas: nil, urban_areas: nil)
       csv = CSV.new(output)
       csv << ["ZCTA5", "Urban Area GEOID", "Population", "Housing Units", "Land Area", "Water Area"]
       foreach(@ua_zcta_rel_file, headers: true, col_sep: ",", encoding: "iso8859-1") do |row|
         next unless row["UAPOP"]
+        next if urban_areas && !urban_areas.include?(row["UA"])
+        next if zctas && !zctas.include?(row["ZCTA5"])
         csv << [row["ZCTA5"], row["UA"], row["POPPT"], row["HUPT"], row["AREALANDPT"], row["AREAPT"].to_i - row["AREALANDPT"].to_i]
       end
     end
 
-    def urban_area_counties(output)
+    def zcta_places(output, zctas: nil, places: nil)
+      csv = CSV.new(output)
+      csv << ["ZCTA5", "Place GEOID", "Population", "Housing Units", "Land Area", "Water Area"]
+      foreach(@zcta_place_rel_file, headers: true, col_sep: ",", encoding: "iso8859-1") do |row|
+        next unless row["PLPOP"]
+        next if places && !places.include?(row["GEOID"])
+        next if zctas && !zctas.include?(row["ZCTA5"])
+        csv << [row["ZCTA5"], row["GEOID"], row["POPPT"], row["HUPT"], row["AREALANDPT"], row["AREAPT"].to_i - row["AREALANDPT"].to_i]
+      end
+    end
+
+    def urban_area_counties(output, urban_areas: nil, counties: nil)
       csv = CSV.new(output)
       csv << ["Urban Area GEOID", "County GEOID", "Population", "Housing Units", "Land Area", "Water Area"]
       foreach(@ua_county_rel_file, headers: true, col_sep: ",", encoding: "iso8859-1") do |row|
         next unless row["UAPOP"]
+        next if urban_areas && !urban_areas.include?(row["UA"])
+        next if counties && !counties.include?(row["GEOID"])
         csv << [row["UA"], row["GEOID"], row["POPPT"], row["HUPT"], row["AREALANDPT"], row["AREAPT"].to_i - row["AREALANDPT"].to_i]
+      end
+    end
+
+    def place_counties(output, places: nil, counties: nil)
+      csv = CSV.new(output)
+      csv << ["Place GEOID", "County GEOID"]
+      foreach(File.join(processed_dir, "gnis_place_counties.csv"), headers: true, col_sep: ",") do |row|
+        next if places && !places.include?(row["Place GEOID"])
+        next if counties && !counties.include?(row["County GEOID"])
+        csv << [row["Place GEOID"], row["County GEOID"]]
       end
     end
 
@@ -440,16 +730,23 @@ module USGeo
     def foreach(csv_file, options = {}, &block)
       options = options.dup
       encoding = options.delete(:encoding) || "UTF-8"
-      File.open(csv_file, encoding: encoding) do |file|
+      file = (csv_file.is_a?(String) ? File.open(csv_file, encoding: encoding) : csv_file)
+      begin
         # Skip the BOM bytes if the file was exported as UTF-8 CSV from Excel
         bytes = file.read(3)
         file.rewind unless bytes == "\xEF\xBB\xBF".b
         CSV.new(file, options).each(&block)
+      ensure
+        file.close if csv_file.is_a?(String)
       end
     end
 
     def gzip(path, &block)
       Zlib::GzipWriter.open(path, Zlib::BEST_COMPRESSION, &block)
+    end
+
+    def gunzip(path, &block)
+      Zlib::GzipReader.open(path, &block)
     end
   end
 end

@@ -16,11 +16,16 @@ module USGeo
     belongs_to :metropolitan_division, foreign_key: :metropolitan_division_geoid, optional: true, inverse_of: :counties
     belongs_to :state, foreign_key: :state_code, inverse_of: :counties
 
+    has_many :subdivisions, foreign_key: :county_geoid, inverse_of: :county, class_name: "USGeo::CountySubdivision"
+
     has_many :zcta_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
     has_many :zctas, through: :zcta_counties
 
     has_many :urban_area_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
     has_many :urban_areas, through: :urban_area_counties
+
+    has_many :place_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
+    has_many :places, through: :place_counties
 
     validates :geoid, length: {is: 5}
     validates :name, length: {maximum: 60}
@@ -32,11 +37,13 @@ module USGeo
     validates :dma_code, length: {is: 3}, allow_nil: true
 
     class << self
-      def load!(location = nil)
-        location ||= "#{BaseRecord::BASE_DATA_URI}/counties.csv.gz"
+      def load!(uri = nil)
+        location = data_uri(uri || "counties.csv.gz")
+
         mark_removed! do
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|
+              record.gnis_id = row["GNIS ID"]
               record.name = row["Name"]
               record.short_name = row["Short Name"]
               record.state_code = row["State"]
@@ -64,15 +71,15 @@ module USGeo
     def county_fips
       geoid[2, 3]
     end
-    
+
     # Return the CBSA only if it is a metropolitan area.
     def metropolitan_area
       core_based_statistical_area if core_based_statistical_area && core_based_statistical_area.metropolitan?
     end
-    
+
     def time_zone
       ActiveSupport::TimeZone[time_zone_name] if time_zone_name
     end
-    
+
   end
 end
