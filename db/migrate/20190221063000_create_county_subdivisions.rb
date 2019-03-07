@@ -14,7 +14,7 @@ class CreateCountySubdivisions < ActiveRecord::Migration[5.0]
       t.float :lat, null: false
       t.float :lng, null: false
       t.datetime :updated_at, null: false
-      t.boolean :removed, null: false, default: false
+      t.integer :status, null: false, default: 0, limit: 1
     end
   end
 

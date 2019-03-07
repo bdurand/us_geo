@@ -23,7 +23,7 @@ module USGeo
       def load!(uri = nil)
         location = data_uri(uri || "metropolitan_divisions.csv.gz")
 
-        mark_removed! do
+        import! do
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|
               record.name = row["Name"]

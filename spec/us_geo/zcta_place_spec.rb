@@ -65,8 +65,8 @@ describe USGeo::ZctaPlace do
       data = File.read(File.expand_path("../../data/dist/zcta_places.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/zcta_places.csv.gz").to_return(body: data)
       USGeo::ZctaPlace.load!
-      expect(USGeo::ZctaPlace.count).to be > 45_000
-      expect(USGeo::ZctaPlace.where(removed: true).count).to eq 0
+      expect(USGeo::ZctaPlace.imported.count).to be > 45_000
+      expect(USGeo::ZctaPlace.removed.count).to eq 0
 
       zcta_places = USGeo::ZctaPlace.where(zipcode: "53211")
       expect(zcta_places.size).to eq 3

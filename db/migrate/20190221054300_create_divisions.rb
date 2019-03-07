@@ -6,7 +6,7 @@ class CreateDivisions < ActiveRecord::Migration[5.0]
       t.integer :region_id, null: false, limit: 1, index: true
       t.string :name, null: false, limit: 30, index: {unique: true}
       t.datetime :updated_at, null: false
-      t.boolean :removed, null: false, default: false
+      t.integer :status, null: false, default: 0, limit: 1
     end
   end
 

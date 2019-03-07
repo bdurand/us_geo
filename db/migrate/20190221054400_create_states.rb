@@ -9,7 +9,7 @@ class CreateStates < ActiveRecord::Migration[5.0]
       t.integer :region_id, null: true, limit: 1, index: true
       t.integer :division_id, null: true, limit: 1, index: true
       t.datetime :updated_at, null: false
-      t.boolean :removed, null: false, default: false
+      t.integer :status, null: false, default: 0, limit: 1
     end
   end
 

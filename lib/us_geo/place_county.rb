@@ -15,7 +15,7 @@ module USGeo
       def load!(uri = nil)
         location = data_uri(uri || "place_counties.csv.gz")
 
-        mark_removed! do
+        import! do
           load_data_file(location) do |row|
             load_record!(place_geoid: row["Place GEOID"], county_geoid: row["County GEOID"]) do |record|
             end

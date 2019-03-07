@@ -18,8 +18,8 @@ describe USGeo::CountySubdivision do
       data = File.read(File.expand_path("../../data/dist/county_subdivisions.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/county_subdivisions.csv.gz").to_return(body: data)
       USGeo::CountySubdivision.load!
-      expect(USGeo::CountySubdivision.count).to be > 35_000
-      expect(USGeo::CountySubdivision.where(removed: true).count).to eq 0
+      expect(USGeo::CountySubdivision.imported.count).to be > 35_000
+      expect(USGeo::CountySubdivision.removed.count).to eq 0
 
       subdivision = USGeo::CountySubdivision.find("2600545180")
       expect(subdivision.name).to eq "Township of Laketown"

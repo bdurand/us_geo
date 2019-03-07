@@ -9,7 +9,7 @@ class CreateUrbanAreaCounties < ActiveRecord::Migration[5.0]
       t.integer :population, null: false
       t.integer :housing_units, null: false
       t.datetime :updated_at, null: false
-      t.boolean :removed, null: false, default: false
+      t.integer :status, null: false, default: 0, limit: 1
     end
 
     add_index :us_geo_urban_area_counties, [:urban_area_geoid, :county_geoid], name: :index_us_geo_urban_area_counties_uniq, unique: true

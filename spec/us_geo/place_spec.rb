@@ -48,8 +48,8 @@ describe USGeo::Place do
       data = File.read(File.expand_path("../../data/dist/places.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/places.csv.gz").to_return(body: data)
       USGeo::Place.load!
-      expect(USGeo::Place.count).to be > 30_000
-      expect(USGeo::Place.where(removed: true).count).to eq 0
+      expect(USGeo::Place.imported.count).to be > 30_000
+      expect(USGeo::Place.removed.count).to eq 0
 
       place = USGeo::Place.find("0649187")
       expect(place.gnis_id).to eq 2413013

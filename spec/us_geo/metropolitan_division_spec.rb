@@ -25,8 +25,8 @@ describe USGeo::MetropolitanDivision do
       data = File.read(File.expand_path("../../data/dist/metropolitan_divisions.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/metropolitan_divisions.csv.gz").to_return(body: data)
       USGeo::MetropolitanDivision.load!
-      expect(USGeo::MetropolitanDivision.count).to be > 25
-      expect(USGeo::MetropolitanDivision.where(removed: true).count).to eq 0
+      expect(USGeo::MetropolitanDivision.imported.count).to be > 25
+      expect(USGeo::MetropolitanDivision.removed.count).to eq 0
 
       division = USGeo::MetropolitanDivision.find("16984")
       expect(division.name).to eq "Chicago-Naperville-Evanston, IL"

@@ -27,8 +27,8 @@ describe USGeo::PlaceCounty do
       data = File.read(File.expand_path("../../data/dist/place_counties.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/place_counties.csv.gz").to_return(body: data)
       USGeo::PlaceCounty.load!
-      expect(USGeo::PlaceCounty.count).to be > 30_000
-      expect(USGeo::PlaceCounty.where(removed: true).count).to eq 0
+      expect(USGeo::PlaceCounty.imported.count).to be > 30_000
+      expect(USGeo::PlaceCounty.removed.count).to eq 0
 
       place_counties = USGeo::PlaceCounty.where(place_geoid: "3651000")
       expect(place_counties.size).to eq 5

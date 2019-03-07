@@ -27,7 +27,7 @@ module USGeo
       def load!(uri = nil)
         location = data_uri(uri || "core_based_statistical_areas.csv.gz")
         
-        mark_removed! do
+        import! do
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|
               record.type = (row["Population"].to_i >= 50_000 ? "MetropolitanArea" : "MicropolitanArea")

@@ -81,8 +81,8 @@ describe USGeo::Zcta do
       data = File.read(File.expand_path("../../data/dist/zctas.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/zctas.csv.gz").to_return(body: data)
       USGeo::Zcta.load!
-      expect(USGeo::Zcta.count).to be > 30_000
-      expect(USGeo::Zcta.where(removed: true).count).to eq 0
+      expect(USGeo::Zcta.imported.count).to be > 30_000
+      expect(USGeo::Zcta.removed.count).to eq 0
 
       zcta = USGeo::Zcta.find("60305")
       expect(zcta.primary_county_geoid).to eq "17031"

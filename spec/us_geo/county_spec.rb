@@ -80,8 +80,8 @@ describe USGeo::County do
       data = File.read(File.expand_path("../../data/dist/counties.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/counties.csv.gz").to_return(body: data)
       USGeo::County.load!
-      expect(USGeo::County.count).to be > 3000
-      expect(USGeo::County.where(removed: true).count).to eq 0
+      expect(USGeo::County.imported.count).to be > 3000
+      expect(USGeo::County.removed.count).to eq 0
 
       cook = USGeo::County.find("17031")
       expect(cook.name).to eq "Cook County"

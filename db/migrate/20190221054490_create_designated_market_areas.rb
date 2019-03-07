@@ -5,7 +5,7 @@ class CreateDesignatedMarketAreas < ActiveRecord::Migration[5.0]
       t.string :code, primary_key: true, null: false, limit: 3
       t.string :name, null: false, limit: 60, index: {unique: true}
       t.datetime :updated_at, null: false
-      t.boolean :removed, null: false, default: false
+      t.integer :status, null: false, default: 0, limit: 1
     end
   end
 

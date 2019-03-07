@@ -149,4 +149,6 @@ If you want, you can download the file data files and point to them locally by s
 
 You can also load the data programatically by simply calling the `load!` method on each class. This will do the same thing the rake tasks do.
 
+All records imported from the data files will have their status set to 1 (imported). Any records that were previously imported, but that are no longer in the data file, will have their status changed to -1 (removed) to indicate that they are no longer in the official data set. Finally, records added to the tables manually will have their status set to 0 (manual). It is perfectly acceptable to augment the data set to, for example, add new Postal Service ZIP codes that did not exist during the last census.
+
 This gem can be used outside of a Rails application. You'll just need to copy the migrations by hand and install the import rake tasks.

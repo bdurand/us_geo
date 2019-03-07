@@ -65,8 +65,8 @@ describe USGeo::ZctaCounty do
       data = File.read(File.expand_path("../../data/dist/zcta_counties.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/zcta_counties.csv.gz").to_return(body: data)
       USGeo::ZctaCounty.load!
-      expect(USGeo::ZctaCounty.count).to be > 40_000
-      expect(USGeo::ZctaCounty.where(removed: true).count).to eq 0
+      expect(USGeo::ZctaCounty.imported.count).to be > 40_000
+      expect(USGeo::ZctaCounty.removed.count).to eq 0
       
       zcta_counties = USGeo::ZctaCounty.where(zipcode: "00601")
       expect(zcta_counties.size).to eq 2

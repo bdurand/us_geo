@@ -14,7 +14,7 @@ module USGeo
       def load!(uri = nil)
         location = data_uri(uri || "divisions.csv.gz")
         
-        mark_removed! do
+        import! do
           load_data_file(location) do |row|
             load_record!(id: row["Division ID"]) do |record|
               record.name = row["Division Name"]

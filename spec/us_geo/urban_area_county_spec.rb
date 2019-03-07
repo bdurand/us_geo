@@ -65,8 +65,8 @@ describe USGeo::UrbanAreaCounty do
       data = File.read(File.expand_path("../../data/dist/urban_area_counties.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/urban_area_counties.csv.gz").to_return(body: data)
       USGeo::UrbanAreaCounty.load!
-      expect(USGeo::UrbanAreaCounty.count).to be > 4000
-      expect(USGeo::UrbanAreaCounty.where(removed: true).count).to eq 0
+      expect(USGeo::UrbanAreaCounty.imported.count).to be > 4000
+      expect(USGeo::UrbanAreaCounty.removed.count).to eq 0
 
       urban_area_counties = USGeo::UrbanAreaCounty.where(urban_area_geoid: "39430")
       expect(urban_area_counties.size).to eq 2

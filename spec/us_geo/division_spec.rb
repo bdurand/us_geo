@@ -25,8 +25,8 @@ describe USGeo::Division do
       data = File.read(File.expand_path("../../data/dist/divisions.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/divisions.csv.gz").to_return(body: data)
       USGeo::Division.load!
-      expect(USGeo::Division.count).to eq 9
-      expect(USGeo::Division.where(removed: true).count).to eq 0
+      expect(USGeo::Division.imported.count).to eq 9
+      expect(USGeo::Division.removed.count).to eq 0
 
       division = USGeo::Division.find(2)
       expect(division.name).to eq "Middle Atlantic"

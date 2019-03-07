@@ -20,7 +20,7 @@ class CreateCounties < ActiveRecord::Migration[5.0]
       t.float :lat, null: true
       t.float :lng, null: true
       t.datetime :updated_at, null: false
-      t.boolean :removed, null: false, default: false
+      t.integer :status, null: false, default: 0, limit: 1
     end
 
     add_index :us_geo_counties, [:name, :state_code], unique: true

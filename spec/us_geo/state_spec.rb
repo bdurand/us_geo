@@ -39,8 +39,8 @@ describe USGeo::State do
       data = File.read(File.expand_path("../../data/dist/states.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/states.csv.gz").to_return(body: data)
       USGeo::State.load!
-      expect(USGeo::State.count).to eq 59
-      expect(USGeo::State.where(removed: true).count).to eq 0
+      expect(USGeo::State.imported.count).to eq 59
+      expect(USGeo::State.removed.count).to eq 0
 
       illinois = USGeo::State.find("IL")
       expect(illinois.name).to eq "Illinois"

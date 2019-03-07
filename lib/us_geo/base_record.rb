@@ -15,6 +15,17 @@ module USGeo
     self.abstract_class = true
     self.table_name_prefix = "us_geo_"
 
+    STATUS_IMPORTED = 1
+    STATUS_REMOVED = -1
+    STATUS_MANUAL = 0
+
+    validates :status, inclusion: [STATUS_IMPORTED, STATUS_REMOVED, STATUS_MANUAL]
+
+    scope :imported, -> { where(status: STATUS_IMPORTED) }
+    scope :removed, -> { where(status: STATUS_REMOVED) }
+    scope :manual, -> { where(status: STATUS_MANUAL) }
+    scope :not_removed, -> { where(status: [STATUS_IMPORTED, STATUS_MANUAL]) }
+
     class << self
       def load!(location = nil, gzipped: true)
         raise NotImplementedError
@@ -25,21 +36,18 @@ module USGeo
       # Insert or update a record given the unique criteria for finding it.
       def load_record!(criteria, &block)
         record = find_or_initialize_by(criteria)
-        record.removed = false if record.respond_to?(:removed=)
-        record.updated_at = Time.now if record.respond_to?(:updated_at=)
+        record.status = STATUS_IMPORTED
+        record.updated_at = Time.now
         yield(record)
         record.save!
       end
 
-      # Mark any records not updated in the block as removed.
-      def mark_removed!(&block)
+      # Mark the status of any records not updated in the block as being no longer imported.
+      def import!(&block)
         start_time = Time.at(Time.now.to_i.floor)
         yield
         raise LoadError.new("No data found") unless where("updated_at >= ?", start_time).exists?
-        where("updated_at < ?", start_time).update_all(removed: true)
-        where(removed: true).each do |record|
-          STDERR.puts("WARNING: #{table_name}.#{record.id} has been marked removed")
-        end
+        where("updated_at < ?", start_time).imported.update_all(status: STATUS_REMOVED)
       end
 
       def data_uri(path)
@@ -80,6 +88,18 @@ module USGeo
       def area_meters_to_miles(square_meters)
         (square_meters.to_f / (1609.34 ** 2)).round(6)
       end
+    end
+
+    def imported?
+      status == STATUS_IMPORTED
+    end
+
+    def removed?
+      status == STATUS_REMOVED
+    end
+
+    def manual?
+      status == STATUS_MANUAL
     end
 
   end

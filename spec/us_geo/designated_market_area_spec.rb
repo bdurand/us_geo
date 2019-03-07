@@ -18,8 +18,8 @@ describe USGeo::DesignatedMarketArea do
       data = File.read(File.expand_path("../../data/dist/dmas.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/dmas.csv.gz").to_return(body: data)
       USGeo::DesignatedMarketArea.load!
-      expect(USGeo::DesignatedMarketArea.count).to be > 200
-      expect(USGeo::DesignatedMarketArea.where(removed: true).count).to eq 0
+      expect(USGeo::DesignatedMarketArea.imported.count).to be > 200
+      expect(USGeo::DesignatedMarketArea.removed.count).to eq 0
 
       dma = USGeo::DesignatedMarketArea.find("602")
       expect(dma.name).to eq "Chicago, IL"

@@ -27,6 +27,9 @@ namespace :us_geo do
         t = Time.now
         klass.load!
         puts "Loaded #{klass.count} rows into #{klass.table_name} in #{(Time.now - t).round(1)}s"
+        klass.removed.find_each do |record|
+          puts("  WARNING: #{klass}.#{record.id} status changed to removed")
+        end
       end
 
       desc "Import data for all USGeo models"

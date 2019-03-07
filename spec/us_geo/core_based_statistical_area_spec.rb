@@ -32,8 +32,8 @@ describe USGeo::CoreBasedStatisticalArea do
       data = File.read(File.expand_path("../../data/dist/core_based_statistical_areas.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/core_based_statistical_areas.csv.gz").to_return(body: data)
       USGeo::CoreBasedStatisticalArea.load!
-      expect(USGeo::CoreBasedStatisticalArea.count).to be > 900
-      expect(USGeo::CoreBasedStatisticalArea.where(removed: true).count).to eq 0
+      expect(USGeo::CoreBasedStatisticalArea.imported.count).to be > 900
+      expect(USGeo::CoreBasedStatisticalArea.removed.count).to eq 0
 
       chicagoarea = USGeo::CoreBasedStatisticalArea.find("16980")
       expect(chicagoarea).to be_a(USGeo::MetropolitanArea)

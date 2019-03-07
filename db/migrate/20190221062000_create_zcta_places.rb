@@ -9,7 +9,7 @@ class CreateZctaPlaces < ActiveRecord::Migration[5.0]
       t.integer :population, null: false
       t.integer :housing_units, null: false
       t.datetime :updated_at, null: false
-      t.boolean :removed, null: false, default: false
+      t.integer :status, null: false, default: 0, limit: 1
     end
 
     add_index :us_geo_zcta_places, [:zipcode, :place_geoid], name: :index_us_geo_us_geo_zcta_places_uniq, unique: true

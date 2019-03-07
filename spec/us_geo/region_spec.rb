@@ -25,8 +25,8 @@ describe USGeo::Region do
       data = File.read(File.expand_path("../../data/dist/divisions.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/divisions.csv.gz").to_return(body: data)
       USGeo::Region.load!
-      expect(USGeo::Region.count).to eq 4
-      expect(USGeo::Region.where(removed: true).count).to eq 0
+      expect(USGeo::Region.imported.count).to eq 4
+      expect(USGeo::Region.removed.count).to eq 0
 
       region = USGeo::Region.find(2)
       expect(region.name).to eq "Midwest"

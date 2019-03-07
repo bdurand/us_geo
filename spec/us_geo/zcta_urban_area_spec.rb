@@ -65,8 +65,8 @@ describe USGeo::ZctaUrbanArea do
       data = File.read(File.expand_path("../../data/dist/zcta_urban_areas.csv.gz", __dir__))
       stub_request(:get, "#{USGeo.base_data_uri}/zcta_urban_areas.csv.gz").to_return(body: data)
       USGeo::ZctaUrbanArea.load!
-      expect(USGeo::ZctaUrbanArea.count).to be > 15_000
-      expect(USGeo::ZctaUrbanArea.where(removed: true).count).to eq 0
+      expect(USGeo::ZctaUrbanArea.imported.count).to be > 15_000
+      expect(USGeo::ZctaUrbanArea.removed.count).to eq 0
 
       zcta_urban_areas = USGeo::ZctaUrbanArea.where(urban_area_geoid: "39430")
       expect(zcta_urban_areas.size).to eq 5

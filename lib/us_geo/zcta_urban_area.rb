@@ -21,7 +21,7 @@ module USGeo
       def load!(uri = nil)
         location = data_uri(uri || "zcta_urban_areas.csv.gz")
 
-        mark_removed! do
+        import! do
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"], urban_area_geoid: row["Urban Area GEOID"]) do |record|
               record.population = row["Population"]
