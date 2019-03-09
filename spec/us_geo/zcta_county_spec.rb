@@ -62,8 +62,8 @@ describe USGeo::ZctaCounty do
     after { USGeo::ZctaCounty.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/zcta_counties.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/zcta_counties.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/zcta_counties.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/zcta_counties.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::ZctaCounty.load!
       expect(USGeo::ZctaCounty.imported.count).to be > 40_000
       expect(USGeo::ZctaCounty.removed.count).to eq 0

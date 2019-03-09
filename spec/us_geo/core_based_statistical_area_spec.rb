@@ -29,8 +29,8 @@ describe USGeo::CoreBasedStatisticalArea do
     after { USGeo::CoreBasedStatisticalArea.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/core_based_statistical_areas.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/core_based_statistical_areas.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/core_based_statistical_areas.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/core_based_statistical_areas.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::CoreBasedStatisticalArea.load!
       expect(USGeo::CoreBasedStatisticalArea.imported.count).to be > 900
       expect(USGeo::CoreBasedStatisticalArea.removed.count).to eq 0

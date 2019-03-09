@@ -62,8 +62,8 @@ describe USGeo::UrbanAreaCounty do
     after { USGeo::UrbanAreaCounty.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/urban_area_counties.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/urban_area_counties.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/urban_area_counties.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/urban_area_counties.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::UrbanAreaCounty.load!
       expect(USGeo::UrbanAreaCounty.imported.count).to be > 4000
       expect(USGeo::UrbanAreaCounty.removed.count).to eq 0

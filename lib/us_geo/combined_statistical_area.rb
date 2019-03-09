@@ -21,7 +21,7 @@ module USGeo
 
     class << self
       def load!(uri = nil)
-        location = data_uri(uri || "combined_statistical_areas.csv.gz")
+        location = data_uri(uri || "combined_statistical_areas.csv")
         import! do
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|

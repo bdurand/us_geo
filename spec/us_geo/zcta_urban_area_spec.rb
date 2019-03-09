@@ -62,8 +62,8 @@ describe USGeo::ZctaUrbanArea do
     after { USGeo::ZctaUrbanArea.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/zcta_urban_areas.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/zcta_urban_areas.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/zcta_urban_areas.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/zcta_urban_areas.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::ZctaUrbanArea.load!
       expect(USGeo::ZctaUrbanArea.imported.count).to be > 15_000
       expect(USGeo::ZctaUrbanArea.removed.count).to eq 0

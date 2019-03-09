@@ -15,8 +15,8 @@ describe USGeo::CountySubdivision do
     after { USGeo::CountySubdivision.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/county_subdivisions.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/county_subdivisions.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/county_subdivisions.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/county_subdivisions.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::CountySubdivision.load!
       expect(USGeo::CountySubdivision.imported.count).to be > 35_000
       expect(USGeo::CountySubdivision.removed.count).to eq 0

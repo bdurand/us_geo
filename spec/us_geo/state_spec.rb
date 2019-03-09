@@ -36,8 +36,8 @@ describe USGeo::State do
     after { USGeo::State.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/states.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/states.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/states.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/states.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::State.load!
       expect(USGeo::State.imported.count).to eq 59
       expect(USGeo::State.removed.count).to eq 0

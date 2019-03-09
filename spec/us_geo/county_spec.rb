@@ -77,8 +77,8 @@ describe USGeo::County do
     after { USGeo::County.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/counties.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/counties.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/counties.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/counties.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::County.load!
       expect(USGeo::County.imported.count).to be > 3000
       expect(USGeo::County.removed.count).to eq 0

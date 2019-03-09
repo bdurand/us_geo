@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "zlib"
 require "csv"
 require "open-uri"
 
@@ -69,9 +68,8 @@ module USGeo
           file = File.open(location)
         end
         begin
-          reader = (location.end_with?(".gz") ? Zlib::GzipReader.new(file) : file)
           rows = []
-          CSV.new(reader, headers: true).each do |row|
+          CSV.new(file, headers: true).each do |row|
             rows << row
             if rows.size >= 50
               transaction { rows.each(&block) }

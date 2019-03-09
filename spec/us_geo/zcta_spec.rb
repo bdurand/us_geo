@@ -78,8 +78,8 @@ describe USGeo::Zcta do
     after { USGeo::Zcta.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/zctas.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/zctas.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/zctas.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/zctas.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::Zcta.load!
       expect(USGeo::Zcta.imported.count).to be > 30_000
       expect(USGeo::Zcta.removed.count).to eq 0

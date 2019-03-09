@@ -22,8 +22,8 @@ describe USGeo::Region do
     after { USGeo::Region.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/divisions.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/divisions.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/divisions.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/divisions.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::Region.load!
       expect(USGeo::Region.imported.count).to eq 4
       expect(USGeo::Region.removed.count).to eq 0

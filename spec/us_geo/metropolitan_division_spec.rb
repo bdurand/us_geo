@@ -22,8 +22,8 @@ describe USGeo::MetropolitanDivision do
     after { USGeo::MetropolitanDivision.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/metropolitan_divisions.csv.gz", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/metropolitan_divisions.csv.gz").to_return(body: data)
+      data = File.read(File.expand_path("../../data/dist/metropolitan_divisions.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/metropolitan_divisions.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
       USGeo::MetropolitanDivision.load!
       expect(USGeo::MetropolitanDivision.imported.count).to be > 25
       expect(USGeo::MetropolitanDivision.removed.count).to eq 0

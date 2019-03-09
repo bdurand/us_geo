@@ -2,7 +2,6 @@
 
 require 'csv'
 require 'set'
-require 'zlib'
 
 module USGeo
 
@@ -55,48 +54,40 @@ module USGeo
 
     def dump(dir = nil)
       dir ||= File.join(__dir__, "dist")
-      gzip(File.join(dir, "combined_statistical_areas.csv.gz")) { |f| combined_statistical_areas(f) }
-      gzip(File.join(dir, "core_based_statistical_areas.csv.gz")) { |f| core_based_statistical_areas(f) }
-      gzip(File.join(dir, "metropolitan_divisions.csv.gz")) { |f| metropolitan_divisions(f) }
-      gzip(File.join(dir, "counties.csv.gz")) { |f| counties(f) }
-      gzip(File.join(dir, "county_subdivisions.csv.gz")) { |f| county_subdivisions(f) }
-      gzip(File.join(dir, "places.csv.gz")) { |f| places(f) }
-      gzip(File.join(dir, "zctas.csv.gz")) { |f| zctas(f) }
-      gzip(File.join(dir, "urban_areas.csv.gz")) { |f| urban_areas(f) }
+      File.open(File.join(dir, "combined_statistical_areas.csv"), "w") { |f| combined_statistical_areas(f) }
+      File.open(File.join(dir, "core_based_statistical_areas.csv"), "w") { |f| core_based_statistical_areas(f) }
+      File.open(File.join(dir, "metropolitan_divisions.csv"), "w") { |f| metropolitan_divisions(f) }
+      File.open(File.join(dir, "counties.csv"), "w") { |f| counties(f) }
+      File.open(File.join(dir, "county_subdivisions.csv"), "w") { |f| county_subdivisions(f) }
+      File.open(File.join(dir, "places.csv"), "w") { |f| places(f) }
+      File.open(File.join(dir, "zctas.csv"), "w") { |f| zctas(f) }
+      File.open(File.join(dir, "urban_areas.csv"), "w") { |f| urban_areas(f) }
 
       zcta_list = Set.new
-      gunzip(File.join(dir, "zctas.csv.gz")) do |f|
-        foreach(f, headers: true) do |row|
-          zcta_list << row["ZCTA5"]
-        end
+      foreach(File.join(dir, "zctas.csv"), headers: true) do |row|
+        zcta_list << row["ZCTA5"]
       end
 
       urban_area_list = Set.new
-      gunzip(File.join(dir, "urban_areas.csv.gz")) do |f|
-        foreach(f, headers: true) do |row|
-          urban_area_list << row["GEOID"]
-        end
+      foreach(File.join(dir, "urban_areas.csv"), headers: true) do |row|
+        urban_area_list << row["GEOID"]
       end
 
       county_list = Set.new
-      gunzip(File.join(dir, "counties.csv.gz")) do |f|
-        foreach(f, headers: true) do |row|
-          county_list << row["GEOID"]
-        end
+      foreach(File.join(dir, "counties.csv"), headers: true) do |row|
+        county_list << row["GEOID"]
       end
 
       place_list = Set.new
-      gunzip(File.join(dir, "places.csv.gz")) do |f|
-        foreach(f, headers: true) do |row|
-          place_list << row["GEOID"]
-        end
+      foreach(File.join(dir, "places.csv"), headers: true) do |row|
+        place_list << row["GEOID"]
       end
 
-      gzip(File.join(dir, "zcta_counties.csv.gz")) { |f| zcta_counties(f, zctas: zcta_list, counties: county_list) }
-      gzip(File.join(dir, "zcta_urban_areas.csv.gz")) { |f| zcta_urban_areas(f, zctas: zcta_list, urban_areas: urban_area_list) }
-      gzip(File.join(dir, "zcta_places.csv.gz")) { |f| zcta_places(f, zctas: zcta_list, places: place_list) }
-      gzip(File.join(dir, "urban_area_counties.csv.gz")) { |f| urban_area_counties(f, urban_areas: urban_area_list, counties: county_list) }
-      gzip(File.join(dir, "place_counties.csv.gz")) { |f| place_counties(f, places: place_list, counties: county_list) }
+      File.open(File.join(dir, "zcta_counties.csv"), "w") { |f| zcta_counties(f, zctas: zcta_list, counties: county_list) }
+      File.open(File.join(dir, "zcta_urban_areas.csv"), "w") { |f| zcta_urban_areas(f, zctas: zcta_list, urban_areas: urban_area_list) }
+      File.open(File.join(dir, "zcta_places.csv"), "w") { |f| zcta_places(f, zctas: zcta_list, places: place_list) }
+      File.open(File.join(dir, "urban_area_counties.csv"), "w") { |f| urban_area_counties(f, urban_areas: urban_area_list, counties: county_list) }
+      File.open(File.join(dir, "place_counties.csv"), "w") { |f| place_counties(f, places: place_list, counties: county_list) }
       nil
     end
 
@@ -716,8 +707,8 @@ module USGeo
           zcta_data = data[zcta5]
           next unless zcta_data && row["ZPOP"]
           zcta_data[:primary_ua_pct] ||= 0
-          if row["ZPOPPCT"].to_f >= zcta_data[:primary_ua_pct] && row["UA"] != "99999"
-            zcta_data[:primary_urban_area] = row["UA"]
+          if row["ZPOPPCT"].to_f >= zcta_data[:primary_ua_pct]
+            zcta_data[:primary_urban_area] = row["UA"] unless row["UA"] == "99999"
             zcta_data[:primary_ua_pct] = row["ZPOPPCT"].to_f
           end
         end
@@ -739,14 +730,6 @@ module USGeo
       ensure
         file.close if csv_file.is_a?(String)
       end
-    end
-
-    def gzip(path, &block)
-      Zlib::GzipWriter.open(path, Zlib::BEST_COMPRESSION, &block)
-    end
-
-    def gunzip(path, &block)
-      Zlib::GzipReader.open(path, &block)
     end
   end
 end
