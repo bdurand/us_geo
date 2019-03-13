@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = "us_geo"
   s.version     = USGeo::VERSION
   s.authors     = ["Brian Durand"]
-  s.summary     = "Collection of county level data for the United States for use with ActiveRecord"
+  s.summary     = "Collection of geographic data for the United States for use with ActiveRecord"
   s.license     = "MIT"
 
   s.files = Dir["{db,lib}/**/*", "Rakefile", "README.md", "Gemfile", "Gemfile.lock"]
