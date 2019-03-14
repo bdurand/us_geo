@@ -14,7 +14,7 @@ module USGeo
 
     has_many :place_counties, foreign_key: :place_geoid, inverse_of: :place, dependent: :destroy
     has_many :counties, through: :place_counties
-    
+
     belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
     belongs_to :urban_area, foreign_key: :urban_area_geoid, optional: true, class_name: "USGeo::UrbanArea"
     belongs_to :state, foreign_key: :state_code, inverse_of: :places
@@ -24,7 +24,7 @@ module USGeo
     validates :primary_county_geoid, length: {is: 5}
     validates :urban_area_geoid, length: {is: 5}, allow_nil: true
     validates :name, length: {maximum: 60}
-    validates :short_name, length: {maximum: 60}
+    validates :short_name, length: {maximum: 30}
     validates :fips_class_code, length: {is: 2}
     validates :land_area, numericality: true, allow_nil: true
     validates :water_area, numericality: true, allow_nil: true
@@ -34,7 +34,7 @@ module USGeo
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "places.csv")
-       
+
         import! do
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|

@@ -472,8 +472,22 @@ module USGeo
           puts "Missing data for #{geoid} #{data[:name]}, #{data[:state]}: #{data.inspect}"
           next
         end
-        short_name = data[:name].sub(/\A.*? of /i, "").sub(/ Census Designated Place/i, "").sub(/ \(historical\)/i, "")
+        short_name = data[:name].sub(/\A.*? of /i, "").sub(/\A.*? of /i, "")
+        short_name = short_name.sub(/ Census Designated Place/i, "")
+        short_name = short_name.sub(/ \(historical\)/i, "")
+        short_name = short_name.sub(/ Township/i, "")
+        short_name = short_name.sub(/ Consolidated Government/i, "")
         short_name = short_name.sub(/ Metro Government/i, "")
+        short_name = short_name.sub(/ Town\z/i, "")
+        short_name = short_name.sub(/ Junction\z/i, "")
+        short_name = short_name.sub(/ Village\z/i, "")
+        short_name = short_name.sub(/ Comunidad\z/i, "")
+        short_name = short_name.sub(/ Zona Urbana\z/i, "")
+        short_name = short_name.sub(/ State University\z/i, " State")
+        short_name = short_name.split("-", 2).first if short_name.size > 30
+        if short_name.size > 30
+          raise "Short name for #{data[:name].inspect} greather than 30 characters: #{short_name.inspect}"
+        end
         data[:short_name] = short_name
         csv << [
           geoid,
