@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    us_geo (1.0.0)
+    us_geo (1.0.1)
       activerecord (~> 5.0)
 
 GEM
