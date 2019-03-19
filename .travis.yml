@@ -1,6 +1,8 @@
 language: ruby
-rvm:
-  - 2.5
+
+before_install:
+  - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
+  - gem install bundler -v '< 2'
 
 cache: bundler
 
@@ -9,6 +11,10 @@ branches:
   only:
     - master
     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    - travis
+
+rvm:
+  - "2.5"
 
 gemfile:
   - Gemfile
