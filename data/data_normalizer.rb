@@ -189,6 +189,7 @@ module USGeo
       combined_statistical_areas.each do |geoid, data|
         csv << [geoid, data[:name], data[:population], data[:housing_units], data[:land_area], data[:water_area]]
       end
+      output
     end
 
     def core_based_statistical_areas(output)
@@ -241,6 +242,7 @@ module USGeo
       core_based_statistical_areas.each do |geoid, data|
         csv << [geoid, data[:name], data[:csa], data[:population], data[:housing_units], data[:land_area], data[:water_area], data[:lat], data[:lng]]
       end
+      output
     end
 
     def metropolitan_divisions(output)
@@ -273,6 +275,7 @@ module USGeo
       metropolitan_divisions.each do |geoid, data|
         csv << [geoid, data[:name], data[:cbsa], data[:population], data[:housing_units], data[:land_area], data[:water_area]]
       end
+      output
     end
 
     def counties(output)
@@ -317,6 +320,7 @@ module USGeo
         county_geoid = "#{row['FIPS State Code']}#{row['FIPS County Code']}"
         data = counties[county_geoid]
         data[:cbsa_code] = row["CBSA Code"]
+        data[:metropolitan_division] = row["Metropolitan Division Code"]
         data[:central] = row["Central/Outlying County"].to_s.include?("Central")
         counties[county_geoid] = data
       end
@@ -332,10 +336,10 @@ module USGeo
       end
 
       csv = CSV.new(output)
-      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "CBSA", "Central", "DMA", "Time Zone", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "CBSA", "Metropolitan Division", "Central", "DMA", "Time Zone", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       counties.each do |geoid, data|
         unless data[:time_zone] && data[:gnis_id] && data[:fips_class]
-          puts "Missing data for #{geoid} #{data[:name]}, #{data[:state]}: #{data.inspect}"
+          puts "Missing data for county #{geoid} #{data[:name]}, #{data[:state]}: #{data.inspect}"
           next
         end
         csv << [
@@ -345,6 +349,7 @@ module USGeo
           data[:short_name],
           data[:state],
           data[:cbsa_code],
+          data[:metropolitan_division],
           data[:central] ? "T" : "F",
           data[:dma_code],
           data[:time_zone],
@@ -357,6 +362,7 @@ module USGeo
           data[:lng]
         ]
       end
+      output
     end
 
     def county_subdivisions(output)
@@ -401,7 +407,7 @@ module USGeo
       csv << ["GEOID", "GNIS ID", "Name", "County GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       subdivisions.each do |geoid, data|
         unless data[:gnis_id] && data[:fips_class]
-          puts "Missing data for #{geoid} #{data[:name]}: #{data.inspect}"
+          puts "Missing data for subdivision #{geoid} #{data[:name]}: #{data.inspect}"
           next
         end
         csv << [
@@ -418,6 +424,7 @@ module USGeo
           data[:lng]
         ]
       end
+      output
     end
 
     def places(output)
@@ -469,21 +476,33 @@ module USGeo
       csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "County GEOID", "Urban Area GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       places.each do |geoid, data|
         unless data[:gnis_id] && data[:fips_class]
-          puts "Missing data for #{geoid} #{data[:name]}, #{data[:state]}: #{data.inspect}"
+          puts "Missing data for place #{geoid} #{data[:name]}, #{data[:state]}: #{data.inspect}"
           next
         end
-        short_name = data[:name].sub(/\A.*? of /i, "").sub(/\A.*? of /i, "")
+        short_name = data[:name]
+        short_name = short_name.sub(/\A(The )?City and Borough of /i, "")
+        short_name = short_name.sub(/\A(The )?Unified Government of /i, "")
+        short_name = short_name.sub(/\A(The )?Consolidated Government of /i, "")
+        short_name = short_name.sub(/\A(The )?City and County of /i, "")
+        short_name = short_name.sub(/\A(The )?Metropolitan Government of /i, "")
+        short_name = short_name.sub(/\A(The )?City of /i, "")
+        short_name = short_name.sub(/\A(The )?Town of /i, "")
+        short_name = short_name.sub(/\A(The )?Township of /i, "")
+        short_name = short_name.sub(/\A(The )?Municipality of /i, "")
+        short_name = short_name.sub(/\A(The )?Village of /i, "")
+        short_name = short_name.sub(/\A(The )?Borough of /i, "")
+        short_name = short_name.sub(/\A(The )?County of /i, "")
+        short_name = short_name.sub(/\A(The )?Corporation of /i, "")
         short_name = short_name.sub(/ Census Designated Place/i, "")
+        short_name = short_name.sub(/ CDP/i, "")
         short_name = short_name.sub(/ \(historical\)/i, "")
         short_name = short_name.sub(/ Township/i, "")
         short_name = short_name.sub(/ Consolidated Government/i, "")
         short_name = short_name.sub(/ Metro Government/i, "")
-        short_name = short_name.sub(/ Town\z/i, "")
-        short_name = short_name.sub(/ Junction\z/i, "")
-        short_name = short_name.sub(/ Village\z/i, "")
         short_name = short_name.sub(/ Comunidad\z/i, "")
         short_name = short_name.sub(/ Zona Urbana\z/i, "")
-        short_name = short_name.sub(/ State University\z/i, " State")
+
+        short_name = short_name.sub(/\bUniversity\b/i, "Univ.") if short_name.size > 30
         short_name = short_name.split("-", 2).first if short_name.size > 30
         if short_name.size > 30
           raise "Short name for #{data[:name].inspect} greather than 30 characters: #{short_name.inspect}"
@@ -506,6 +525,7 @@ module USGeo
           data[:lng]
         ]
       end
+      output
     end
 
     def zctas(output)
@@ -549,6 +569,7 @@ module USGeo
           data[:lng]
         ]
       end
+      output
     end
 
     def urban_areas(output)
@@ -602,6 +623,7 @@ module USGeo
           data[:lng]
         ]
       end
+      output
     end
 
     def zcta_counties(output, zctas: nil, counties: nil)
@@ -621,6 +643,7 @@ module USGeo
           ]
         end
       end
+      output
     end
 
     def zcta_urban_areas(output, zctas: nil, urban_areas: nil)
@@ -632,6 +655,7 @@ module USGeo
         next if zctas && !zctas.include?(row["ZCTA5"])
         csv << [row["ZCTA5"], row["UA"], row["POPPT"], row["HUPT"], row["AREALANDPT"], row["AREAPT"].to_i - row["AREALANDPT"].to_i]
       end
+      output
     end
 
     def zcta_places(output, zctas: nil, places: nil)
@@ -643,6 +667,7 @@ module USGeo
         next if zctas && !zctas.include?(row["ZCTA5"])
         csv << [row["ZCTA5"], row["GEOID"], row["POPPT"], row["HUPT"], row["AREALANDPT"], row["AREAPT"].to_i - row["AREALANDPT"].to_i]
       end
+      output
     end
 
     def urban_area_counties(output, urban_areas: nil, counties: nil)
@@ -654,6 +679,7 @@ module USGeo
         next if counties && !counties.include?(row["GEOID"])
         csv << [row["UA"], row["GEOID"], row["POPPT"], row["HUPT"], row["AREALANDPT"], row["AREAPT"].to_i - row["AREALANDPT"].to_i]
       end
+      output
     end
 
     def place_counties(output, places: nil, counties: nil)
@@ -664,6 +690,7 @@ module USGeo
         next if counties && !counties.include?(row["County GEOID"])
         csv << [row["Place GEOID"], row["County GEOID"]]
       end
+      output
     end
 
     private

@@ -52,6 +52,7 @@ module USGeo
               record.short_name = row["Short Name"]
               record.state_code = row["State"]
               record.cbsa_geoid = row["CBSA"]
+              record.metropolitan_division_geoid = row["Metropolitan Division"]
               record.dma_code = row["DMA"]
               record.time_zone_name = row["Time Zone"]
               record.fips_class_code = row["FIPS Class"]

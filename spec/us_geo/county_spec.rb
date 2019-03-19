@@ -88,6 +88,7 @@ describe USGeo::County do
       expect(cook.short_name).to eq "Cook"
       expect(cook.dma_code).to eq "602"
       expect(cook.cbsa_geoid).to eq "16980"
+      expect(cook.metropolitan_division_geoid).to eq "16984"
       expect(cook.state_code).to eq "IL"
       expect(cook.state_fips).to eq "17"
       expect(cook.county_fips).to eq "031"
