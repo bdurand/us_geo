@@ -1,8 +1,8 @@
 PATH
   remote: ..
   specs:
-    us_geo (1.0.2)
-      activerecord (~> 5.0)
+    us_geo (1.0.3)
+      activerecord (>= 5.0)
 
 GEM
   remote: https://rubygems.org/

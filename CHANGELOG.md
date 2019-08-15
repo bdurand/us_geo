@@ -1,3 +1,7 @@
+# 1.0.3
+
+* Make dependencies compatible with Rails 6
+
 # 1.0.2
 
 * Fix short name logic to be more conservative in how it shortens names
