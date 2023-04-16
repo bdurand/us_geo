@@ -1,19 +1,18 @@
 # frozen_string_literal: true
 
 module USGeo
-
   # Combined statistical area (CSA) of multiple metropolitan areas with weak regional
   # and economic connectoins between them.
   class CombinedStatisticalArea < BaseRecord
-
-    include Demographics
+    include Population
+    include Area
 
     self.primary_key = "geoid"
 
     has_many :core_based_statistical_areas, foreign_key: :csa_geoid, inverse_of: :combined_statistical_area
 
     validates :geoid, length: {is: 3}
-    validates :name, length: {maximum: 60}
+    validates :name, presence: true, length: {maximum: 60}, uniqueness: true
     validates :land_area, numericality: true, presence: true
     validates :water_area, numericality: true, presence: true
     validates :population, numericality: {only_integer: true}, presence: true
@@ -35,6 +34,5 @@ module USGeo
         end
       end
     end
-
   end
 end

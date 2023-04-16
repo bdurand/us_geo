@@ -1,7 +1,7 @@
 # USGeo
 
 [![Build Status](https://travis-ci.com/bdurand/us_geo.svg?branch=master)](https://travis-ci.com/bdurand/us_geo)
-[![Maintainability](https://api.codeclimate.com/v1/badges/a01ffc7f707686416c0d/maintainability)](https://codeclimate.com/github/bdurand/us_geo/maintainability)
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
 
 This gem provides a variety of U.S. geographic data ActiveRecord models. It is designed to provide a normalized way to access the data from a relational database. This is by no means a complete set of data. The primary purpose it was built is to provide a way to match most ZIP codes to higher level geographic entities.
 
@@ -42,6 +42,7 @@ In addition, there entity to entity mapping tables:
 * 17389 ZCTA to Urban Area
 * 49843 ZCTA to Place
 * 4945 Urban Area to County
+* ? Urban Area to Place
 * 31492 Place to County
 
 The land and water area for all entities is given in square miles.
@@ -92,16 +93,23 @@ Urban area data is only provided for states, the District of Columbia, Puerto Ri
 
 ### Place
 
-A place is an organized area within a state usually corresponding to a city, town, village, etc. Places are within a single state, but may span counties. If a place spans multiple counties, the county with the most population will be identified as the primary county. Places may belong to an urban area.
+A place is an organized area within a state usually corresponding to a city, town, village, etc. Places are within a single state, but may span counties. If a place spans multiple counties, the county with the most land area will be identified as the primary county. Places may belong to an urban area.
 
 ### ZIP Code Tabulation Area (ZCTA)
 
 Approximate equivalent to U.S. Postal Service ZIP codes, but designed for geographic and demographic purposes rather than mail routing. Not all postal ZIP codes are mapped to ZCTAs (i.e. ZIP codes mapped to a single building) and the borders of ZCTAs smooth out some of the irregularities of ZIP codes. Otherwise, they are mostly interchangeable.
 
-ZCTAs can span counties, urban areas, places. The primary county and primary urban area will be the ones that contain most of the ZCTA's population.
+ZCTAs can span counties, urban areas, and places. The primary county and primary urban area will be the ones that contain most of the ZCTA's land area.
 
 ZCTA data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
 
+### Entity Relationships
+
+[![](https://mermaid.ink/img/pako:eNptkEEOgyAQRa9iZq0XYNFN7QXqls1URkui0MDQxBjvXkBNtC2rz5sPLzBDaxWBgHZA72uNvcNRmiKuTIo79doaaY6s1m_tf2jDyHRGVxsMT_9YEx7q65bVVFTV5SBIg32XR5sl8Rwz3D2JrvmATyooYSQ3olbxzXM6IYGfNJIEEaOiDsPAEqRZYjW8VFTclGbrQHQ4eCoBA9tmMi0IdoH20vZ1W2v5AMlpdFY)](https://mermaid.live/edit#pako:eNptkEEOgyAQRa9iZq0XYNFN7QXqls1URkui0MDQxBjvXkBNtC2rz5sPLzBDaxWBgHZA72uNvcNRmiKuTIo79doaaY6s1m_tf2jDyHRGVxsMT_9YEx7q65bVVFTV5SBIg32XR5sl8Rwz3D2JrvmATyooYSQ3olbxzXM6IYGfNJIEEaOiDsPAEqRZYjW8VFTclGbrQHQ4eCoBA9tmMi0IdoH20vZ1W2v5AMlpdFY)
+
+[![](https://mermaid.ink/img/pako:eNqFkk1uAjEMha8y8pq5wKiqVDosWbHNxk0MWOQHJU4lRLk7KQwSg8JMVlH8PfvlyWfQwRB0oC2m1DPuIjrlm3JuL813iLTERGYjKJyENdqvSKj8mHI_7GegNUkMx2BZ0FeqrKeqT9qefzlx8GOip8Q7j0JmjfFA8tzjdXLz8de2E1-7aV78zGruspqNpm0_izJ7OT0cvQlsIKd8vatWhtRCG2Gz_eqxwwIcRYdsyuKc_9sokD05UtCVq6EtZisKlL8UNB9NiWNlWEKEbos20QIwS9icvIZOYqYHNOzfQF2uzcLskw)](https://mermaid.live/edit#pako:eNqFkk1uAjEMha8y8pq5wKiqVDosWbHNxk0MWOQHJU4lRLk7KQwSg8JMVlH8PfvlyWfQwRB0oC2m1DPuIjrlm3JuL813iLTERGYjKJyENdqvSKj8mHI_7GegNUkMx2BZ0FeqrKeqT9qefzlx8GOip8Q7j0JmjfFA8tzjdXLz8de2E1-7aV78zGruspqNpm0_izJ7OT0cvQlsIKd8vatWhtRCG2Gz_eqxwwIcRYdsyuKc_9sokD05UtCVq6EtZisKlL8UNB9NiWNlWEKEbos20QIwS9icvIZOYqYHNOzfQF2uzcLskw)
+
+[![](https://mermaid.ink/img/pako:eNptkM8KwjAMh1-l5OxeYAxBpndBvEgvsc100HXSpoc59-52_9wY9pR--fprSAuq1gQpKIPeH0t8OKykFfEMRFzdHe3BEY5w3bopjnRNzgYVzej3UmSfJBmv5Zv0EvbPyE3wTG4O6f8QWZLsRV4Hy82K9nAz3WJPk_RwKMU2YqGbjFHadmAHFbkKSx131famBH5SRRLSWGoqMBiWIG0X1fDSyHTSJdcO0gKNpx1g4PrSWAUpu0CzNK18srovi8qAvQ)](https://mermaid.live/edit#pako:eNptkM8KwjAMh1-l5OxeYAxBpndBvEgvsc100HXSpoc59-52_9wY9pR--fprSAuq1gQpKIPeH0t8OKykFfEMRFzdHe3BEY5w3bopjnRNzgYVzej3UmSfJBmv5Zv0EvbPyE3wTG4O6f8QWZLsRV4Hy82K9nAz3WJPk_RwKMU2YqGbjFHadmAHFbkKSx131famBH5SRRLSWGoqMBiWIG0X1fDSyHTSJdcO0gKNpx1g4PrSWAUpu0CzNK18srovi8qAvQ)
 
 ## Usage
 
@@ -138,6 +146,7 @@ rake us_geo:import:places
 rake us_geo:import:zctas
 rake us_geo:import:place_counties
 rake us_geo:import:urban_area_counties
+rake us_geo:import:urban_area_places
 rake us_geo:import:zcta_counties
 rake us_geo:import:zcta_places
 rake us_geo:import:zcta_urban_areas

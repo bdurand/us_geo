@@ -1,0 +1,57 @@
+Name,Code,Type,FIPS,Region ID,Region,Division ID,Division,Population,Housing Units,Land Area,Water Area
+Alabama,AL,state,01,3,South,6,East South Central,4997675,2278526,50645.0,1775.0
+Alaska,AK,state,02,4,West,9,Pacific,728936,320808,570641.0,94743.0
+Arizona,AZ,state,04,4,West,8,Mountain,7086218,3060516,113594.0,396.0
+Arkansas,AR,state,05,3,South,7,West South Central,3006309,1361880,52035.0,1143.0
+California,CA,state,06,4,West,9,Pacific,39455353,14328539,155779.0,7916.0
+Colorado,CO,state,08,4,West,8,Mountain,5723176,2454873,103642.0,452.0
+Connecticut,CT,state,09,1,Northeast,1,New England,3605330,1527039,4842.0,701.0
+Delaware,DE,state,10,3,South,5,South Atlantic,981892,445104,1949.0,540.0
+Florida,FL,state,12,3,South,5,South Atlantic,21339762,9764897,53625.0,12133.0
+Georgia,GA,state,13,3,South,5,South Atlantic,10625615,4375039,57513.0,1912.0
+Hawaii,HI,state,15,4,West,9,Pacific,1453498,556937,6423.0,4509.0
+Idaho,ID,state,16,4,West,8,Mountain,1811617,742145,82643.0,926.0
+Illinois,IL,state,17,2,Midwest,3,East North Central,12821813,5412995,55519.0,2395.0
+Indiana,IN,state,18,2,Midwest,3,East North Central,6751340,2911562,35826.0,593.0
+Iowa,IA,state,19,2,Midwest,4,West North Central,3179090,1407100,55857.0,416.0
+Kansas,KS,state,20,2,Midwest,4,West North Central,2932099,1272290,81759.0,520.0
+Kentucky,KY,state,21,3,South,6,East South Central,4494141,1988420,39486.0,921.0
+Louisiana,LA,state,22,3,South,7,West South Central,4657305,2066323,43204.0,9174.0
+Maine,ME,state,23,1,Northeast,1,New England,1357046,737782,30843.0,4537.0
+Maryland,MD,state,24,3,South,5,South Atlantic,6148545,2516341,9707.0,2699.0
+Massachusetts,MA,state,25,1,Northeast,1,New England,6991852,2979634,7800.0,2754.0
+Michigan,MI,state,26,2,Midwest,3,East North Central,10062512,4566504,56539.0,40175.0
+Minnesota,MN,state,27,2,Midwest,4,West North Central,5670472,2470483,79627.0,7309.0
+Mississippi,MS,state,28,3,South,6,East South Central,2967023,1317375,46923.0,1509.0
+Missouri,MO,state,29,2,Midwest,4,West North Central,6141534,2782081,68742.0,965.0
+Montana,MT,state,30,4,West,8,Mountain,1077978,512553,145546.0,1494.0
+Nebraska,NE,state,31,2,Midwest,4,West North Central,1951480,840802,76824.0,524.0
+Nevada,NV,state,32,4,West,8,Mountain,3059238,1269846,109781.0,791.0
+New Hampshire,NH,state,33,1,Northeast,1,New England,1372175,636480,8953.0,397.0
+New Jersey,NJ,state,34,1,Northeast,2,Middle Atlantic,9234024,3738342,7354.0,1368.0
+New Mexico,NM,state,35,4,West,8,Mountain,2109366,937397,121298.0,292.0
+New York,NY,state,36,1,Northeast,2,Middle Atlantic,20114745,8449178,47126.0,7429.0
+North Carolina,NC,state,37,3,South,5,South Atlantic,10367022,4673933,48618.0,5201.0
+North Dakota,ND,state,38,2,Midwest,4,West North Central,773344,370111,69001.0,1698.0
+Ohio,OH,state,39,2,Midwest,3,East North Central,11769923,5232733,40861.0,3965.0
+Oklahoma,OK,state,40,3,South,7,West South Central,3948136,1741721,68595.0,1304.0
+Oregon,OR,state,41,4,West,9,Pacific,4207177,1798864,95988.0,2391.0
+Pennsylvania,PA,state,42,1,Northeast,2,Middle Atlantic,12970650,5728788,44743.0,1312.0
+Rhode Island,RI,state,44,1,Northeast,1,New England,1091949,481168,1034.0,511.0
+South Carolina,SC,state,45,3,South,5,South Atlantic,5078903,2325248,30061.0,1960.0
+South Dakota,SD,state,46,2,Midwest,4,West North Central,881785,391857,75811.0,1305.0
+Tennessee,TN,state,47,3,South,6,East South Central,6859497,3011124,41235.0,909.0
+Texas,TX,state,48,3,South,7,West South Central,28862581,11433880,261232.0,7365.0
+Utah,UT,state,49,4,West,8,Mountain,3231370,1133558,82170.0,2727.0
+Vermont,VT,state,50,1,Northeast,1,New England,641637,333519,9217.0,400.0
+Virginia,VA,state,51,3,South,5,South Atlantic,8582479,3596100,39490.0,3285.0
+Washington,WA,state,53,4,West,9,Pacific,7617364,3170695,66456.0,4842.0
+West Virginia,WV,state,54,3,South,5,South Atlantic,1801049,859437,24038.0,192.0
+Wisconsin,WI,state,55,2,Midwest,3,East North Central,5871661,2718369,54158.0,11339.0
+Wyoming,WY,state,56,4,West,8,Mountain,576641,271818,97093.0,720.0
+District of Columbia,DC,district,11,3,South,5,South Atlantic,683154,344306,61.0,7.0
+Puerto Rico,PR,territory,72,,,,,3311274,1553791,3424.0,1901.0
+U.S. Virgin Islands,VI,territory,74,,,,,0,0,134.0,599.0
+American Samoa,AS,territory,60,,,,,0,0,76.0,505.0
+Guam,GU,territory,66,,,,,0,0,210.0,361.0
+Northern Mariana Islands,MP,territory,69,,,,,0,0,182.0,1793.0

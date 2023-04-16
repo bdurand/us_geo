@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module USGeo
-
   # ZIP code tabulation area. These roughly map to U.S. Postal service ZIP codes, but
   # are designed for geographic and demographic purposes instead of mail routing. In particular
   # certain optimizations that the Postal Service makes to optimize mail routing are
@@ -10,11 +9,11 @@ module USGeo
   # ZCTA's can span counties, but the one with the majority of the residents is identified
   # as the primary county for when a single county is required.
   #
-  # ZCTA's can span urbanized area, but the one with the majority of the residents is identified
-  # as the primary urbanized area for when a single area is required.
+  # ZCTA's can span places, but the one with the majority of the residents is identified
+  # as the primary place for when a single area is required.
   class Zcta < BaseRecord
-
-    include Demographics
+    include Population
+    include Area
 
     self.table_name = "us_geo_zctas"
     self.primary_key = "zipcode"
@@ -23,12 +22,9 @@ module USGeo
     has_many :counties, through: :zcta_counties
     belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
 
-    has_many :zcta_urban_areas, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
-    has_many :urban_areas, through: :zcta_urban_areas
-    belongs_to :primary_urban_area, foreign_key: :primary_urban_area_geoid, class_name: "USGeo::UrbanArea"
-
     has_many :zcta_places, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
     has_many :places, through: :zcta_places
+    belongs_to :primary_place, foreign_key: :primary_place_geoid, class_name: "USGeo::Place"
 
     validates :zipcode, length: {is: 5}
     validates :land_area, numericality: true, presence: true
@@ -46,7 +42,7 @@ module USGeo
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"]) do |record|
               record.primary_county_geoid = row["Primary County"]
-              record.primary_urban_area_geoid = row["Primary Urban Area"]
+              record.primary_place_geoid = row["Primary Place"]
               record.population = row["Population"]
               record.housing_units = row["Housing Units"]
               record.land_area = area_meters_to_miles(row["Land Area"])
@@ -58,6 +54,5 @@ module USGeo
         end
       end
     end
-
   end
 end

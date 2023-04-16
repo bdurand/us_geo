@@ -1,5 +1,6 @@
-class CreateZctas < ActiveRecord::Migration[5.0]
+# frozen_string_literal: true
 
+class CreateZctas < ActiveRecord::Migration[5.0]
   def up
     create_table :us_geo_zctas, id: false do |t|
       t.string :zipcode, primary_key: true, null: false, limit: 5
@@ -19,5 +20,4 @@ class CreateZctas < ActiveRecord::Migration[5.0]
   def down
     drop_table :us_geo_zctas
   end
-
 end

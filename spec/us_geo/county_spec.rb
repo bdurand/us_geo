@@ -1,19 +1,18 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe USGeo::County do
-
   describe "associations" do
     it "should have a state" do
       county = USGeo::County.new
       county.geoid = "00001"
-      expect{ county.state }.to_not raise_error
+      expect { county.state }.to_not raise_error
       expect(county.build_state).to be_a(USGeo::State)
     end
 
     it "should have a core_based_statistical_area" do
       county = USGeo::County.new
       county.geoid = "00001"
-      expect{ county.core_based_statistical_area }.to_not raise_error
+      expect { county.core_based_statistical_area }.to_not raise_error
       expect(county.build_core_based_statistical_area).to be_a(USGeo::CoreBasedStatisticalArea)
     end
 
@@ -30,45 +29,37 @@ describe USGeo::County do
     it "should have a metropolitan division" do
       county = USGeo::County.new
       county.geoid = "00001"
-      expect{ county.metropolitan_division }.to_not raise_error
+      expect { county.metropolitan_division }.to_not raise_error
       expect(county.build_metropolitan_division).to be_a(USGeo::MetropolitanDivision)
     end
 
     it "should have zctas" do
       county = USGeo::County.new
       county.geoid = "00001"
-      expect{ county.zctas }.to_not raise_error
-      expect{ county.zcta_counties }.to_not raise_error
+      expect { county.zctas }.to_not raise_error
+      expect { county.zcta_counties }.to_not raise_error
       expect(county.zcta_counties.build).to be_a(USGeo::ZctaCounty)
-    end
-
-    it "should have urban areas" do
-      county = USGeo::County.new
-      county.geoid = "00001"
-      expect{ county.urban_areas }.to_not raise_error
-      expect{ county.urban_area_counties }.to_not raise_error
-      expect(county.urban_area_counties.build).to be_a(USGeo::UrbanAreaCounty)
     end
 
     it "should have places" do
       county = USGeo::County.new
       county.geoid = "00001"
-      expect{ county.places }.to_not raise_error
-      expect{ county.place_counties }.to_not raise_error
+      expect { county.places }.to_not raise_error
+      expect { county.place_counties }.to_not raise_error
       expect(county.place_counties.build).to be_a(USGeo::PlaceCounty)
     end
 
     it "should have subdivisions" do
       county = USGeo::County.new
       county.geoid = "00001"
-      expect{ county.subdivisions }.to_not raise_error
+      expect { county.subdivisions }.to_not raise_error
       expect(county.subdivisions.build).to be_a(USGeo::CountySubdivision)
     end
 
     it "should have a designated market area" do
       county = USGeo::County.new
       county.geoid = "00001"
-      expect{ county.designated_market_area }.to_not raise_error
+      expect { county.designated_market_area }.to_not raise_error
       expect(county.build_designated_market_area).to be_a(USGeo::DesignatedMarketArea)
     end
   end
@@ -100,7 +91,7 @@ describe USGeo::County do
       expect(cook.land_area.round).to eq 945
       expect(cook.water_area.round).to eq 690
       expect(cook.lat.round).to eq 42
-      expect(cook.lng.round).to eq -88
+      expect(cook.lng.round).to eq(-88)
 
       clinton = USGeo::County.find("17027")
       expect(clinton.name).to eq "Clinton County"
@@ -127,5 +118,4 @@ describe USGeo::County do
       expect(county.time_zone.name).to eq "America/Chicago"
     end
   end
-
 end

@@ -19,6 +19,7 @@ namespace :us_geo do
       zcta_urban_areas: USGeo::ZctaUrbanArea,
       zcta_places: USGeo::ZctaPlace,
       urban_area_counties: USGeo::UrbanAreaCounty,
+      urban_area_places: USGeo::UrbanAreaPlace,
       place_counties: USGeo::PlaceCounty
     }
     klasses.each do |name, klass|

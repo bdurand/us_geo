@@ -1,19 +1,18 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe USGeo::MetropolitanDivision do
-
   describe "associations" do
     it "should have a core_based_statistical_area" do
       division = USGeo::MetropolitanDivision.new
       division.geoid = "00001"
-      expect{ division.core_based_statistical_area }.to_not raise_error
+      expect { division.core_based_statistical_area }.to_not raise_error
       expect(division.build_core_based_statistical_area).to be_a(USGeo::CoreBasedStatisticalArea)
     end
 
     it "should have counties" do
       division = USGeo::MetropolitanDivision.new
       division.geoid = "00001"
-      expect{ division.counties }.to_not raise_error
+      expect { division.counties }.to_not raise_error
       expect(division.counties.build).to be_a(USGeo::County)
     end
   end
@@ -37,5 +36,4 @@ describe USGeo::MetropolitanDivision do
       expect(division.water_area.round).to eq 731
     end
   end
-
 end

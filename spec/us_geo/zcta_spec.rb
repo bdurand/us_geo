@@ -1,20 +1,19 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe USGeo::Zcta do
-
   describe "associations" do
     it "should have a primary county" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
-      expect{ zcta.primary_county }.to_not raise_error
+      expect { zcta.primary_county }.to_not raise_error
       expect(zcta.build_primary_county).to be_a(USGeo::County)
     end
 
     it "should have counties" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
-      expect{ zcta.counties }.to_not raise_error
-      expect{ zcta.zcta_counties }.to_not raise_error
+      expect { zcta.counties }.to_not raise_error
+      expect { zcta.zcta_counties }.to_not raise_error
       expect(zcta.zcta_counties.build).to be_a(USGeo::ZctaCounty)
     end
 
@@ -58,19 +57,19 @@ describe USGeo::Zcta do
       expect(zcta.designated_market_area).to eq dma
     end
 
-    it "should have a primary urban area" do
+    it "should have a primary place" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
-      expect{ zcta.primary_urban_area }.to_not raise_error
-      expect(zcta.build_primary_urban_area).to be_a(USGeo::UrbanArea)
+      expect { zcta.primary_place }.to_not raise_error
+      expect(zcta.build_primary_urban_area).to be_a(USGeo::Place)
     end
 
-    it "should have urban areas" do
+    it "should have places" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
-      expect{ zcta.urban_areas }.to_not raise_error
-      expect{ zcta.zcta_urban_areas }.to_not raise_error
-      expect(zcta.zcta_urban_areas.build).to be_a(USGeo::ZctaUrbanArea)
+      expect { zcta.places }.to_not raise_error
+      expect { zcta.zcta_places }.to_not raise_error
+      expect(zcta.zcta_places.build).to be_a(USGeo::ZctaPlace)
     end
   end
 
@@ -92,8 +91,7 @@ describe USGeo::Zcta do
       expect(zcta.land_area.round(1)).to eq 2.5
       expect(zcta.water_area.round(3)).to eq 0.002
       expect(zcta.lat.round).to eq 42
-      expect(zcta.lng.round).to eq -88
+      expect(zcta.lng.round).to eq(-88)
     end
   end
-
 end

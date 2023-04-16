@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 module USGeo
-
   # County or county equivalent. Counties are composed of zero or more ZCTA's and may
   # belong to a CBSA. The county's significance withing the CBSA is indicated by the
   # central flag which indicates if it is a central or outlying county.
   class County < BaseRecord
-
-    include Demographics
+    include Population
+    include Area
 
     self.primary_key = "geoid"
 
@@ -21,15 +20,12 @@ module USGeo
     has_many :zcta_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
     has_many :zctas, through: :zcta_counties
 
-    has_many :urban_area_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
-    has_many :urban_areas, through: :urban_area_counties
-
     has_many :place_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
     has_many :places, through: :place_counties
 
     validates :geoid, length: {is: 5}
-    validates :name, length: {maximum: 60}
-    validates :short_name, length: {maximum: 30}
+    validates :name, presence: true, length: {maximum: 60}, uniqueness: {scope: :state_code}
+    validates :short_name, presence: true, length: {maximum: 30}, uniqueness: {scope: :state_code}
     validates :state_code, length: {is: 2}
     validates :fips_class_code, length: {is: 2}
     validates :metropolitan_division_geoid, length: {is: 5}, allow_nil: true
@@ -79,12 +75,11 @@ module USGeo
 
     # Return the CBSA only if it is a metropolitan area.
     def metropolitan_area
-      core_based_statistical_area if core_based_statistical_area && core_based_statistical_area.metropolitan?
+      core_based_statistical_area if core_based_statistical_area&.metropolitan?
     end
 
     def time_zone
       ActiveSupport::TimeZone[time_zone_name] if time_zone_name
     end
-
   end
 end

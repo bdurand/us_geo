@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 module USGeo
-
   # U.S. region.
   class Region < BaseRecord
+    include Population
+    include Area
 
     has_many :divisions, inverse_of: :region
     has_many :states, inverse_of: :region
 
-    validates :name, length: {maximum: 30}
+    validates :name, presence: true, length: {maximum: 30}, uniqueness: true
 
     class << self
       def load!(uri = nil)
@@ -23,6 +24,5 @@ module USGeo
         end
       end
     end
-
   end
 end

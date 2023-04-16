@@ -1,12 +1,11 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe USGeo::CombinedStatisticalArea do
-
   describe "associations" do
     it "should have core_based_statistical_areas" do
       csa = USGeo::CombinedStatisticalArea.new
       csa.geoid = "001"
-      expect{ csa.core_based_statistical_areas }.to_not raise_error
+      expect { csa.core_based_statistical_areas }.to_not raise_error
       expect(csa.core_based_statistical_areas.build).to be_a(USGeo::CoreBasedStatisticalArea)
     end
   end
@@ -15,8 +14,7 @@ describe USGeo::CombinedStatisticalArea do
     after { USGeo::CombinedStatisticalArea.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/combined_statistical_areas.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/combined_statistical_areas.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      mock_data_file_request("combined_statistical_areas.csv")
       USGeo::CombinedStatisticalArea.load!
       expect(USGeo::CombinedStatisticalArea.imported.count).to be > 150
       expect(USGeo::CombinedStatisticalArea.removed.count).to eq 0
@@ -29,5 +27,4 @@ describe USGeo::CombinedStatisticalArea do
       expect(chicagoland.water_area.round).to eq 2431
     end
   end
-
 end

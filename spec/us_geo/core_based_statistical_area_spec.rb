@@ -1,26 +1,25 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe USGeo::CoreBasedStatisticalArea do
-
   describe "associations" do
     it "should have a combined statistical area" do
       core_based_statistical_area = USGeo::CoreBasedStatisticalArea.new
       core_based_statistical_area.geoid = "00001"
-      expect{ core_based_statistical_area.combined_statistical_area }.to_not raise_error
+      expect { core_based_statistical_area.combined_statistical_area }.to_not raise_error
       expect(core_based_statistical_area.build_combined_statistical_area).to be_a(USGeo::CombinedStatisticalArea)
     end
 
     it "should have counties" do
       core_based_statistical_area = USGeo::CoreBasedStatisticalArea.new
       core_based_statistical_area.geoid = "00001"
-      expect{ core_based_statistical_area.counties }.to_not raise_error
+      expect { core_based_statistical_area.counties }.to_not raise_error
       expect(core_based_statistical_area.counties.build).to be_a(USGeo::County)
     end
 
     it "should have metropolitan divisions" do
       core_based_statistical_area = USGeo::CoreBasedStatisticalArea.new
       core_based_statistical_area.geoid = "00001"
-      expect{ core_based_statistical_area.metropolitan_divisions }.to_not raise_error
+      expect { core_based_statistical_area.metropolitan_divisions }.to_not raise_error
       expect(core_based_statistical_area.metropolitan_divisions.build).to be_a(USGeo::MetropolitanDivision)
     end
   end
@@ -44,7 +43,7 @@ describe USGeo::CoreBasedStatisticalArea do
       expect(chicagoarea.land_area.round).to eq 7197
       expect(chicagoarea.water_area.round).to eq 2382
       expect(chicagoarea.lat.round).to eq 42
-      expect(chicagoarea.lng.round).to eq -88
+      expect(chicagoarea.lng.round).to eq(-88)
 
       centralia = USGeo::CoreBasedStatisticalArea.find("16460")
       expect(centralia.population).to be < 50_000
@@ -52,5 +51,4 @@ describe USGeo::CoreBasedStatisticalArea do
       expect(centralia.name).to eq "Centralia, IL"
     end
   end
-
 end

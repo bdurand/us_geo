@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 module USGeo
-
   # Core based statistical area composed of one or more counties anchored by an urban center.
   # Includes both metropolitan (population > 50,000) and micropolitan (population > 10,000
   # but < 50,000) areas.
   class CoreBasedStatisticalArea < BaseRecord
-
-    include Demographics
+    include Population
+    include Area
 
     self.primary_key = "geoid"
     self.store_full_sti_class = false
@@ -17,7 +16,8 @@ module USGeo
     belongs_to :combined_statistical_area, foreign_key: :csa_geoid, optional: true, inverse_of: :core_based_statistical_areas
 
     validates :geoid, length: {is: 5}
-    validates :name, length: {maximum: 60}
+    validates :name, presence: true, length: {maximum: 60}, uniqueness: true
+    validates :short_name, presence: true, length: {maximum: 60}, uniqueness: true
     validates :land_area, numericality: true, presence: true
     validates :water_area, numericality: true, presence: true
     validates :population, numericality: {only_integer: true}, presence: true
@@ -26,11 +26,11 @@ module USGeo
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "core_based_statistical_areas.csv")
-        
+
         import! do
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|
-              record.type = (row["Population"].to_i >= 50_000 ? "MetropolitanArea" : "MicropolitanArea")
+              record.type = ((row["Population"].to_i >= 50_000) ? "MetropolitanArea" : "MicropolitanArea")
               record.name = row["Name"]
               record.csa_geoid = row["CSA"]
               record.population = row["Population"]
@@ -48,10 +48,9 @@ module USGeo
     def metropolitan?
       raise NotImplementedError
     end
-    
+
     def micropolitan?
       raise NotImplementedError
     end
-
   end
 end

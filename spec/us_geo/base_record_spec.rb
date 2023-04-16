@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe USGeo::BaseRecord do
-
   describe "status" do
     it "should be marked as imported" do
       record = USGeo::County.new(status: 1)
@@ -63,5 +62,4 @@ describe USGeo::BaseRecord do
       expect(manual.status).to eq USGeo::Region::STATUS_MANUAL
     end
   end
-
 end

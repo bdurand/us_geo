@@ -1,5 +1,6 @@
-class CreateStates < ActiveRecord::Migration[5.0]
+# frozen_string_literal: true
 
+class CreateStates < ActiveRecord::Migration[5.0]
   def up
     create_table :us_geo_states, id: false do |t|
       t.string :code, primary_key: true, null: false, limit: 2
@@ -16,5 +17,4 @@ class CreateStates < ActiveRecord::Migration[5.0]
   def down
     drop_table :us_geo_states
   end
-
 end

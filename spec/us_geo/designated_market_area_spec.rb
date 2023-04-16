@@ -1,12 +1,11 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe USGeo::DesignatedMarketArea do
-
   describe "associations" do
     it "should have counties" do
       division = USGeo::DesignatedMarketArea.new
       division.id = 1
-      expect{ division.counties }.to_not raise_error
+      expect { division.counties }.to_not raise_error
       expect(division.counties.build).to be_a(USGeo::County)
     end
   end
@@ -25,5 +24,4 @@ describe USGeo::DesignatedMarketArea do
       expect(dma.name).to eq "Chicago, IL"
     end
   end
-
 end

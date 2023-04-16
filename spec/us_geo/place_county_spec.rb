@@ -1,13 +1,12 @@
 require "spec_helper"
 
 describe USGeo::PlaceCounty do
-
   describe "associations" do
     it "should have a place" do
       place_county = USGeo::PlaceCounty.new
       place_county.place_geoid = "0000001"
       place_county.county_geoid = "00001"
-      expect{ place_county.place }.to_not raise_error
+      expect { place_county.place }.to_not raise_error
       expect(place_county.build_place).to be_a(USGeo::Place)
     end
 
@@ -15,7 +14,7 @@ describe USGeo::PlaceCounty do
       place_county = USGeo::PlaceCounty.new
       place_county.place_geoid = "0000001"
       place_county.county_geoid = "00001"
-      expect{ place_county.county }.to_not raise_error
+      expect { place_county.county }.to_not raise_error
       expect(place_county.build_county).to be_a(USGeo::County)
     end
   end
@@ -35,5 +34,4 @@ describe USGeo::PlaceCounty do
       expect(place_counties.collect(&:county_geoid)).to match_array(["36005", "36047", "36061", "36081", "36085"])
     end
   end
-
 end

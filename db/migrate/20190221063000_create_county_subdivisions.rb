@@ -1,5 +1,6 @@
-class CreateCountySubdivisions < ActiveRecord::Migration[5.0]
+# frozen_string_literal: true
 
+class CreateCountySubdivisions < ActiveRecord::Migration[5.0]
   def up
     create_table :us_geo_county_subdivisions, id: false do |t|
       t.string :geoid, primary_key: true, limit: 10, null: false
@@ -21,5 +22,4 @@ class CreateCountySubdivisions < ActiveRecord::Migration[5.0]
   def down
     drop_table :us_geo_county_subdivisions
   end
-
 end

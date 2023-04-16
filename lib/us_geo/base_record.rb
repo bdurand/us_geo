@@ -1,16 +1,11 @@
 # frozen_string_literal: true
 
-require "csv"
-require "open-uri"
-
 module USGeo
-
   class LoadError < StandardError
   end
 
   # Base class that all models inherit from.
   class BaseRecord < ::ActiveRecord::Base
-
     self.abstract_class = true
     self.table_name_prefix = "us_geo_"
 
@@ -24,6 +19,8 @@ module USGeo
     scope :removed, -> { where(status: STATUS_REMOVED) }
     scope :manual, -> { where(status: STATUS_MANUAL) }
     scope :not_removed, -> { where(status: [STATUS_IMPORTED, STATUS_MANUAL]) }
+
+    alias_method :active, :not_removed
 
     class << self
       def load!(location = nil, gzipped: true)
@@ -61,11 +58,13 @@ module USGeo
       end
 
       def load_data_file(location, &block)
-        file = nil
-        if location.include?(":")
-          file = URI.parse(location).open(read_timeout: 5, open_timeout: 5)
+        require "open-uri"
+        require "csv"
+
+        file = if location.include?(":")
+          URI.parse(location).open(read_timeout: 5, open_timeout: 5)
         else
-          file = File.open(location)
+          File.open(location)
         end
         begin
           rows = []
@@ -84,7 +83,7 @@ module USGeo
 
       # Convert square meters to square miles
       def area_meters_to_miles(square_meters)
-        (square_meters.to_f / (1609.34 ** 2)).round(6)
+        (square_meters.to_f / (Area::MILES_TO_METERS**2)).round(6)
       end
     end
 
@@ -99,6 +98,5 @@ module USGeo
     def manual?
       status == STATUS_MANUAL
     end
-
   end
 end

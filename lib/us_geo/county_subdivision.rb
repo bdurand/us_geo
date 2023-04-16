@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
 module USGeo
-
   # County subdivision.
   class CountySubdivision < BaseRecord
-
-    include Demographics
+    include Population
+    include Area
 
     self.primary_key = "geoid"
 
     belongs_to :county, foreign_key: :county_geoid, inverse_of: :subdivisions
 
     validates :geoid, length: {is: 10}
-    validates :name, length: {maximum: 60}
+    validates :name, presence: true, length: {maximum: 60}, uniqueness: {scope: :county_geoid}
     validates :fips_class_code, length: {is: 2}
     validates :land_area, numericality: true, allow_nil: true
     validates :water_area, numericality: true, allow_nil: true
@@ -41,6 +40,5 @@ module USGeo
         end
       end
     end
-
   end
 end

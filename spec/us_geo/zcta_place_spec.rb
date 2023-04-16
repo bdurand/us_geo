@@ -1,7 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe USGeo::ZctaPlace do
-
   describe "percentages" do
     it "should return the percentage of the population of the zcta" do
       zcta = USGeo::Zcta.new(population: 20_000)
@@ -45,7 +44,7 @@ describe USGeo::ZctaPlace do
       zcta_place = USGeo::ZctaPlace.new
       zcta_place.zipcode = "60304"
       zcta_place.place_geoid = "0000001"
-      expect{ zcta_place.zcta }.to_not raise_error
+      expect { zcta_place.zcta }.to_not raise_error
       expect(zcta_place.build_zcta).to be_a(USGeo::Zcta)
     end
 
@@ -53,7 +52,7 @@ describe USGeo::ZctaPlace do
       zcta_place = USGeo::ZctaPlace.new
       zcta_place.zipcode = "60304"
       zcta_place.place_geoid = "0000001"
-      expect{ zcta_place.place }.to_not raise_error
+      expect { zcta_place.place }.to_not raise_error
       expect(zcta_place.build_place).to be_a(USGeo::Place)
     end
   end
@@ -71,12 +70,11 @@ describe USGeo::ZctaPlace do
       zcta_places = USGeo::ZctaPlace.where(zipcode: "53211")
       expect(zcta_places.size).to eq 3
       expect(zcta_places.collect(&:place_geoid)).to match_array(["5553000", "5573725", "5586700"])
-      zcta_place = zcta_places.detect{ |z| z.place_geoid == "5553000"}
+      zcta_place = zcta_places.detect { |z| z.place_geoid == "5553000" }
       expect(zcta_place.population).to be > 15_000
       expect(zcta_place.housing_units).to be > 7000
       expect(zcta_place.land_area.round(1)).to eq 1.9
       expect(zcta_place.water_area.round(3)).to eq 0.055
     end
   end
-
 end

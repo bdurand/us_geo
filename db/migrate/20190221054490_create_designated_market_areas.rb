@@ -1,5 +1,6 @@
-class CreateDesignatedMarketAreas < ActiveRecord::Migration[5.0]
+# frozen_string_literal: true
 
+class CreateDesignatedMarketAreas < ActiveRecord::Migration[5.0]
   def up
     create_table :us_geo_designated_market_areas, id: false do |t|
       t.string :code, primary_key: true, null: false, limit: 3
@@ -12,5 +13,4 @@ class CreateDesignatedMarketAreas < ActiveRecord::Migration[5.0]
   def down
     drop_table :us_geo_designated_market_areas
   end
-
 end

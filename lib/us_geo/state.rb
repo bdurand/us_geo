@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 module USGeo
-
   # U.S. state or territory.
   class State < BaseRecord
+    include Population
+    include Area
 
     STATE_TYPE = "state"
     DISTRICT_TYPE = "district"
     TERRITORY_TYPE = "territory"
-    
+
     self.primary_key = "code"
     self.inheritance_column = :_type_disabled
 
@@ -17,15 +18,15 @@ module USGeo
     has_many :counties, foreign_key: :state_code, inverse_of: :state
     has_many :places, foreign_key: :state_code, inverse_of: :state
 
-    validates :code, length: {is: 2}
+    validates :code, length: {is: 2}, uniqueness: true
     validates :fips, length: {is: 2}
-    validates :name, length: {maximum: 30}
+    validates :name, presence: true, length: {maximum: 30}, uniqueness: true
     validates :type, inclusion: [STATE_TYPE, DISTRICT_TYPE, TERRITORY_TYPE]
 
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "states.csv")
-        
+
         import! do
           load_data_file(location) do |row|
             load_record!(code: row["Code"]) do |record|
@@ -39,18 +40,17 @@ module USGeo
         end
       end
     end
-    
+
     def state?
       type == STATE_TYPE
     end
-    
+
     def territory?
       type == TERRITORY_TYPE
     end
-    
+
     def district?
       type == DISTRICT_TYPE
     end
-
   end
 end

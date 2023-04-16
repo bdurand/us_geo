@@ -1,19 +1,18 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe USGeo::Division do
-
   describe "associations" do
     it "should have a region" do
       division = USGeo::Division.new
       division.id = 1
-      expect{ division.region }.to_not raise_error
+      expect { division.region }.to_not raise_error
       expect(division.build_region).to be_a(USGeo::Region)
     end
 
     it "should have states" do
       division = USGeo::Division.new
       division.id = 1
-      expect{ division.states }.to_not raise_error
+      expect { division.states }.to_not raise_error
       expect(division.states.build).to be_a(USGeo::State)
     end
   end
@@ -33,5 +32,4 @@ describe USGeo::Division do
       expect(division.region_id).to eq 1
     end
   end
-
 end
