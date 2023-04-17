@@ -30,8 +30,6 @@ jobs:
             appraisal: "activerecord_6.0"
           - ruby: "2.6"
             appraisal: "activerecord_5.2"
-          - ruby: "2.6"
-            appraisal: "activerecord_5.1"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
