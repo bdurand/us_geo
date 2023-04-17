@@ -44,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The USGeo::Demographics module has been removed. The functionality is split into USGeo::Area and USGeo::Population.
 
+- Dropped support for ActiveRecord 5.0 and Ruby 2.5.
+
 ### Fixed
 
 - Fixed arithmetic for converting area from square miles to kilometers.
