@@ -39,7 +39,7 @@ module USGeoData
   # Relationship files
   ZCTA_COUNTY_REL_FILE = File.join("relationships", "tab20_zcta520_county20_natl.txt")
   ZCTA_PLACE_REL_FILE = File.join("relationships", "tab20_zcta520_place20_natl.txt")
-  ZCTA_ZCTA_REL_FILE = File.join("relationships", "tab20_zcta510_zcta520_natl.txt")
+  ZCTA_10_ZCTA_20_REL_FILE = File.join("relationships", "tab20_zcta510_zcta520_natl.txt")
   PLACE_COUNTY_REL_FILE = File.join("relationships", "tab20_zcta520_county20_natl.txt")
   CBSA_DELINEATION_FILE = File.join("relationships", "list1_Mar_2020.csv")
 
@@ -107,6 +107,7 @@ module USGeoData
         open_file("zctas.csv") { |file| zctas.dump_csv(file) }
         open_file("zcta_counties.csv") { |file| zctas.dump_counties_csv(file) }
         open_file("zcta_places.csv") { |file| zctas.dump_places_csv(file) }
+        open_file("zcta_mappings.csv") { |file| zctas.dump_zcta_mappings_csv(file) }
       end
 
       if files.empty? || files.include?(:places)

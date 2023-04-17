@@ -19,6 +19,10 @@ module USGeo
     self.primary_key = "zipcode"
     self.ignored_columns = %w[primary_urban_area_geoid]
 
+    # This scope will search for ZCTA's via the ZCTAMappings table. This is useful
+    # when you have a retired ZIP code and want to find the current ZCTA for that ZIP code.
+    scope :for_zipcode, ->(zipcode) { left_outer_joins(:zcta_mappings).where(ZctaMapping.table_name => {zipcode: zipcode}).or(where(zipcode: zipcode)).distinct }
+
     has_many :zcta_counties, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
     has_many :counties, through: :zcta_counties
     belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
@@ -26,6 +30,8 @@ module USGeo
     has_many :zcta_places, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
     has_many :places, through: :zcta_places
     belongs_to :primary_place, foreign_key: :primary_place_geoid, class_name: "USGeo::Place"
+
+    has_many :zcta_mappings, foreign_key: :zcta_zipcode, inverse_of: :zcta, dependent: :destroy
 
     validates :zipcode, length: {is: 5}
     validates :land_area, numericality: true, presence: true

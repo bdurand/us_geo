@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe USGeo::Zcta do
@@ -70,6 +72,65 @@ describe USGeo::Zcta do
       expect { zcta.places }.to_not raise_error
       expect { zcta.zcta_places }.to_not raise_error
       expect(zcta.zcta_places.build).to be_a(USGeo::ZctaPlace)
+    end
+  end
+
+  describe "for_zipecode" do
+    after { USGeo::Zcta.delete_all }
+
+    it "should return a zcta with an active ZIP code" do
+      USGeo::Zcta.create!(
+        zipcode: "53211",
+        primary_county_geoid: "55079",
+        land_area: 4.5,
+        water_area: 0.2,
+        lat: 43.1,
+        lng: -87.9,
+        population: 17000,
+        housing_units: 8000
+      )
+      USGeo::Zcta.create!(
+        zipcode: "60304",
+        primary_county_geoid: "17031",
+        land_area: 4.5,
+        water_area: 0.2,
+        lat: 43.1,
+        lng: -87.9,
+        population: 17000,
+        housing_units: 8000
+      )
+
+      expect(USGeo::Zcta.for_zipcode("53211").collect(&:zipcode)).to eq ["53211"]
+      expect(USGeo::Zcta.for_zipcode("60304").collect(&:zipcode)).to eq ["60304"]
+    end
+
+    it "should return a zcta mapped from an inactive ZIP code" do
+      USGeo::Zcta.create!(
+        zipcode: "53211",
+        primary_county_geoid: "55079",
+        land_area: 4.5,
+        water_area: 0.2,
+        lat: 43.1,
+        lng: -87.9,
+        population: 17000,
+        housing_units: 8000
+      )
+      USGeo::Zcta.create!(
+        zipcode: "60304",
+        primary_county_geoid: "17031",
+        land_area: 4.5,
+        water_area: 0.2,
+        lat: 43.1,
+        lng: -87.9,
+        population: 17000,
+        housing_units: 8000
+      )
+      USGeo::ZctaMapping.create!(zipcode: "53211", zcta_zipcode: "53211")
+      USGeo::ZctaMapping.create!(zipcode: "60301", zcta_zipcode: "60304")
+
+      expect(USGeo::Zcta.for_zipcode("53211").collect(&:zipcode)).to eq ["53211"]
+      expect(USGeo::Zcta.for_zipcode("60304").collect(&:zipcode)).to eq ["60304"]
+      expect(USGeo::Zcta.for_zipcode("60301").collect(&:zipcode)).to eq ["60304"]
     end
   end
 

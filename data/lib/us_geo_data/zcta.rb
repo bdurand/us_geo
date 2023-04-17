@@ -55,6 +55,15 @@ module USGeoData
       output
     end
 
+    def dump_zcta_mappings_csv(output)
+      csv = CSV.new(output)
+      csv << ["ZIP Code", "Active ZCTA5"]
+      zcta_10_to_20_mappings.each do |old_zcta, new_zcta|
+        csv << [old_zcta, new_zcta]
+      end
+      output
+    end
+
     def zcta_data
       unless defined?(@zcta_data)
         data = {}
@@ -78,6 +87,33 @@ module USGeoData
       @zcta_data
     end
 
+    def zcta_10_to_20_mappings
+      mapping = {}
+      foreach(data_file(USGeoData::ZCTA_10_ZCTA_20_REL_FILE), col_sep: "|") do |row|
+        old_geoid = row["GEOID_ZCTA5_10"]
+        new_geoid = row["GEOID_ZCTA5_20"]
+        next if old_geoid.nil? || new_geoid.nil? || old_geoid == new_geoid || zcta_data[old_geoid]
+
+        old_area = row["AREALAND_ZCTA5_10"].to_f
+        overlap_area = row["AREALAND_PART"].to_f
+        next if old_area == 0 || overlap_area == 0
+
+        overlaps = mapping[old_geoid]
+        unless overlaps
+          overlaps = {}
+          mapping[old_geoid] = overlaps
+        end
+        overlaps[new_geoid] = overlap_area / old_area
+      end
+
+      single_mappings = {}
+      mapping.each do |old_geoid, overlaps|
+        new_geoid = overlaps.max_by { |_, overlap| overlap }.first
+        single_mappings[old_geoid] = new_geoid
+      end
+      single_mappings
+    end
+
     private
 
     def add_demographics(data)
@@ -93,7 +129,7 @@ module USGeoData
     end
 
     def add_counties(data)
-      foreach(data_file(USGeoData::ZCTA_COUNTY_REL_FILE), col_sep: "|", encoding: "iso8859-1") do |row|
+      foreach(data_file(USGeoData::ZCTA_COUNTY_REL_FILE), col_sep: "|") do |row|
         zcta5 = row["GEOID_ZCTA5_20"]
         county_geoid = row["GEOID_COUNTY_20"]
         county_land_area = row["AREALAND_PART"].to_f * SQUARE_METERS_TO_MILES
@@ -110,7 +146,7 @@ module USGeoData
     end
 
     def add_places(data)
-      foreach(data_file(USGeoData::ZCTA_PLACE_REL_FILE), col_sep: "|", encoding: "iso8859-1") do |row|
+      foreach(data_file(USGeoData::ZCTA_PLACE_REL_FILE), col_sep: "|") do |row|
         zcta5 = row["GEOID_ZCTA5_20"]
         place_geoid = row["GEOID_PLACE_20"]
         place_land_area = row["AREALAND_PART"].to_f * SQUARE_METERS_TO_MILES

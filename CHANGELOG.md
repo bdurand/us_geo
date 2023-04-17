@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - ZCTA's are now associated with a primary place defined as the place with the most overlapping land area with the ZCTA.
 
+- 2010 ZCTAs can still be used to lookup the active ZCTA through the ZCTAMapping model.
+
 - Core Based Statistical Areas now have a short name which is the name of just the most prominant place in the area.
 
 - All Geographic entity models now have land area, water area, population, and housing units columns.
