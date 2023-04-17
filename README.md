@@ -38,6 +38,7 @@ The data set currently contains
 In addition, there entity to entity mapping tables:
 
 * 46,953 ZCTA to County
+* 109549 ZCTA to County Subdivision
 * 53,131 ZCTA to Place
 * 33,084 Place to County
 
