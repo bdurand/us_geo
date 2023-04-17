@@ -80,14 +80,23 @@ module USGeo
       end
     end
 
+    # Return true if the record was imported from the data source distributed with the gem.
+    #
+    # @return [Boolean]
     def imported?
       status == STATUS_IMPORTED
     end
 
+    # Return true if the record was removed from the data source distributed with the gem.
+    #
+    # @return [Boolean]
     def removed?
       status == STATUS_REMOVED
     end
 
+    # Return true if the record was manually added to the database.
+    #
+    # @return [Boolean]
     def manual?
       status == STATUS_MANUAL
     end

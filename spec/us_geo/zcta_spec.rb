@@ -59,6 +59,21 @@ describe USGeo::Zcta do
       expect(zcta.designated_market_area).to eq dma
     end
 
+    it "should have a primary county subdivision" do
+      zcta = USGeo::Zcta.new
+      zcta.zipcode = "60304"
+      expect { zcta.primary_county_subdivision }.to_not raise_error
+      expect(zcta.build_primary_county_subdivision).to be_a(USGeo::CountySubdivision)
+    end
+
+    it "should have county subdivisons" do
+      zcta = USGeo::Zcta.new
+      zcta.zipcode = "60304"
+      expect { zcta.county_subdivisions }.to_not raise_error
+      expect { zcta.zcta_county_subdivisions }.to_not raise_error
+      expect(zcta.zcta_county_subdivisions.build).to be_a(USGeo::ZctaCountySubdivision)
+    end
+
     it "should have a primary place" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
@@ -146,6 +161,7 @@ describe USGeo::Zcta do
 
       zcta = USGeo::Zcta.find("53211")
       expect(zcta.primary_county_geoid).to eq "55079"
+      expect(zcta.primary_county_subdivision_geoid).to eq "5507953000"
       expect(zcta.primary_place_geoid).to eq "5553000"
       expect(zcta.population).to be_between(30_000, 40_000)
       expect(zcta.housing_units).to be_between(15_000, 20_000)

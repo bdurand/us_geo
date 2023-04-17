@@ -10,6 +10,14 @@ describe USGeo::CountySubdivision do
       expect { subdivision.county }.to_not raise_error
       expect(subdivision.build_county).to be_a(USGeo::County)
     end
+
+    it "should have zctas" do
+      subdivision = USGeo::CountySubdivision.new
+      subdivision.geoid = "0000000001"
+      expect { subdivision.zctas }.to_not raise_error
+      expect { subdivision.zcta_county_subdivisions }.to_not raise_error
+      expect(subdivision.zcta_county_subdivisions.build).to be_a(USGeo::ZctaCountySubdivision)
+    end
   end
 
   describe "load" do

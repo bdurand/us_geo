@@ -89,14 +89,13 @@ A place is an organized area within a state usually corresponding to a city, tow
 
 Approximate equivalent to U.S. Postal Service ZIP codes, but designed for geographic and demographic purposes rather than mail routing. Not all postal ZIP codes are mapped to ZCTAs (i.e. ZIP codes mapped to a single building) and the borders of ZCTAs smooth out some of the irregularities of ZIP codes. Otherwise, they are mostly interchangeable.
 
-ZCTAs can span counties and places. The primary county and primary place will be the ones that contain most of the ZCTA's land area.
+ZCTAs can span counties, county subdivisions, and places. A primary county, county subdivision, and place are identified for ZCTA's. This will be the one that includes most of the ZCTA's land area.
 
 ZCTA data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
 
 ### Entity Relationships
 
-[![](https://mermaid.ink/img/pako:eNqFk0tugzAQQK9ieR0ugKJKbekyUlV2EZuJPaFWjR3Z40pRmrsX81GBOsDKvPnYfgM3LqxEnnOhwftCQe2gqQxrn46wD6yVNZWZskJ9K_-PlgSEbM5ebTB0TbEynGSyzVEQzMm7BoHLHg5fwKOMmypPSoB-dgjLrOakzEbSAcnZi9WKwCSiSqxFJ7VpKQV6VZtWjDyA-0Ka9ujVsix7mhiNgfGtC3Vae94bjnD0Gmm_nuCE2iiV7ZeVf3RQHGG3nG3S86Untv_JspVBdDULe5s1w_0T0hInejDeIXPtXI-iG9eezWU-gpV-6Y-E73iDrgEl25_vFttUnD6xwYrn7VLiGYKmilfm3qaGi2x1vElF1vH8DNrjjkMgW16N4Dm5gGPS8A8PWfdfYjRVbQ?type=png)](https://mermaid.live/edit#pako:eNqFk0tugzAQQK9ieR0ugKJKbekyUlV2EZuJPaFWjR3Z40pRmrsX81GBOsDKvPnYfgM3LqxEnnOhwftCQe2gqQxrn46wD6yVNZWZskJ9K_-PlgSEbM5ebTB0TbEynGSyzVEQzMm7BoHLHg5fwKOMmypPSoB-dgjLrOakzEbSAcnZi9WKwCSiSqxFJ7VpKQV6VZtWjDyA-0Ka9ujVsix7mhiNgfGtC3Vae94bjnD0Gmm_nuCE2iiV7ZeVf3RQHGG3nG3S86Untv_JspVBdDULe5s1w_0T0hInejDeIXPtXI-iG9eezWU-gpV-6Y-E73iDrgEl25_vFttUnD6xwYrn7VLiGYKmilfm3qaGi2x1vElF1vH8DNrjjkMgW16N4Dm5gGPS8A8PWfdfYjRVbQ)
-
+[![](https://mermaid.ink/img/pako:eNqFU8FuwyAM_RXEufmBqJq0LTtWmpZblYsLbmaNQAXOpKrrvy8h6ZRkNOVknp8f5hkuUjmNMpfKQAgFQe2hqazoVkTEB9bkbGWnWEHfFP6hJQOjmGOvrrV8TmFle9BJmb1imCPvBhQuNTy-QEDdH0qBSYF59ghLVnMg-4C0Q_bu5Awx2ESW1Fp2Ups2pcBAte2M0TvwX8hTjf6mYptlT382pdCZUXPCaEwPxlBMtQZ8GF9MFDOV2y6m4ugGfJjisqkhFne6GjhLI8X2J8tWJhVrFvY-rBmbT7iauPyd-Y_Mtb7uZROHpN5Awr8VvfQrkhvZoG-AdPc7L71MJfkTG6xk3oUaj9AarmRlrx21PenOjjdN7LzMj2ACbiS07MqzVTJn3-KNNH7ykXX9BbKkYG4?type=png)](https://mermaid.live/edit#pako:eNqFU8FuwyAM_RXEufmBqJq0LTtWmpZblYsLbmaNQAXOpKrrvy8h6ZRkNOVknp8f5hkuUjmNMpfKQAgFQe2hqazoVkTEB9bkbGWnWEHfFP6hJQOjmGOvrrV8TmFle9BJmb1imCPvBhQuNTy-QEDdH0qBSYF59ghLVnMg-4C0Q_bu5Awx2ESW1Fp2Ups2pcBAte2M0TvwX8hTjf6mYptlT382pdCZUXPCaEwPxlBMtQZ8GF9MFDOV2y6m4ugGfJjisqkhFne6GjhLI8X2J8tWJhVrFvY-rBmbT7iauPyd-Y_Mtb7uZROHpN5Awr8VvfQrkhvZoG-AdPc7L71MJfkTG6xk3oUaj9AarmRlrx21PenOjjdN7LzMj2ACbiS07MqzVTJn3-KNNH7ykXX9BbKkYG4)
 ## Usage
 
 First add to you Gemfile:
@@ -131,6 +130,7 @@ rake us_geo:import:places
 rake us_geo:import:zctas
 rake us_geo:import:place_counties
 rake us_geo:import:zcta_counties
+rake us_geo:import:zcta_county_subdivisions
 rake us_geo:import:zcta_places
 ```
 

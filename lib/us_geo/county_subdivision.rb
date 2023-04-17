@@ -10,6 +10,9 @@ module USGeo
 
     belongs_to :county, foreign_key: :county_geoid, inverse_of: :subdivisions
 
+    has_many :zcta_county_subdivisions, foreign_key: :county_subdivision_geoid, inverse_of: :county_subdivision, dependent: :destroy
+    has_many :zctas, through: :zcta_county_subdivisions
+
     validates :geoid, length: {is: 10}
     validates :name, presence: true, length: {maximum: 60}, uniqueness: {scope: :county_geoid}
     validates :fips_class_code, length: {is: 2}

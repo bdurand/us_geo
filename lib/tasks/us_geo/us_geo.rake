@@ -12,14 +12,11 @@ namespace :us_geo do
       metropolitan_divisions: USGeo::MetropolitanDivision,
       counties: USGeo::County,
       county_subdivisions: USGeo::CountySubdivision,
-      urban_areas: USGeo::UrbanArea,
       places: USGeo::Place,
       zctas: USGeo::Zcta,
       zcta_counties: USGeo::ZctaCounty,
-      zcta_urban_areas: USGeo::ZctaUrbanArea,
+      zcta_county_subdivisions: USGeo::ZctaCountySubdivision,
       zcta_places: USGeo::ZctaPlace,
-      urban_area_counties: USGeo::UrbanAreaCounty,
-      urban_area_places: USGeo::UrbanAreaPlace,
       place_counties: USGeo::PlaceCounty
     }
     klasses.each do |name, klass|

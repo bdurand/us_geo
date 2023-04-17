@@ -38,6 +38,7 @@ module USGeoData
 
   # Relationship files
   ZCTA_COUNTY_REL_FILE = File.join("relationships", "tab20_zcta520_county20_natl.txt")
+  ZCTA_COUNTY_SUBDIVISION_REL_FILE = File.join("relationships", "tab20_zcta520_cousub20_natl.txt")
   ZCTA_PLACE_REL_FILE = File.join("relationships", "tab20_zcta520_place20_natl.txt")
   ZCTA_10_ZCTA_20_REL_FILE = File.join("relationships", "tab20_zcta510_zcta520_natl.txt")
   PLACE_COUNTY_REL_FILE = File.join("relationships", "tab20_zcta520_county20_natl.txt")
@@ -106,6 +107,7 @@ module USGeoData
         zctas = Zcta.new
         open_file("zctas.csv") { |file| zctas.dump_csv(file) }
         open_file("zcta_counties.csv") { |file| zctas.dump_counties_csv(file) }
+        open_file("zcta_county_subdivisions.csv") { |file| zctas.dump_county_subdivisions_csv(file) }
         open_file("zcta_places.csv") { |file| zctas.dump_places_csv(file) }
         open_file("zcta_mappings.csv") { |file| zctas.dump_zcta_mappings_csv(file) }
       end

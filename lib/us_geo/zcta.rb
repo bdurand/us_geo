@@ -27,6 +27,10 @@ module USGeo
     has_many :counties, through: :zcta_counties
     belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
 
+    has_many :zcta_county_subdivisions, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
+    has_many :county_subdivisions, through: :zcta_county_subdivisions
+    belongs_to :primary_county_subdivision, foreign_key: :primary_county_subdivision_geoid, class_name: "USGeo::CountySubdivision"
+
     has_many :zcta_places, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
     has_many :places, through: :zcta_places
     belongs_to :primary_place, foreign_key: :primary_place_geoid, class_name: "USGeo::Place"
@@ -39,7 +43,13 @@ module USGeo
     validates :population, numericality: {only_integer: true}, presence: true
     validates :housing_units, numericality: {only_integer: true}, presence: true
 
-    delegate :core_based_statistical_area, :designated_market_area, :state, :state_code, :time_zone, to: :primary_county, allow_nil: true
+    delegate :core_based_statistical_area,
+      :designated_market_area,
+      :state,
+      :state_code,
+      :time_zone,
+      to: :primary_county,
+      allow_nil: true
 
     class << self
       def load!(uri = nil)
@@ -49,6 +59,7 @@ module USGeo
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"]) do |record|
               record.primary_county_geoid = row["Primary County"]
+              record.primary_county_subdivision_geoid = row["Primary County Subdivision"]
               record.primary_place_geoid = row["Primary Place"]
               record.population = row["Population"]
               record.housing_units = row["Housing Units"]
