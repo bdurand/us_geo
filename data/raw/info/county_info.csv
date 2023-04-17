@@ -2408,8 +2408,8 @@ GEOID,Short Name,Full Name,State,DMA Code,Time Zone,FIPS Class
 02016,Aleutians West,Aleutians West Census Area,AK,,America/Adak,H5
 02050,Bethel,Bethel Census Area,AK,,America/Anchorage,H5
 02060,Bristol Bay,Bristol Bay Borough,AK,,America/Anchorage,H1
-02063,Chugach Census Area,AK,,America/Anchorage,H5
-02066,Copper River Census Area,AK,,America/Anchorage,H5
+02063,Chugach Census Area,Chugach Census Area,AK,,America/Anchorage,H5
+02066,Copper River Census Area,Copper River Census Area,AK,,America/Anchorage,H5
 02070,Dillingham,Dillingham Census Area,AK,,America/Anchorage,H5
 02090,Fairbanks North Star,Fairbanks North Star Borough,AK,745,America/Anchorage,H1
 02100,Haines,Haines Borough,AK,747,America/Juneau,H1

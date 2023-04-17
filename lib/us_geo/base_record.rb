@@ -20,8 +20,6 @@ module USGeo
     scope :manual, -> { where(status: STATUS_MANUAL) }
     scope :not_removed, -> { where(status: [STATUS_IMPORTED, STATUS_MANUAL]) }
 
-    alias_method :active, :not_removed
-
     class << self
       def load!(location = nil, gzipped: true)
         raise NotImplementedError
@@ -79,11 +77,6 @@ module USGeo
         ensure
           file.close if file && !file.closed?
         end
-      end
-
-      # Convert square meters to square miles
-      def area_meters_to_miles(square_meters)
-        (square_meters.to_f / (Area::MILES_TO_METERS**2)).round(6)
       end
     end
 

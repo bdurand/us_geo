@@ -7,7 +7,7 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["GEOID", "GNIS ID", "Name", "County GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
-      subdivision_data.each_value do |data|
+      subdivision_data.each do |geoid, data|
         unless data[:gnis_id] && data[:fips_class]
           puts "Missing data for subdivision #{data[:geoid]} #{data[:name]}: #{data.inspect}"
           next
@@ -38,12 +38,11 @@ module USGeoData
           geoid = row["GEOID"]
           gnis_id = row["ANSICODE"].gsub(/\A0+/, "").to_i
           data = gnis_subdivisions[gnis_id]
-          data ||= {name: row["NAME"], county_geoid: geoid[0, 5], gnis_id: gnis_id}
+          next unless data && geoid.start_with?(data[:county_geoid])
+
           data[:geoid] = geoid
           data[:land_area] = row["ALAND_SQMI"]&.to_f
           data[:water_area] = row["AWATER_SQMI"]&.to_f
-          data[:lat] ||= row["INTPTLAT"]&.to_f
-          data[:lng] ||= row["INTPTLONG"]&.to_f
           subdivisions[geoid] = data
         end
 

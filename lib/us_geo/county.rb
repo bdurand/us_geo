@@ -55,8 +55,8 @@ module USGeo
               record.central = (row["Central"] == "T")
               record.population = row["Population"]
               record.housing_units = row["Housing Units"]
-              record.land_area = area_meters_to_miles(row["Land Area"])
-              record.water_area = area_meters_to_miles(row["Water Area"])
+              record.land_area = row["Land Area"]
+              record.water_area = row["Water Area"]
               record.lat = row["Latitude"]
               record.lng = row["Longitude"]
             end

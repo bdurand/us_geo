@@ -68,8 +68,8 @@ describe USGeo::County do
     after { USGeo::County.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/counties.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/counties.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      mock_data_file_request("counties.csv")
+
       USGeo::County.load!
       expect(USGeo::County.imported.count).to be > 3000
       expect(USGeo::County.removed.count).to eq 0
@@ -86,12 +86,12 @@ describe USGeo::County do
       expect(cook.fips_class_code).to eq "H1"
       expect(cook.time_zone_name).to eq "America/Chicago"
       expect(cook.central?).to eq true
-      expect(cook.population).to be > 5_000_000
-      expect(cook.housing_units).to be > 2_000_000
-      expect(cook.land_area.round).to eq 945
-      expect(cook.water_area.round).to eq 690
-      expect(cook.lat.round).to eq 42
-      expect(cook.lng.round).to eq(-88)
+      expect(cook.population).to be_between(5_000_000, 6_000_000)
+      expect(cook.housing_units).to be_between(2_000_000, 3_000_000)
+      expect(cook.land_area.round).to be_between(900, 1000)
+      expect(cook.water_area.round).to be_between(600, 800)
+      expect(cook.lat.round(1)).to eq 41.9
+      expect(cook.lng.round(1)).to eq(-87.6)
 
       clinton = USGeo::County.find("17027")
       expect(clinton.name).to eq "Clinton County"

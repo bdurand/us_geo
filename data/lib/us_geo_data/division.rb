@@ -24,9 +24,17 @@ module USGeoData
 
     def dump_csv(output)
       CSV.new(output).tap do |csv|
-        csv << ["ID", "Name", "Population", "Housing Units", "Land Area", "Water Area"]
+        csv << ["ID", "Name", "Region ID", "Population", "Housing Units", "Land Area", "Water Area"]
         division_data.each_value do |data|
-          csv << [data[:id], data[:name], data[:population], data[:housing_units], data[:land_area].round(3), data[:water_area].round(3)]
+          csv << [
+            data[:id],
+            data[:name],
+            data[:region_id],
+            data[:population],
+            data[:housing_units],
+            data[:land_area].round(3),
+            data[:water_area].round(3)
+          ]
         end
       end
       output
@@ -37,7 +45,15 @@ module USGeoData
         data = {}
         foreach(data_file(USGeoData::DIVISIONS_FILE)) do |row|
           id = row["ID"].to_i
-          data[id] = {id: id, name: row["Name"], population: 0, housing_units: 0, land_area: 0.0, water_area: 0.0}
+          data[id] = {
+            id: id,
+            name: row["Name"],
+            region_id: row["Region ID"].to_i,
+            population: 0,
+            housing_units: 0,
+            land_area: 0.0,
+            water_area: 0.0
+          }
         end
 
         add_state_values(data)

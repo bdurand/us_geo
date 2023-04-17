@@ -2,20 +2,20 @@
 
 require "csv"
 
-load File.join(__dir__, "us_geo_data", "processor.rb")
+require_relative "us_geo_data/processor"
 
-load File.join(__dir__, "us_geo_data", "combined_statistical_area.rb")
-load File.join(__dir__, "us_geo_data", "core_based_statistical_area.rb")
-load File.join(__dir__, "us_geo_data", "county_subdivision.rb")
-load File.join(__dir__, "us_geo_data", "county.rb")
-load File.join(__dir__, "us_geo_data", "division.rb")
-load File.join(__dir__, "us_geo_data", "dma.rb")
-load File.join(__dir__, "us_geo_data", "gnis.rb")
-load File.join(__dir__, "us_geo_data", "metropolitan_division.rb")
-load File.join(__dir__, "us_geo_data", "place.rb")
-load File.join(__dir__, "us_geo_data", "region.rb")
-load File.join(__dir__, "us_geo_data", "state.rb")
-load File.join(__dir__, "us_geo_data", "zcta.rb")
+require_relative "us_geo_data/combined_statistical_area"
+require_relative "us_geo_data/core_based_statistical_area"
+require_relative "us_geo_data/county_subdivision"
+require_relative "us_geo_data/county"
+require_relative "us_geo_data/division"
+require_relative "us_geo_data/dma"
+require_relative "us_geo_data/gnis"
+require_relative "us_geo_data/metropolitan_division"
+require_relative "us_geo_data/place"
+require_relative "us_geo_data/region"
+require_relative "us_geo_data/state"
+require_relative "us_geo_data/zcta"
 
 module USGeoData
   SQUARE_METERS_TO_MILES = 0.0000003861021585424458
@@ -31,7 +31,7 @@ module USGeoData
   # Gazetteer files
   CBSA_GAZETTEER_FILE = File.join("gazetteer", "2021_Gaz_cbsa_national.txt")
   ZCTA_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_zcta_national.txt")
-  COUNTY_GAZETTEER_FILE = File.join("gazetteer",  "2022_Gaz_counties_national.txt")
+  COUNTY_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_counties_national.txt")
   OLD_COUNTY_GAZETTEER_FILE = File.join("gazetteer", "2018_Gaz_counties_national.txt")
   SUBDIVISION_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_cousubs_national.txt")
   PLACE_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_place_national.txt")
@@ -61,31 +61,59 @@ module USGeoData
       Gnis.new.preprocess
     end
 
-    def dump_all
+    def dump_all(files)
+      files = Array(files)
       counties = County.new
       states = State.new(counties: counties)
 
-      open_file("counties.csv") { |file| counties.dump_csv(file) }
+      if files.empty? || files.include?(:counties)
+        open_file("counties.csv") { |file| counties.dump_csv(file) }
+      end
 
-      open_file("states.csv") { |file| states.dump_csv(file) }
+      if files.empty? || files.include?(:states)
+        open_file("states.csv") { |file| states.dump_csv(file) }
+      end
 
-      open_file("regions.csv") { |file| Region.new(states: states).dump_csv(file) }
-      open_file("divisions.csv") { |file| Division.new(states: states).dump_csv(file) }
-      open_file("dmas.csv") { |file| Dma.new(counties: counties).dump_csv(file) }
-      open_file("metropolitan_divisions.csv") { |file| MetropolitanDivision.new(counties: counties).dump_csv(file) }
-      open_file("core_based_statistical_areas.csv") { |file| CoreBasedStatisticalArea.new(counties: counties).dump_csv(file) }
-      open_file("combined_statistical_areas.csv") { |file| CombinedStatisticalArea.new(counties: counties).dump_csv(file) }
+      if files.empty? || files.include?(:regions)
+        open_file("regions.csv") { |file| Region.new(states: states).dump_csv(file) }
+      end
 
-      open_file("county_subdivisions.csv") { |file| CountySubdivision.new.dump_csv(file) }
+      if files.empty? || files.include?(:divisions)
+        open_file("divisions.csv") { |file| Division.new(states: states).dump_csv(file) }
+      end
 
-      zctas = Zcta.new
-      open_file("zctas.csv") { |file| zctas.dump_csv(file) }
-      open_file("zcta_counties.csv") { |file| zctas.dump_counties_csv(file) }
-      open_file("zcta_places.csv") { |file| zctas.dump_places_csv(file) }
+      if files.empty? || files.include?(:dma)
+        open_file("dmas.csv") { |file| Dma.new(counties: counties).dump_csv(file) }
+      end
 
-      places = Place.new
-      open_file("places.csv") { |file| places.dump_csv(file) }
-      open_file("place_counties.csv") { |file| places.dump_counties_csv(file) }
+      if files.empty? || files.include?(:metropolitan_divisions)
+        open_file("metropolitan_divisions.csv") { |file| MetropolitanDivision.new(counties: counties).dump_csv(file) }
+      end
+
+      if files.empty? || files.include?(:cbsa)
+        open_file("core_based_statistical_areas.csv") { |file| CoreBasedStatisticalArea.new(counties: counties).dump_csv(file) }
+      end
+
+      if files.empty? || files.include?(:csa)
+        open_file("combined_statistical_areas.csv") { |file| CombinedStatisticalArea.new(counties: counties).dump_csv(file) }
+      end
+
+      if files.empty? || files.include?(:county_subdivisions)
+        open_file("county_subdivisions.csv") { |file| CountySubdivision.new.dump_csv(file) }
+      end
+
+      if files.empty? || files.include?(:zcta)
+        zctas = Zcta.new
+        open_file("zctas.csv") { |file| zctas.dump_csv(file) }
+        open_file("zcta_counties.csv") { |file| zctas.dump_counties_csv(file) }
+        open_file("zcta_places.csv") { |file| zctas.dump_places_csv(file) }
+      end
+
+      if files.empty? || files.include?(:places)
+        places = Place.new
+        open_file("places.csv") { |file| places.dump_csv(file) }
+        open_file("place_counties.csv") { |file| places.dump_counties_csv(file) }
+      end
     end
 
     private

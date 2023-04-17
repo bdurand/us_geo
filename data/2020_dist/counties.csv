@@ -3181,8 +3181,8 @@ GEOID,GNIS ID,Name,Short Name,State,CBSA,Metropolitan Division,Central,DMA,Time 
 02105,2371430,Hoonah-Angoon Census Area,Hoonah-Angoon (CA),AK,,,F,,America/Juneau,H5,2327,1699,6555.258,3013.484,58.2091447,-135.5590827
 02275,2516402,Wrangell City and Borough,Wrangell,AK,,,F,,America/Juneau,H6,2162,1294,2555.994,920.614,56.2936265,-132.1292249
 02195,2516404,Petersburg Borough,Petersburg Borough,AK,,,F,,America/Juneau,H1,3368,1749,2900.656,921.181,57.1140131,-133.0024593
-02063,2804400,Chugach Census Area,Chugach Census Area,AZ,,,F,America/Anchorage,H5,H5,7015,3626,9529.847,5613.504,60.6100835,-146.1305415
-02066,2804401,Copper River Census Area,Copper River,AK,,,F,America/Anchorage,H5,H5,2635,2676,24692.136,470.052,61.8834538,-143.9681046
+02063,2804400,Chugach Census Area,Chugach Census Area,AZ,,,F,,America/Anchorage,H5,7015,3626,9529.847,5613.504,60.6100835,-146.1305415
+02066,2804401,Copper River Census Area,Copper River,AK,,,F,,America/Anchorage,H5,2635,2676,24692.136,470.052,61.8834538,-143.9681046
 29510,767557,City of Saint Louis,Saint Louis City,MO,41180,,T,609,America/Chicago,C7,302787,173830,61.72,4.454,38.635699,-90.244582
 32510,863219,Carson City,Carson City City,NV,16180,,T,811,America/Los_Angeles,C7,57957,24358,144.534,12.585,39.15306,-119.747368
 51510,1498415,City of Alexandria,Alexandria City,VA,47900,47894,T,511,America/New_York,C7,158185,80040,14.935,0.413,38.819251,-77.08367

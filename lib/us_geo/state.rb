@@ -35,6 +35,10 @@ module USGeo
               record.fips = row["FIPS"]
               record.region_id = row["Region ID"]
               record.division_id = row["Division ID"]
+              record.population = row["Population"]
+              record.housing_units = row["Housing Units"]
+              record.land_area = row["Land Area"]
+              record.water_area = row["Water Area"]
             end
           end
         end

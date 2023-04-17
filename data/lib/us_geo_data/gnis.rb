@@ -65,6 +65,7 @@ module USGeoData
           county_geoid = "#{state_fips}#{row["COUNTY_NUMERIC"]}"
           lat = row["PRIMARY_LATITUDE"]
           lng = row["PRIMARY_LONGITUDE"]
+          county_num = row["COUNTY_SEQUENCE"].to_i
 
           if county?(fips_class_code)
             county_name = row["COUNTY_NAME"].to_s
@@ -72,13 +73,12 @@ module USGeoData
             counties_csv << [gnis_id, county_geoid, name, county_name, state_code, fips_class_code, lat, lng]
           end
 
-          if subdivision?(fips_class_code)
+          if subdivision?(fips_class_code) && county_num == 1
             geoid = "#{state_fips}#{row["COUNTY_NUMERIC"]}#{row["CENSUS_CODE"]}"
             subdivisions_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
           end
 
           if place?(fips_class_code)
-            county_num = row["COUNTY_SEQUENCE"].to_i
             if county_num == 1
               places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
             end

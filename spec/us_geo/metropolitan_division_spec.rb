@@ -21,8 +21,8 @@ describe USGeo::MetropolitanDivision do
     after { USGeo::MetropolitanDivision.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/metropolitan_divisions.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/metropolitan_divisions.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      mock_data_file_request("metropolitan_divisions.csv")
+
       USGeo::MetropolitanDivision.load!
       expect(USGeo::MetropolitanDivision.imported.count).to be > 25
       expect(USGeo::MetropolitanDivision.removed.count).to eq 0
@@ -30,10 +30,10 @@ describe USGeo::MetropolitanDivision do
       division = USGeo::MetropolitanDivision.find("16984")
       expect(division.name).to eq "Chicago-Naperville-Evanston, IL"
       expect(division.cbsa_geoid).to eq "16980"
-      expect(division.population).to be > 7_000_000
-      expect(division.housing_units).to be > 2_000_000
-      expect(division.land_area.round).to eq 3131
-      expect(division.water_area.round).to eq 731
+      expect(division.population).to be_between(7_000_000, 10_000_000)
+      expect(division.housing_units).to be_between(2_000_000, 4_000_000)
+      expect(division.land_area.round).to be_between(3000, 4000)
+      expect(division.water_area.round).to be_between(500, 1000)
     end
   end
 end

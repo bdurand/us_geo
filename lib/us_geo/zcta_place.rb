@@ -20,8 +20,8 @@ module USGeo
         import! do
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"], place_geoid: row["Place GEOID"]) do |record|
-              record.land_area = area_meters_to_miles(row["Land Area"])
-              record.water_area = area_meters_to_miles(row["Water Area"])
+              record.land_area = row["Land Area"]
+              record.water_area = row["Water Area"]
             end
           end
         end

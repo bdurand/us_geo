@@ -32,11 +32,12 @@ module USGeo
             load_record!(geoid: row["GEOID"]) do |record|
               record.type = ((row["Population"].to_i >= 50_000) ? "MetropolitanArea" : "MicropolitanArea")
               record.name = row["Name"]
+              record.short_name = row["Short Name"]
               record.csa_geoid = row["CSA"]
               record.population = row["Population"]
               record.housing_units = row["Housing Units"]
-              record.land_area = area_meters_to_miles(row["Land Area"])
-              record.water_area = area_meters_to_miles(row["Water Area"])
+              record.land_area = row["Land Area"]
+              record.water_area = row["Water Area"]
               record.lat = row["Latitude"]
               record.lng = row["Longitude"]
             end

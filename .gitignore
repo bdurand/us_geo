@@ -1,6 +1,7 @@
 .DS_Store
 .bundle/
 .rspec
+.rspec_status
 .ruby-version
 .yardoc
 .env

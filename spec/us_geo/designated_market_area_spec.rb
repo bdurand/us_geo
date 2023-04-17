@@ -14,14 +14,18 @@ describe USGeo::DesignatedMarketArea do
     after { USGeo::DesignatedMarketArea.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/dmas.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/dmas.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      mock_data_file_request("dmas.csv")
+
       USGeo::DesignatedMarketArea.load!
       expect(USGeo::DesignatedMarketArea.imported.count).to be > 200
       expect(USGeo::DesignatedMarketArea.removed.count).to eq 0
 
       dma = USGeo::DesignatedMarketArea.find("602")
       expect(dma.name).to eq "Chicago, IL"
+      expect(dma.population).to be_between(8_000_000, 12_000_000)
+      expect(dma.housing_units).to be_between(3_000_000, 5_000_000)
+      expect(dma.land_area.round).to be_between(9000, 10_000)
+      expect(dma.water_area.round).to be_between(1500, 2500)
     end
   end
 end

@@ -23,8 +23,8 @@ describe USGeo::PlaceCounty do
     after { USGeo::PlaceCounty.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/place_counties.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/place_counties.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      mock_data_file_request("place_counties.csv")
+
       USGeo::PlaceCounty.load!
       expect(USGeo::PlaceCounty.imported.count).to be > 30_000
       expect(USGeo::PlaceCounty.removed.count).to eq 0

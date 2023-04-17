@@ -21,10 +21,10 @@ describe USGeo::CombinedStatisticalArea do
 
       chicagoland = USGeo::CombinedStatisticalArea.find("176")
       expect(chicagoland.name).to eq "Chicago-Naperville, IL-IN-WI"
-      expect(chicagoland.population).to be > 8_000_000
-      expect(chicagoland.housing_units).to be > 3_000_000
-      expect(chicagoland.land_area.round).to eq 10636
-      expect(chicagoland.water_area.round).to eq 2431
+      expect(chicagoland.population).to be_between(8_000_000, 12_000_000)
+      expect(chicagoland.housing_units).to be_between(3_000_000, 5_000_000)
+      expect(chicagoland.land_area.round).to be_between(9000, 12_000)
+      expect(chicagoland.water_area.round).to be_between(1500, 2500)
     end
   end
 end

@@ -17,9 +17,13 @@ module USGeo
 
         import! do
           load_data_file(location) do |row|
-            load_record!(id: row["Division ID"]) do |record|
-              record.name = row["Division Name"]
+            load_record!(id: row["ID"]) do |record|
+              record.name = row["Name"]
               record.region_id = row["Region ID"]
+              record.population = row["Population"]
+              record.housing_units = row["Housing Units"]
+              record.land_area = row["Land Area"]
+              record.water_area = row["Water Area"]
             end
           end
         end

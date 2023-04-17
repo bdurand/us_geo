@@ -13,12 +13,16 @@ module USGeo
 
     class << self
       def load!(uri = nil)
-        location = data_uri(uri || "divisions.csv")
+        location = data_uri(uri || "regions.csv")
 
         import! do
           load_data_file(location) do |row|
-            load_record!(id: row["Region ID"]) do |record|
-              record.name = row["Region Name"]
+            load_record!(id: row["ID"]) do |record|
+              record.name = row["Name"]
+              record.population = row["Population"]
+              record.housing_units = row["Housing Units"]
+              record.land_area = row["Land Area"]
+              record.water_area = row["Water Area"]
             end
           end
         end

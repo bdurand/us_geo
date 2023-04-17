@@ -21,6 +21,10 @@ module USGeo
           load_data_file(location) do |row|
             load_record!(code: row["Code"]) do |record|
               record.name = row["Name"]
+              record.population = row["Population"]
+              record.housing_units = row["Housing Units"]
+              record.land_area = row["Land Area"]
+              record.water_area = row["Water Area"]
             end
           end
         end

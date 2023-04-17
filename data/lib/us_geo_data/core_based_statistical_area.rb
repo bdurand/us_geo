@@ -40,6 +40,7 @@ module USGeoData
             data = {
               geoid: cbsa_code,
               name: row["CBSA Title"],
+              short_name: short_name(row["CBSA Title"]),
               csa: row["CSA Code"],
               counties: Set.new,
               population: 0,
@@ -75,11 +76,13 @@ module USGeoData
 
     private
 
+    def short_name(name)
+      city, state = name.split(", ", 2)
+      "#{city.split("-").first}, #{state.split("-").first}"
+    end
+
     def add_county_data(core_based_statistical_areas)
       core_based_statistical_areas.each do |code, data|
-        city, state = data[:name].split(", ", 2)
-        data[:short_name] = "#{city.split("-").first}, #{state.split("-").first}"
-
         data[:counties].each do |county_geoid|
           county = county_data[county_geoid]
           data[:population] += county[:population]

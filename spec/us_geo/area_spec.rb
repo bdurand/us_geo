@@ -15,12 +15,12 @@ describe USGeo::Area do
   end
 
   it "should convert the land area from miles to kilometers" do
-    expect(record.land_area_km.round(3)).to eq 72.42
+    expect(record.land_area_km.round(3)).to eq 116.55
     expect(nil_record.land_area_km).to eq nil
   end
 
   it "should convert the water area from miles to kilometers" do
-    expect(record.water_area_km.round(3)).to eq 8.047
+    expect(record.water_area_km.round(3)).to eq 12.95
     expect(nil_record.water_area_km).to eq nil
   end
 end

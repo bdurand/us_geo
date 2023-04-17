@@ -61,7 +61,7 @@ describe USGeo::Zcta do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
       expect { zcta.primary_place }.to_not raise_error
-      expect(zcta.build_primary_urban_area).to be_a(USGeo::Place)
+      expect(zcta.build_primary_place).to be_a(USGeo::Place)
     end
 
     it "should have places" do
@@ -77,21 +77,21 @@ describe USGeo::Zcta do
     after { USGeo::Zcta.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/zctas.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/zctas.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      mock_data_file_request("zctas.csv")
+
       USGeo::Zcta.load!
       expect(USGeo::Zcta.imported.count).to be > 30_000
       expect(USGeo::Zcta.removed.count).to eq 0
 
-      zcta = USGeo::Zcta.find("60305")
-      expect(zcta.primary_county_geoid).to eq "17031"
-      expect(zcta.primary_urban_area_geoid).to eq "16264"
-      expect(zcta.population).to be > 10_000
-      expect(zcta.housing_units).to be > 4000
-      expect(zcta.land_area.round(1)).to eq 2.5
-      expect(zcta.water_area.round(3)).to eq 0.002
-      expect(zcta.lat.round).to eq 42
-      expect(zcta.lng.round).to eq(-88)
+      zcta = USGeo::Zcta.find("53211")
+      expect(zcta.primary_county_geoid).to eq "55079"
+      expect(zcta.primary_place_geoid).to eq "5553000"
+      expect(zcta.population).to be_between(30_000, 40_000)
+      expect(zcta.housing_units).to be_between(15_000, 20_000)
+      expect(zcta.land_area.round(2)).to eq 3.97
+      expect(zcta.water_area.round(2)).to eq 0.64
+      expect(zcta.lat.round(1)).to eq 43.1
+      expect(zcta.lng.round(1)).to eq(-87.9)
     end
   end
 end

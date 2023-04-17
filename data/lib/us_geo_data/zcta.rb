@@ -115,7 +115,7 @@ module USGeoData
         place_geoid = row["GEOID_PLACE_20"]
         place_land_area = row["AREALAND_PART"].to_f * SQUARE_METERS_TO_MILES
         place_water_area = row["AREAWATER_PART"].to_f * SQUARE_METERS_TO_MILES
-        next unless place_land_area > 0
+        next unless place_geoid && place_land_area > 0
 
         info = data[zcta5]
         next unless info

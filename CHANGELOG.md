@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Entities that are legally independent of other county subdivisions are included as both county subdivisions and places.
 
+- Areas in the CSV data files are now in square miles instead of square meters to match the data that is imported.
+
 ### Added
 
 - ZCTA's are now associated with a primary place defined as the place with the most overlapping land area with the ZCTA.
@@ -41,6 +43,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Population and housing unit data has been removed from the overlap models used to join entities (i.e. ZctaCounty, ZctaPlace, PlaceCounty). This information is no longer available directly from the Census relationship files. Only the overlapping land and water area is now available.
 
 - The USGeo::Demographics module has been removed. The functionality is split into USGeo::Area and USGeo::Population.
+
+### Fixed
+
+- Fixed arithmetic for converting area from square miles to kilometers.
 
 ## 1.0.3
 

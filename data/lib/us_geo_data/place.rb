@@ -75,7 +75,8 @@ module USGeoData
       / Zona Urbana\z/i
     ].freeze
 
-    ABBREVIATE_IN_SHORT_NAME = {
+    ABBREVIATIONS = {
+      /\bCensus Designated Place\b/i => "CDP",
       /\b(The )?University\b/i => "Univ.",
       /\bInstitute\b/i => "Inst.",
       /\bCollege\b/i => "Coll."
@@ -92,8 +93,8 @@ module USGeoData
         csv << [
           data[:geoid],
           data[:gnis_id],
-          data[:name],
-          data[:short_name],
+          abbr_name(data[:name], 60),
+          short_name(data[:name]),
           data[:state],
           data[:county_geoid],
           data[:fips_class],
@@ -133,7 +134,6 @@ module USGeoData
           data = gnis_places[gnis_id].dup
           data ||= {
             name: row["NAME"],
-            short_name: short_name(row["NAME"]),
             state: row["USPS"],
             gnis_id: gnis_id
           }
@@ -160,12 +160,8 @@ module USGeoData
         short_name = short_name.sub(pattern, "")
       end
 
-      ABBREVIATE_IN_SHORT_NAME.each do |pattern, replacement|
-        short_name = short_name.gsub(pattern, replacement) if short_name.size > 30
-      end
-
+      short_name = abbr_name(short_name, 30)
       short_name = abbr_state(short_name) if short_name.size > 30
-
       short_name = short_name.split("-", 2).first if short_name.size > 30
 
       if short_name.size > 30
@@ -204,6 +200,14 @@ module USGeoData
     def abbr_state(name)
       STATE_ABBREVIATIONS.each do |state, abbr|
         name = name.gsub(Regexp.new(state, Regexp::IGNORECASE), abbr)
+      end
+      name
+    end
+
+    def abbr_name(name, desired_length)
+      ABBREVIATIONS.each do |pattern, replacement|
+        break if name.size < desired_length
+        name = name.gsub(pattern, replacement)
       end
       name
     end

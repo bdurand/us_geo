@@ -21,13 +21,18 @@ describe USGeo::Region do
     after { USGeo::Region.delete_all }
 
     it "should load the fixture data" do
-      mock_data_file_request("divisions.csv")
+      mock_data_file_request("regions.csv")
+
       USGeo::Region.load!
       expect(USGeo::Region.imported.count).to eq 4
       expect(USGeo::Region.removed.count).to eq 0
 
       region = USGeo::Region.find(2)
       expect(region.name).to eq "Midwest"
+      expect(region.population).to be_between(60_000_000, 80_000_000)
+      expect(region.housing_units).to be_between(30_000_000, 40_000_000)
+      expect(region.land_area.round).to be_between(700_000, 800_000)
+      expect(region.water_area.round).to be_between(70_000, 80_000)
     end
   end
 end
