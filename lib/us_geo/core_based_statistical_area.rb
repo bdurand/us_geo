@@ -23,6 +23,15 @@ module USGeo
     validates :population, numericality: {only_integer: true}, presence: true
     validates :housing_units, numericality: {only_integer: true}, presence: true
 
+    # @!attribute geoid
+    #   @return [String] 5-digit code for the CBSA.
+
+    # @!attribute name
+    #   @return [String] Name of the CBSA.
+
+    # @!attribute short_name
+    #   @return [String] Short name of the CBSA.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "core_based_statistical_areas.csv")

@@ -18,6 +18,12 @@ module USGeo
     validates :population, numericality: {only_integer: true}, presence: true
     validates :housing_units, numericality: {only_integer: true}, presence: true
 
+    # @!attribute geoid
+    #   @return [String] 5-digit code for the metropolitan division.
+
+    # @!attribute name
+    #   @return [String] Name of the metropolitan division.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "metropolitan_divisions.csv")

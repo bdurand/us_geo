@@ -21,6 +21,15 @@ module USGeo
     validates :population, numericality: {only_integer: true}, allow_nil: true
     validates :housing_units, numericality: {only_integer: true}, allow_nil: true
 
+    # @!attribute geoid
+    #   @return [String] 10-digit code for the subdivision.
+
+    # @!attribute name
+    #   @return [String] Name of the subdivision.
+
+    # @!attribute fips_class_code
+    #   @return [String] 2-character FIPS class code.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "county_subdivisions.csv")

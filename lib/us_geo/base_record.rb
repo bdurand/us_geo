@@ -80,6 +80,12 @@ module USGeo
       end
     end
 
+    # @!attribute status
+    #   @return [Integer]
+
+    # @!attribute updated_at
+    #   @return [Time]
+
     # Return true if the record was imported from the data source distributed with the gem.
     #
     # @return [Boolean]

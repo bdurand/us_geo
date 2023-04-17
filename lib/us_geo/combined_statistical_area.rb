@@ -18,6 +18,12 @@ module USGeo
     validates :population, numericality: {only_integer: true}, presence: true
     validates :housing_units, numericality: {only_integer: true}, presence: true
 
+    # @!attribute geoid
+    #   @return [String] 3-digit code for the CSA.
+
+    # @!attribute name
+    #   @return [String] Name of the CSA.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "combined_statistical_areas.csv")

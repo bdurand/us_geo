@@ -11,6 +11,12 @@ module USGeo
 
     validates :name, presence: true, length: {maximum: 30}, uniqueness: true
 
+    # @!attribute id
+    #   @return [Integer] ID of the division.
+
+    # @!attribute name
+    #   @return [String] Name of the division.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "divisions.csv")

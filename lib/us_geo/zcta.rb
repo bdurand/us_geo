@@ -21,7 +21,7 @@ module USGeo
 
     # This scope will search for ZCTA's via the ZCTAMappings table. This is useful
     # when you have a retired ZIP code and want to find the current ZCTA for that ZIP code.
-    scope :for_zipcode, ->(zipcode) { left_outer_joins(:zcta_mappings).where(ZctaMapping.table_name => {zipcode: zipcode}).or(where(zipcode: zipcode)).distinct }
+    scope :for_zipcode, ->(zipcode) { left_outer_joins(:zcta_mappings).where(ZctaMapping.table_name => {zipcode: zipcode}).or(left_outer_joins(:zcta_mappings).where(zipcode: zipcode)).distinct }
 
     has_many :zcta_counties, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
     has_many :counties, through: :zcta_counties
@@ -50,6 +50,9 @@ module USGeo
       :time_zone,
       to: :primary_county,
       allow_nil: true
+
+    # @!attribute zipcode
+    #   @return [String] 5-digit ZIP code.
 
     class << self
       def load!(uri = nil)

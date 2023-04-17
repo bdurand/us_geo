@@ -13,6 +13,12 @@ module USGeo
     validates :code, length: {is: 3}, uniqueness: true
     validates :name, presence: true, length: {maximum: 60}, uniqueness: true
 
+    # @!attribute code
+    #   @return [String] 3-digit code for the DMA.
+
+    # @!attribute name
+    #   @return [String] Name of the DMA.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "dmas.csv")

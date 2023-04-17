@@ -23,6 +23,18 @@ module USGeo
     validates :name, presence: true, length: {maximum: 30}, uniqueness: true
     validates :type, inclusion: [STATE_TYPE, DISTRICT_TYPE, TERRITORY_TYPE]
 
+    # @!attribute code
+    #   @return [String] 2-letter postal code of the state.
+
+    # @!attribute name
+    #   @return [String] Name of the state.
+
+    # @!attribute fips
+    #   @return [String] 2-digit FIPS code of the state.
+
+    # @!attribute type
+    #   @return [String] Type of the state or territory.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "states.csv")

@@ -36,6 +36,21 @@ module USGeo
     validates :population, numericality: {only_integer: true}, allow_nil: true
     validates :housing_units, numericality: {only_integer: true}, allow_nil: true
 
+    # @!attribute geoid
+    #   @return [String] 5-digit code for the county.
+
+    # @!attribute name
+    #   @return [String] Name of the county.
+
+    # @!attribute short_name
+    #   @return [String] Short name of the county.
+
+    # @!attribute state_code
+    #   @return [String] 2-letter code for the state.
+
+    # @!attribute fips_class_code
+    #   @return [String] 2-character FIPS class code.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "counties.csv")
