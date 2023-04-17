@@ -16,7 +16,7 @@ RAILS_6_RELEASES.each do |version|
   end
 end
 
-RAILS_5_RELEASES = ["5.2", "5.1", "5.0"].freeze
+RAILS_5_RELEASES = ["5.2", "5.1"].freeze
 
 RAILS_5_RELEASES.each do |version|
   appraise "activerecord-#{version.split(".").take(2).join(".")}" do

@@ -9,7 +9,6 @@ class CreatePlaces < ActiveRecord::Migration[5.0]
       t.string :short_name, null: false, limit: 30, index: true
       t.string :state_code, null: false, limit: 2, index: true
       t.string :primary_county_geoid, null: false, limit: 5, index: true
-      t.string :urban_area_geoid, null: true, limit: 5, index: true
       t.string :fips_class_code, null: false, limit: 2
       t.float :land_area, null: true
       t.float :water_area, null: true

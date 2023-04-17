@@ -7,6 +7,7 @@ module USGeo
     include Area
 
     self.primary_key = "geoid"
+    self.ignored_columns = %w[urban_area_geoid]
 
     has_many :zcta_places, foreign_key: :place_geoid, inverse_of: :place, dependent: :destroy
     has_many :zctas, through: :zcta_places

@@ -17,6 +17,7 @@ module USGeo
 
     self.table_name = "us_geo_zctas"
     self.primary_key = "zipcode"
+    self.ignored_columns = %w[primary_urban_area_geoid]
 
     has_many :zcta_counties, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
     has_many :counties, through: :zcta_counties

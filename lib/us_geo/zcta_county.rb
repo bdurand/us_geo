@@ -5,6 +5,8 @@ module USGeo
   class ZctaCounty < BaseRecord
     include Area
 
+    self.ignored_columns = %w[population housing_units]
+
     belongs_to :zcta, foreign_key: :zipcode, inverse_of: :zcta_counties
     belongs_to :county, foreign_key: :county_geoid, inverse_of: :zcta_counties
 

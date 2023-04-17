@@ -45,27 +45,13 @@ end
 namespace :data do
   desc "Process the raw USGS GNIS file into separate CSV files"
   task :preprocess_gnis_data do
-    require_relative "data/data_normalizer"
-    USGeo::DataNormalizer.new.parse_gnis_data
+    require_relative "data/lib/us_geo_data"
+    USGeoData::Gnis.new.preprocess
   end
 
-  desc "Validate that the counties_info.csv file is complete"
-  task :validate_counties do
-    require_relative "data/data_normalizer"
-    errors = USGeo::DataNormalizer.new.validate_counties_csv
-    unless errors.empty?
-      errors.each do |data|
-        warn "Missing values in county data:"
-        data.each do |key, value|
-          warn "  #{key}: #{value.inspect}"
-        end
-      end
-      exit 1
-    end
-  end
-
+  desc "Generate the distribution CSV files from the raw data files and processed GNIS files"
   task :dump_dist do
-    require_relative "data/data_normalizer"
-    USGeo::DataNormalizer.new.dump_dist
+    require_relative "data/lib/us_geo_data"
+    USGeoData.dump_all
   end
 end
