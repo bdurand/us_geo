@@ -6,7 +6,7 @@ module USGeoData
 
     def dump_csv(output)
       csv = CSV.new(output)
-      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "CBSA", "Metropolitan Division", "Central", "DMA", "Time Zone", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "CBSA", "Metropolitan Division", "Central", "Time Zone", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       county_data.each_value do |data|
         unless data[:time_zone] && data[:gnis_id] && data[:fips_class]
           puts "Missing data for county #{data[:geoid]} #{data[:name]}, #{data[:state]}: #{data.inspect}"
@@ -21,7 +21,6 @@ module USGeoData
           data[:cbsa_code],
           data[:metropolitan_division],
           data[:central] ? "T" : "F",
-          data[:dma_code],
           data[:time_zone],
           data[:fips_class],
           data[:population],
@@ -41,7 +40,8 @@ module USGeoData
         counties = {}
 
         add_gnis_data(counties)
-        add_county_info_data(counties)
+        add_extra_counties(counties)
+        add_timezones(counties)
         add_gazetteer_data(counties)
         add_cbsa_data(counties)
         add_demographics(counties)
@@ -68,24 +68,34 @@ module USGeoData
       end
     end
 
-    def add_county_info_data(counties)
-      foreach(data_file(USGeoData::COUNTY_INFO_FILE), col_sep: ",") do |row|
+    # Add extra counties that don't appear in the U.S.G.S or Gazetteer files.
+    def add_extra_counties(counties)
+      foreach(data_file(USGeoData::EXTRA_COUNTIES_FILE), col_sep: ",") do |row|
+        county_geoid = row["GEOID"]
+        data = counties[county_geoid] || {}
+        data[:geoid] = county_geoid
+        data[:name] ||= row["Full Name"]
+        data[:short_name] ||= row["Short Name"]
+        data[:state] ||= row["State"]
+        data[:fips_class] ||= row["FIPS Class"]
+        data[:land_area] ||= row["Land Area"]&.to_f
+        data[:water_area] ||= row["Water Area"]&.to_f
+        data[:lat] ||= row["Latitude"]&.to_f
+        data[:lng] ||= row["Longitude"]&.to_f
+        data[:population] ||= row["Population"]&.to_i
+        data[:housing_units] ||= row["Housing Units"]&.to_i
+        data[:gnis_id] ||= row["GNIS ID"]&.to_i
+        counties[county_geoid] = data
+      end
+    end
+
+    def add_timezones(counties)
+      foreach(data_file(USGeoData::COUNTY_TIMEZONE_FILE), col_sep: ",") do |row|
         county_geoid = row["GEOID"]
         data = counties[county_geoid]
-        unless data
-          puts row.to_h.inspect, "-" * 20
-          data = {
-            geoid: county_geoid,
-            name: row["Full Name"],
-            state: row["State"],
-            fips_class: row["FIPS Class"]
-          }
-          counties[county_geoid] = data
+        if data
+          data[:time_zone] = row["Time Zone"]
         end
-
-        data[:short_name] ||= row["Short Name"]
-        data[:dma_code] = row["DMA Code"]
-        data[:time_zone] = row["Time Zone"]
       end
     end
 
@@ -125,12 +135,12 @@ module USGeoData
     def add_demographics(counties)
       demographics(data_file(USGeoData::COUNTY_POPULATION_FILE)).each do |geoid, population|
         info = counties[geoid]
-        info[:population] = population if info
+        info[:population] = population if info && population
       end
 
       demographics(data_file(USGeoData::COUNTY_HOUSING_UNITS_FILE)).each do |geoid, housing_units|
         info = counties[geoid]
-        info[:housing_units] = housing_units if info
+        info[:housing_units] = housing_units if info && housing_units
       end
     end
   end

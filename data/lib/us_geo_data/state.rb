@@ -50,8 +50,8 @@ module USGeoData
         end
 
         foreach(data_file(USGeoData::STATE_DATA_FILE)) do |row|
-          data[row["State"]][:land_area] = row["Land Square Miles"].to_f
-          data[row["State"]][:water_area] = row["Water Square Miles"].to_f
+          data[row["State"]][:land_area] ||= row["Land Square Miles"].to_f
+          data[row["State"]][:water_area] ||= row["Water Square Miles"].to_f
         end
 
         add_county_data(data, code_to_name)

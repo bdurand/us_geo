@@ -3,7 +3,6 @@
 class RegionsController < ApplicationController
   def index
     @regions = USGeo::Region.not_removed.order(:id)
-    @territories = USGeo::State.not_removed.where(division: nil)
   end
 
   def show

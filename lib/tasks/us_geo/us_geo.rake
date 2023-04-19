@@ -6,7 +6,6 @@ namespace :us_geo do
       regions: USGeo::Region,
       divisions: USGeo::Division,
       states: USGeo::State,
-      designated_market_areas: USGeo::DesignatedMarketArea,
       combined_statistical_areas: USGeo::CombinedStatisticalArea,
       core_based_statistical_areas: USGeo::CoreBasedStatisticalArea,
       metropolitan_divisions: USGeo::MetropolitanDivision,

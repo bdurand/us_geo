@@ -42,12 +42,6 @@
         <td><%= link_to @county.metropolitan_division.name, metropolitan_division_path(@county.metropolitan_division, breadcrumb_params) %></td>
       </tr>
     <% end %>
-    <% if @county.designated_market_area %>
-      <tr>
-        <th>Designated Market Area</th>
-        <td><%= link_to @county.designated_market_area.name, designated_market_area_path(@county.designated_market_area, breadcrumb_params) %></td>
-      </tr>
-    <% end %>
     <tr>
       <th>Population</th>
       <td><%= formatted_number(@county.population) %></td>

@@ -32,7 +32,6 @@ module USGeo
     delegate :core_based_statistical_area,
       :combined_statistical_area,
       :metropolitan_division,
-      :designated_market_area,
       :time_zone_name,
       :time_zone,
       to: :primary_county,

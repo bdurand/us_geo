@@ -80,7 +80,6 @@ module ApplicationHelper
     combined_statistical_area = objects.detect { |b| b.is_a?(USGeo::CombinedStatisticalArea) }
     core_based_statistical_area = objects.detect { |b| b.is_a?(USGeo::CoreBasedStatisticalArea) }
     metropolitan_division = objects.detect { |b| b.is_a?(USGeo::MetropolitanDivision) }
-    designated_market_area = objects.detect { |b| b.is_a?(USGeo::DesignatedMarketArea) }
     county = objects.detect { |b| b.is_a?(USGeo::County) }
     county_subdivision = objects.detect { |b| b.is_a?(USGeo::CountySubdivision) }
     place = objects.detect { |b| b.is_a?(USGeo::Place) }
@@ -98,8 +97,6 @@ module ApplicationHelper
       links["Combined Statistical Areas"] = combined_statistical_areas_path
     elsif core_based_statistical_area
       links["Core Based Statistical Areas"] = core_based_statistical_areas_path
-    elsif designated_market_area
-      links["Designated Market Areas"] = designated_market_areas_path
     end
 
     links[region.name] = region_path(region) if breadcrumb_link?(region, active)
@@ -108,7 +105,6 @@ module ApplicationHelper
     links[combined_statistical_area.name] = combined_statistical_area_path(combined_statistical_area) if breadcrumb_link?(combined_statistical_area, active)
     links[core_based_statistical_area.name] = core_based_statistical_area_path(core_based_statistical_area) if breadcrumb_link?(core_based_statistical_area, active)
     links[metropolitan_division.name] = metropolitan_division_path(metropolitan_division) if breadcrumb_link?(metropolitan_division, active)
-    links[designated_market_area.name] = designated_market_area_path(designated_market_area) if breadcrumb_link?(designated_market_area, active)
 
     links[county.name] = county_path(county) if breadcrumb_link?(county, active)
     links[county_subdivision.name] = county_subdivision_path(county_subdivision) if breadcrumb_link?(county_subdivision, active)

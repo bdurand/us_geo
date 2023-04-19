@@ -49,16 +49,6 @@ describe USGeo::Zcta do
       expect(zcta.core_based_statistical_area).to eq cbsa
     end
 
-    it "should have a designated market area via the primary county" do
-      zcta = USGeo::Zcta.new
-      zcta.zipcode = "60304"
-      dma = USGeo::DesignatedMarketArea.new
-      county = USGeo::County.new
-      county.designated_market_area = dma
-      zcta.primary_county = county
-      expect(zcta.designated_market_area).to eq dma
-    end
-
     it "should have a primary county subdivision" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"

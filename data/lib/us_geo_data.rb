@@ -9,7 +9,6 @@ require_relative "us_geo_data/core_based_statistical_area"
 require_relative "us_geo_data/county_subdivision"
 require_relative "us_geo_data/county"
 require_relative "us_geo_data/division"
-require_relative "us_geo_data/dma"
 require_relative "us_geo_data/gnis"
 require_relative "us_geo_data/metropolitan_division"
 require_relative "us_geo_data/place"
@@ -23,10 +22,10 @@ module USGeoData
   # Information files
   STATES_FILE = File.join("info", "states.csv")
   STATE_DATA_FILE = File.join("info", "state_data.csv")
-  COUNTY_INFO_FILE = File.join("info", "county_info.csv")
+  COUNTY_TIMEZONE_FILE = File.join("info", "county_timezones.csv")
+  EXTRA_COUNTIES_FILE = File.join("info", "extra_counties.csv")
   REGIONS_FILE = File.join("info", "regions.csv")
   DIVISIONS_FILE = File.join("info", "divisions.csv")
-  DMAS_FILE = File.join("info", "dmas.csv")
 
   # Gazetteer files
   CBSA_GAZETTEER_FILE = File.join("gazetteer", "2021_Gaz_cbsa_national.txt")
@@ -62,7 +61,7 @@ module USGeoData
       Gnis.new.preprocess
     end
 
-    def dump_all(files)
+    def dump_all(files = nil)
       files = Array(files)
       counties = County.new
       states = State.new(counties: counties)
@@ -81,10 +80,6 @@ module USGeoData
 
       if files.empty? || files.include?(:divisions)
         open_file("divisions.csv") { |file| Division.new(states: states).dump_csv(file) }
-      end
-
-      if files.empty? || files.include?(:dma)
-        open_file("dmas.csv") { |file| Dma.new(counties: counties).dump_csv(file) }
       end
 
       if files.empty? || files.include?(:metropolitan_divisions)

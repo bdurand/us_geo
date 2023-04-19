@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 2010 ZCTAs can still be used to lookup the active ZCTA through the ZCTAMapping model.
 
-- Core Based Statistical Areas now have a short name which is the name of just the most prominant place in the area.
+- Core Based Statistical Areas and Combined Statistical Areas now have a short name which is the name of just the largest city in the area. This makes them a little easier to refer to by name.
 
 - All Geographic entity models now have land area, water area, population, and housing units columns.
 
@@ -37,12 +37,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Urbanized area models have been removed. This data is still not available in the 2020 U.S. Census data sets. It was also mostly duplicative with metropolitan areas and created a bit of confusion in the data model. These tables and columns from the 1.0 release are no longer needed. They are left in place in case you want to supply your own models to work with them. Otherwise, you can create migrations to drop them.
-  * us_geo_urban_areas
-  * us_geo_urban_area_counties
-  * us_geo_zcta_urban_areas
-  * us_geo_zctas.primary_urban_area_geoid
-  * us_geo_places.urban_area_geoid
+- Designated market area model has been removed. This data was a crude mapping from counties to DMA's and was not accurate since it didn't respect the actual borders. The table and foreign keys to it will not be removed. See the [updating guide](UPDATING_TO_VERSION_2.md) form more details.
+
+- Urbanized area models have been removed. This data is still not available in the 2020 U.S. Census data sets. It was also mostly duplicative with metropolitan areas and created a bit of confusion in the data model. The table and foreign keys to it will not be removed. See the [updating guide](UPDATING_TO_VERSION_2.md) form more details.
+
 
 - Population and housing unit data has been removed from the overlap models used to join entities (i.e. ZctaCounty, ZctaPlace, PlaceCounty). This information is no longer available directly from the Census relationship files. Only the overlapping land and water area is now available.
 

@@ -46,7 +46,6 @@ module USGeo
     delegate :core_based_statistical_area,
       :combined_statistical_area,
       :metropolitan_division,
-      :designated_market_area,
       :state,
       :state_code,
       :time_zone_name,

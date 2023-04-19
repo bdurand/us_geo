@@ -10,11 +10,12 @@ module USGeoData
 
     def dump_csv(output)
       csv = CSV.new(output)
-      csv << ["GEOID", "Name", "Population", "Housing Units", "Land Area", "Water Area"]
+      csv << ["GEOID", "Name", "Short Name", "Population", "Housing Units", "Land Area", "Water Area"]
       combined_statistical_area_data.each do |geoid, data|
         csv << [
           geoid,
           data[:name],
+          data[:short_name],
           data[:population],
           data[:housing_units],
           data[:land_area]&.round(3),
@@ -34,7 +35,15 @@ module USGeoData
 
           data = combined_statistical_areas[csa_code]
           unless data
-            data = {name: row["CSA Title"], counties: Set.new, population: 0, housing_units: 0, land_area: 0.0, water_area: 0.0}
+            data = {
+              name: row["CSA Title"],
+              short_name: short_name(row["CSA Title"]),
+              counties: Set.new,
+              population: 0,
+              housing_units: 0,
+              land_area: 0.0,
+              water_area: 0.0
+            }
             combined_statistical_areas[csa_code] = data
           end
 
@@ -50,6 +59,11 @@ module USGeoData
     end
 
     private
+
+    def short_name(name)
+      city, state = name.split(", ", 2)
+      "#{city.split("-").first}, #{state.split("-").first}"
+    end
 
     def add_county_data(combined_statistical_areas)
       combined_statistical_areas.each do |code, data|

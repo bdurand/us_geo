@@ -46,12 +46,6 @@
         <td><%= link_to @zcta.metropolitan_division.name, metropolitan_division_path(@zcta.metropolitan_division, breadcrumb_params) %></td>
       </tr>
     <% end %>
-    <% if @zcta.designated_market_area %>
-      <tr>
-        <th>Designated Market Area</th>
-        <td><%= link_to @zcta.designated_market_area.name, designated_market_area_path(@zcta.designated_market_area, breadcrumb_params) %></td>
-      </tr>
-    <% end %>
     <tr>
       <th>Population</th>
       <td><%= formatted_number(@zcta.population) %></td>

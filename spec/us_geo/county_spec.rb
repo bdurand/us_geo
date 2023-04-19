@@ -57,13 +57,6 @@ describe USGeo::County do
       expect { county.subdivisions }.to_not raise_error
       expect(county.subdivisions.build).to be_a(USGeo::CountySubdivision)
     end
-
-    it "should have a designated market area" do
-      county = USGeo::County.new
-      county.geoid = "00001"
-      expect { county.designated_market_area }.to_not raise_error
-      expect(county.build_designated_market_area).to be_a(USGeo::DesignatedMarketArea)
-    end
   end
 
   describe "full_name" do
@@ -86,7 +79,6 @@ describe USGeo::County do
       cook = USGeo::County.find("17031")
       expect(cook.name).to eq "Cook County"
       expect(cook.short_name).to eq "Cook"
-      expect(cook.dma_code).to eq "602"
       expect(cook.cbsa_geoid).to eq "16980"
       expect(cook.metropolitan_division_geoid).to eq "16984"
       expect(cook.state_code).to eq "IL"

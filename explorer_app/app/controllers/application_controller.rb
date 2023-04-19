@@ -54,11 +54,4 @@ class ApplicationController < ActionController::Base
       add_breadcrumb(metropolitan_division_id: @metropolitan_division)
     end
   end
-
-  def add_designated_market_area_breadcrumb
-    if params[:designated_market_area_id]
-      @designated_market_area = USGeo::DesignatedMarketArea.find(params[:designated_market_area_id])
-      add_breadcrumb(designated_market_area_id: @designated_market_area)
-    end
-  end
 end

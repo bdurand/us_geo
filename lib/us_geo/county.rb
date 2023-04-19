@@ -9,8 +9,8 @@ module USGeo
     include Area
 
     self.primary_key = "geoid"
+    self.ignored_columns = %w[dma_code]
 
-    belongs_to :designated_market_area, foreign_key: :dma_code, optional: true, inverse_of: :counties
     belongs_to :core_based_statistical_area, foreign_key: :cbsa_geoid, optional: true, inverse_of: :counties
     belongs_to :metropolitan_division, foreign_key: :metropolitan_division_geoid, optional: true, inverse_of: :counties
     belongs_to :state, foreign_key: :state_code, inverse_of: :counties
@@ -32,7 +32,6 @@ module USGeo
     validates :fips_class_code, length: {is: 2}
     validates :metropolitan_division_geoid, length: {is: 5}, allow_nil: true
     validates :cbsa_geoid, length: {is: 5}, allow_nil: true
-    validates :dma_code, length: {is: 3}, allow_nil: true
     validates :land_area, numericality: true, allow_nil: true
     validates :water_area, numericality: true, allow_nil: true
     validates :population, numericality: {only_integer: true}, allow_nil: true
@@ -79,7 +78,6 @@ module USGeo
               record.state_code = row["State"]
               record.cbsa_geoid = row["CBSA"]
               record.metropolitan_division_geoid = row["Metropolitan Division"]
-              record.dma_code = row["DMA"]
               record.time_zone_name = row["Time Zone"]
               record.fips_class_code = row["FIPS Class"]
               record.central = (row["Central"] == "T")

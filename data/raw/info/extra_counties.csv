@@ -1,18 +1,23 @@
-GEOID,Short Name,Full Name,State,FIPS Class,Land Area,Water Area,Latitude,Longitude,Population
-09003,Hartford,Hartford County,CT,H4,734.962,15.654,41.806053,-72.732916,
-09013,Tolland,Tolland County,CT,H4,410.352,6.776,41.858081,-72.340978,
-09001,Fairfield,Fairfield County,CT,H4,624.965,212.083,41.227413,-73.367061,
-09005,Litchfield,Litchfield County,CT,H4,920.513,24.067,41.791883,-73.235404,
-09007,Middlesex,Middlesex County,CT,H4,369.304,69.761,41.433003,-72.52278,
-09009,New Haven,New Haven County,CT,H4,604.516,257.562,41.349717,-72.900204,
-09011,New London,New London County,CT,H4,665.145,106.818,41.472652,-72.108634,
-09015,Windham,Windham County,CT,H4,512.928,8.293,41.824999,-71.990702,
-11001,District of Columbia,District of Columbia,DC,H6,61.136,7.215,38.904103,-77.017229,
-66010,Guam,Territory of Guam,GU,H4,30.17,,13.444304,144.793732,168801
-69085,Northern Islands,Municipality of Northern Islands,MP,H1,59.75,,18.108484,145.759313,0
-69100,Rota,Municipality of Rota,MP,H1,32.87,,14.153611,145.203056,1893
-69110,Saipan,Municipality of Saipan,MP,H1,44.55,,15.21233,145.7545,43385
-69120,Tinian,Municipality of Tinian,MP,H1,39.08,,15.004974,145.633333,2044
-78010,Saint Croix,Saint Croix Island,VI,H4,83.3,,17.733509,-64.783864,41004
-78020,Saint John,Saint John Island,VI,H4,19.7,,18.333333,-64.733333,3881
-78030,Saint Thomas,Saint Thomas Island,VI,H4,32,,18.333333,-64.916667,42261
+GEOID,Short Name,Full Name,State,FIPS Class,Land Area,Water Area,Latitude,Longitude,Population,Housing Units,GNIS ID
+09003,Hartford,Hartford County,CT,H4,734.962,15.654,41.806053,-72.732916,,,
+09013,Tolland,Tolland County,CT,H4,410.352,6.776,41.858081,-72.340978,,,
+09001,Fairfield,Fairfield County,CT,H4,624.965,212.083,41.227413,-73.367061,,,
+09005,Litchfield,Litchfield County,CT,H4,920.513,24.067,41.791883,-73.235404,,,
+09007,Middlesex,Middlesex County,CT,H4,369.304,69.761,41.433003,-72.52278,,,
+09009,New Haven,New Haven County,CT,H4,604.516,257.562,41.349717,-72.900204,,,
+09011,New London,New London County,CT,H4,665.145,106.818,41.472652,-72.108634,,,
+09015,Windham,Windham County,CT,H4,512.928,8.293,41.824999,-71.990702,,,
+11001,District of Columbia,District of Columbia,DC,H6,61.136,7.215,38.904103,-77.017229,,,
+66010,Guam,Territory of Guam,GU,H4,30.17,,13.444304,144.793732,159358,50567,1802705
+69085,Northern Islands,Municipality of Northern Islands,MP,H1,59.75,,18.108484,145.759313,0,0,1805245
+69100,Rota,Municipality of Rota,MP,H1,32.87,,14.153611,145.203056,2527,1049,1805246
+69110,Saipan,Municipality of Saipan,MP,H1,44.55,,15.21233,145.7545,48220,18683,1805247
+69120,Tinian,Municipality of Tinian,MP,H1,39.08,,15.004974,145.633333,3136,1118,1805248
+78010,Saint Croix,Saint Croix Island,VI,H4,83.3,,17.733509,-64.783864,50601,25275,2378248
+78020,Saint John,Saint John Island,VI,H4,19.7,,18.333333,-64.733333,4170,3453,2378249
+78030,Saint Thomas,Saint Thomas Island,VI,H4,32,,18.333333,-64.916667,51634,27173,2378250
+60010,Eastern District,Eastern,GU,H1,25.879,,-14.2674551,-170.6273326,23030,4490,1805240
+60050,Western District,Western,GU,H1,28.873,,-14.3355554,-170.7845273,31329,6090,1805241
+60020,Manuʻa District,Manuʻa District,GU,H1,22,,-14.2084358,-169.5367349,1143,376,1805242
+60030,Rose Island,Rose Island,GU,H4,0.2,,-14.5475,-168.1413889,0,0,1388629
+60040,Swains Island,Swains Island,GU,H4,0.94,,-11.054387,-171.0749296,17,7,1805244

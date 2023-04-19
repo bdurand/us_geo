@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# This migration comes from us_geo_engine (originally 20230416000100)
 # WARNING: This migration removes columns and data from version 1 of the gem.
 # This will remove the us_geo_urban_areas table and demographic data from
 # relationship tables. Urban areas are no longer supported in version 2 of the
@@ -14,6 +13,10 @@ class CleanupVersion1Tables < ActiveRecord::Migration[5.0]
   disable_ddl_transaction!
 
   def up
+    # drop_table :us_geo_designated_market_areas if table_exists?(:us_geo_designated_market_areas)
+
+    # remove_column :us_geo_counties, :dma_code if column_exists?(:us_geo_counties, :dma_code)
+
     # drop_table :us_geo_urban_areas if table_exists?(:us_geo_urban_areas)
     # drop_table :us_geo_urban_area_counties if table_exists?(:us_geo_urban_area_counties)
     # drop_table :us_geo_zcta_urban_areas if table_exists?(:us_geo_zcta_urban_areas)

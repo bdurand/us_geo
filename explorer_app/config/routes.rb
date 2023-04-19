@@ -10,18 +10,12 @@ Rails.application.routes.draw do
 
   controller :divisions do
     get "divisions", action: :index, as: :divisions
-    get "divisions/territories", action: :territories, as: :territories
     get "divisions/:id", action: :show, as: :division
   end
 
   controller :states do
     get "states", action: :index, as: :states
     get "states/:id", action: :show, as: :state
-  end
-
-  controller :designated_market_areas do
-    get "dmas", action: :index, as: :designated_market_areas
-    get "dmas/:id", action: :show, as: :designated_market_area
   end
 
   controller :combined_statistical_areas do

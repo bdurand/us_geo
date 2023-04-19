@@ -56,10 +56,6 @@ A grouping of states within a region.
 
 Includes both states and territories and the District of Columbia.
 
-### Designated Market Area (DMA)
-
-Media marketing areas of counties served by the same over the air radio and television signals. DMA's are not official government designations and are defined by the Nielsen Company.
-
 ### Combined Statistical Areas
 
 Groupings of adjacent CBSA's with regional ties to each other.
@@ -70,13 +66,11 @@ A grouping of counties around an urban core defined by commuting patterns. CBSA'
 
 ### Metropolitan Division
 
-The largest CBSAs (New York, Chicago, etc.) are split into metropolitan divisions.
+The largest CBSAs (New York, Chicago, etc.) are further split into metropolitan divisions based around the largest regional cities.
 
 ### County (or county equivalent)
 
-Basic organizational unit of states and territories. The actual name of the unit can vary depending on the state (i.e. parishes is Louisiana).
-
-County data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
+Basic organizational unit of states and territories. The actual name of the unit can vary depending on the state (i.e. parishes is Louisiana). This also includes cities that are independent of any county.
 
 ### County Subdivision
 
@@ -96,20 +90,20 @@ ZCTA data is only provided for states, the District of Columbia, Puerto Rico. It
 
 ### Entity Relationships
 
-[![](https://mermaid.ink/img/pako:eNqFU8FuwyAM_RXEufmBqJq0LTtWmpZblYsLbmaNQAXOpKrrvy8h6ZRkNOVknp8f5hkuUjmNMpfKQAgFQe2hqazoVkTEB9bkbGWnWEHfFP6hJQOjmGOvrrV8TmFle9BJmb1imCPvBhQuNTy-QEDdH0qBSYF59ghLVnMg-4C0Q_bu5Awx2ESW1Fp2Ups2pcBAte2M0TvwX8hTjf6mYptlT382pdCZUXPCaEwPxlBMtQZ8GF9MFDOV2y6m4ugGfJjisqkhFne6GjhLI8X2J8tWJhVrFvY-rBmbT7iauPyd-Y_Mtb7uZROHpN5Awr8VvfQrkhvZoG-AdPc7L71MJfkTG6xk3oUaj9AarmRlrx21PenOjjdN7LzMj2ACbiS07MqzVTJn3-KNNH7ykXX9BbKkYG4?type=png)](https://mermaid.live/edit#pako:eNqFU8FuwyAM_RXEufmBqJq0LTtWmpZblYsLbmaNQAXOpKrrvy8h6ZRkNOVknp8f5hkuUjmNMpfKQAgFQe2hqazoVkTEB9bkbGWnWEHfFP6hJQOjmGOvrrV8TmFle9BJmb1imCPvBhQuNTy-QEDdH0qBSYF59ghLVnMg-4C0Q_bu5Awx2ESW1Fp2Ups2pcBAte2M0TvwX8hTjf6mYptlT382pdCZUXPCaEwPxlBMtQZ8GF9MFDOV2y6m4ugGfJjisqkhFne6GjhLI8X2J8tWJhVrFvY-rBmbT7iauPyd-Y_Mtb7uZROHpN5Awr8VvfQrkhvZoG-AdPc7L71MJfkTG6xk3oUaj9AarmRlrx21PenOjjdN7LzMj2ACbiS07MqzVTJn3-KNNH7ykXX9BbKkYG4)
-## Usage
+[![](https://mermaid.ink/img/pako:eNqFU0FuwyAQ_AriHH_Aiiq1dY-VqvoWcdnAJkWyIYKlUpTm77XBrmJKHJ_Ws7PDMiMuXFqFvOayA-8bDUcHvTBs-CLCPvGorRHmFmv0t_b_0JaAkC2xVxsMnUtYG_aqKLOTBEvkowOJuYbDF_CoxkO1Jy2he3YIOavfa_OA9I7k7Ml2msAUulqudW9mc1PGe7BtVT39mVBCFzYsCdO1RzCW7FYr4Smc2GgWKvNfbMVgEp4yypdKNbuzVeLkNrHtT1Wt5BBnMvMezszrFGOb9ls78F63YF0puoIxK3rl8PmG9-h60Gp4VJdRRnD6wh4Fr4dS4QFCR4ILcx2o4aSGQN6UJut4fYDO44ZDINuejeQ1uYAzaXqbE-v6C9NYRww?type=png)](https://mermaid.live/edit#pako:eNqFU0FuwyAQ_AriHH_Aiiq1dY-VqvoWcdnAJkWyIYKlUpTm77XBrmJKHJ_Ws7PDMiMuXFqFvOayA-8bDUcHvTBs-CLCPvGorRHmFmv0t_b_0JaAkC2xVxsMnUtYG_aqKLOTBEvkowOJuYbDF_CoxkO1Jy2he3YIOavfa_OA9I7k7Ml2msAUulqudW9mc1PGe7BtVT39mVBCFzYsCdO1RzCW7FYr4Smc2GgWKvNfbMVgEp4yypdKNbuzVeLkNrHtT1Wt5BBnMvMezszrFGOb9ls78F63YF0puoIxK3rl8PmG9-h60Gp4VJdRRnD6wh4Fr4dS4QFCR4ILcx2o4aSGQN6UJut4fYDO44ZDINuejeQ1uYAzaXqbE-v6C9NYRww)## Usage
 
 First add to you Gemfile:
 
 `gem us_geo`
 
-Install the migrations:
+Install the migrations.
 
 ```bash
 rake us_geo_engine:install:migrations
+rake db:migrate
 ```
 
-Import the data:
+Import the data.
 
 ```bash
 rake us_geo:import:all
@@ -121,7 +115,6 @@ Or, if you only want to import some subset of the data, you can run any number o
 rake us_geo:import:regions
 rake us_geo:import:divisions
 rake us_geo:import:states
-rake us_geo:import:designated_market_areas
 rake us_geo:import:combined_statistical_areas
 rake us_geo:import:core_based_statistical_areas
 rake us_geo:import:metropolitan_divisions
