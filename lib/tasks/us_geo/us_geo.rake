@@ -19,6 +19,7 @@ namespace :us_geo do
       zcta_places: USGeo::ZctaPlace,
       place_counties: USGeo::PlaceCounty
     }
+
     klasses.each do |name, klass|
       desc "Import data for #{klass}"
       task name => :environment do
@@ -35,6 +36,18 @@ namespace :us_geo do
         klasses.each_key do |name|
           Rake::Task["us_geo:import:#{name}"].invoke
         end
+      end
+    end
+
+    desc "Remove all records from previously imported data that no longer exists in the current data source"
+    task cleanup: :environment do
+      klasses.each_value do |klass|
+        count = 0
+        klass.removed.find_each do |record|
+          count += 1
+          record.destroy
+        end
+        puts "Deleted #{count} removed records from #{klass.table_name}"
       end
     end
   end

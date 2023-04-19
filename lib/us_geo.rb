@@ -38,7 +38,7 @@ module USGeo
       if defined?(@base_data_uri) && @base_data_uri
         @base_data_uri
       else
-        BASE_DATA_URI
+        ENV.fetch("US_GEO_BASE_DATA_URI", BASE_DATA_URI)
       end
     end
 

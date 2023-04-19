@@ -66,6 +66,13 @@ describe USGeo::County do
     end
   end
 
+  describe "full_name" do
+    it "should return the full name" do
+      county = USGeo::County.new(name: "Cook County", state_code: "IL")
+      expect(county.full_name).to eq "Cook County, IL"
+    end
+  end
+
   describe "load" do
     after { USGeo::County.delete_all }
 

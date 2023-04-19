@@ -73,6 +73,7 @@ module USGeoData
         county_geoid = row["GEOID"]
         data = counties[county_geoid]
         unless data
+          puts row.to_h.inspect, "-" * 20
           data = {
             geoid: county_geoid,
             name: row["Full Name"],

@@ -9,7 +9,9 @@ module USGeo
 
     self.primary_key = "geoid"
 
-    has_many :core_based_statistical_areas, foreign_key: :csa_geoid, inverse_of: :combined_statistical_area
+    has_many :core_based_statistical_areas, -> { not_removed }, foreign_key: :csa_geoid, inverse_of: :combined_statistical_area
+    has_many :counties, -> { not_removed }, through: :core_based_statistical_areas
+    has_many :metropolitan_divisions, -> { not_removed }, through: :core_based_statistical_areas
 
     validates :geoid, length: {is: 3}
     validates :name, presence: true, length: {maximum: 60}, uniqueness: true

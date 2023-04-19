@@ -1,0 +1,24 @@
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <% unless defined?(region) && region %>
+        <th>Region</th>
+      <% end %>
+      <%= demographics_headers %>
+    </th>
+  </thead>
+  <tbody>
+    <% divisions.each do |division| %>
+      <tr>
+        <td><%= division.id %></td>
+        <td><%= link_to division.name, division_path(division, breadcrumb_params) %></td>
+        <% unless defined?(region) && region %>
+          <td><%= link_to division.region.name, region_path(division.region, breadcrumb_params) %></td>
+        <% end %>
+        <%= demographics_cells(division, round_area: 0) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

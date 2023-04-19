@@ -10,8 +10,18 @@ module USGeo
 
     belongs_to :county, foreign_key: :county_geoid, inverse_of: :subdivisions
 
-    has_many :zcta_county_subdivisions, foreign_key: :county_subdivision_geoid, inverse_of: :county_subdivision, dependent: :destroy
-    has_many :zctas, through: :zcta_county_subdivisions
+    delegate :core_based_statistical_area,
+      :combined_statistical_area,
+      :metropolitan_division,
+      :designated_market_area,
+      :state,
+      :state_code,
+      :time_zone,
+      :time_zone_name,
+      to: :county
+
+    has_many :zcta_county_subdivisions, -> { not_removed }, foreign_key: :county_subdivision_geoid, inverse_of: :county_subdivision, dependent: :destroy
+    has_many :zctas, -> { not_removed }, through: :zcta_county_subdivisions
 
     validates :geoid, length: {is: 10}
     validates :name, presence: true, length: {maximum: 60}, uniqueness: {scope: :county_geoid}
@@ -47,6 +57,9 @@ module USGeo
               record.water_area = row["Water Area"]
               record.lat = row["Latitude"]
               record.lng = row["Longitude"]
+
+              duplicate = where.not(geoid: record.geoid).find_by(name: record.name, county_geoid: record.county_geoid)
+              duplicate&.update!(name: "#{record.name} (deleted)", status: BaseRecord::STATUS_REMOVED)
             end
           end
         end

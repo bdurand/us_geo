@@ -21,8 +21,8 @@ module USGeoData
             USGeoData::Region.name(data[:region_id]),
             data[:division_id],
             USGeoData::Division.name(data[:division_id]),
-            data[:population],
-            data[:housing_units],
+            ((data[:population] == 0) ? nil : data[:population]),
+            ((data[:housing_units] == 0) ? nil : data[:housing_units]),
             data[:land_area].round(3),
             data[:water_area].round(3)
           ]

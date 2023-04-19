@@ -8,7 +8,7 @@ module USGeo
 
     self.primary_key = "code"
 
-    has_many :counties, foreign_key: :dma_code, inverse_of: :designated_market_area
+    has_many :counties, -> { not_removed }, foreign_key: :dma_code, inverse_of: :designated_market_area
 
     validates :code, length: {is: 3}, uniqueness: true
     validates :name, presence: true, length: {maximum: 60}, uniqueness: true

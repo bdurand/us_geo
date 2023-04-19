@@ -1,0 +1,7 @@
+<%= breadcrumbs("Combined Statistical Areas") %>
+
+<h1>
+  <%= pluralize @combined_statistical_areas.size, "Combined Statistical Area" %>
+</h1>
+
+<%= render "table", combined_statistical_areas: @combined_statistical_areas %>

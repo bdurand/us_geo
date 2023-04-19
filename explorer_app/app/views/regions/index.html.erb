@@ -1,0 +1,7 @@
+<%= breadcrumbs "Regions" %>
+
+<h1>
+  <%= pluralize @regions.size, "Region" %>
+</h1>
+
+<%= render "table", regions: @regions %>

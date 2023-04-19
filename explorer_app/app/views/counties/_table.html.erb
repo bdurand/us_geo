@@ -1,0 +1,42 @@
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>GEOID</th>
+      <th>Name</th>
+      <% unless defined?(state) && state %>
+        <th>State</th>
+      <% end %>
+      <% unless defined?(core_based_statistical_area) && core_based_statistical_area %>
+        <th>Core Based Statistical Area</th>
+      <% else %>
+        <th>CBSA Position</th>
+      <% end %>
+      <th>FIPS Class Code</th>
+      <%= demographics_headers %>
+    </th>
+  </thead>
+  <tbody>
+    <% counties.each do |county| %>
+      <tr>
+        <td><%= county.geoid %></td>
+        <td><%= link_to county.name, county_path(county, breadcrumb_params) %></td>
+        <% unless defined?(state) && state %>
+          <td><%= county.state.name %></td>
+        <% end %>
+        <% if defined?(core_based_statistical_area) && core_based_statistical_area %>
+          <td><%= county.central? ? "Central" : "Outlying" %></td>
+        <% else %>
+          <td>
+            <% if county.core_based_statistical_area %>
+              <%= link_to county.core_based_statistical_area.name, core_based_statistical_area_path(county.core_based_statistical_area) %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+        <% end %>
+        <td><%= county.fips_class_code %></td>
+        <%= demographics_cells(county, round_area: 0) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

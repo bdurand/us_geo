@@ -35,6 +35,13 @@ describe USGeo::Place do
     end
   end
 
+  describe "full_name" do
+    it "should return the full name" do
+      place = USGeo::Place.new(short_name: "Chicago", state_code: "IL")
+      expect(place.full_name).to eq "Chicago, IL"
+    end
+  end
+
   describe "load" do
     after { USGeo::Place.delete_all }
 

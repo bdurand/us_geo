@@ -1,0 +1,7 @@
+<%= breadcrumbs "Designated Market Areas" %>
+
+<h1>
+  <%= pluralize @designated_market_areas.size, "Designated Market Area" %>
+</h1>
+
+<%= render "table", designated_market_areas: @designated_market_areas %>

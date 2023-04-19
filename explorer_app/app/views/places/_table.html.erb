@@ -1,0 +1,28 @@
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>GEOID</th>
+      <th>Name</th>
+      <th>Primary County</th>
+      <th>FIPS Class Code</th>
+      <%= demographics_headers %>
+    </th>
+  </thead>
+  <tbody>
+    <% places.each do |place| %>
+      <tr>
+        <td><%= place.geoid %></td>
+        <td><%= link_to place.name, place_path(place, breadcrumb_params) %></td>
+        <td>
+          <% if place.primary_county %>
+            <%= link_to place.primary_county.full_name, county_path(place.primary_county, breadcrumb_params) %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td><%= place.fips_class_code %></td>
+        <%= demographics_cells(place, round_area: 1) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,7 @@
+<%= breadcrumbs "Core Based Statistical Areas" %>
+
+<h1>
+  <%= pluralize @core_based_statistical_areas.size, "Core Based Statistical Area" %>
+</h1>
+
+<%= render "table", core_based_statistical_areas: @core_based_statistical_areas, combined_statistical_area: @combined_statistical_area %>

@@ -66,7 +66,7 @@ describe USGeo::Zcta do
       expect(zcta.build_primary_county_subdivision).to be_a(USGeo::CountySubdivision)
     end
 
-    it "should have county subdivisons" do
+    it "should have county subdivisions" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
       expect { zcta.county_subdivisions }.to_not raise_error

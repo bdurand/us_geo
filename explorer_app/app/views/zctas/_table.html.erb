@@ -1,0 +1,32 @@
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>ZIP Code</th>
+      <th>Primary County</th>
+      <th>Primary Place</th>
+      <%= demographics_headers %>
+    </th>
+  </thead>
+  <tbody>
+    <% zctas.each do |zcta| %>
+      <tr>
+        <td><%= link_to zcta.zipcode, zcta_path(zcta, breadcrumb_params) %></td>
+        <td>
+          <% if zcta.primary_county %>
+            <%= link_to zcta.primary_county.full_name, county_path(zcta.primary_county, breadcrumb_params) %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td>
+          <% if zcta.primary_place %>
+            <%= link_to zcta.primary_place.full_name, place_path(zcta.primary_place, breadcrumb_params) %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <%= demographics_cells(zcta, round_area: 1) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

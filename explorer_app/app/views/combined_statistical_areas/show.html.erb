@@ -1,0 +1,48 @@
+<%= breadcrumbs @combined_statistical_area.name, active: @combined_statistical_area %>
+
+<h1><%= @combined_statistical_area.name %></h1>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>GEOID</th>
+      <td><%= @combined_statistical_area.geoid %></td>
+    </tr>
+    <tr>
+      <th>Population</th>
+      <td><%= formatted_number(@combined_statistical_area.population) %></td>
+    </tr>
+    <tr>
+      <th>Housing Units</th>
+      <td><%= formatted_number(@combined_statistical_area.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Land Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@combined_statistical_area.land_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Water Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@combined_statistical_area.water_area, round: 0) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h2><%= pluralize(@combined_statistical_area.core_based_statistical_areas.count, "Core Based Statistical Areas") %></h2>
+
+<%= render "core_based_statistical_areas/table", core_based_statistical_areas: @combined_statistical_area.core_based_statistical_areas, combined_statistical_area: @combined_statistical_area %>
+
+<% if @combined_statistical_area.metropolitan_divisions.present? %>
+  <br>
+
+  <h2><%= pluralize(@combined_statistical_area.metropolitan_divisions.count, "Metropolitan Divisions") %></h2>
+
+  <%= render "metropolitan_divisions/table", metropolitan_divisions: @combined_statistical_area.metropolitan_divisions, combined_statistical_area: @combined_statistical_area %>
+<% end %>
+
+<br>
+
+<h2><%= pluralize(@combined_statistical_area.counties.count, "County") %></h2>
+
+<%= render "counties/table", counties: @combined_statistical_area.counties, combined_statistical_area: @combined_statistical_area %>

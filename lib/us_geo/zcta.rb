@@ -23,19 +23,19 @@ module USGeo
     # when you have a retired ZIP code and want to find the current ZCTA for that ZIP code.
     scope :for_zipcode, ->(zipcode) { left_outer_joins(:zcta_mappings).where(ZctaMapping.table_name => {zipcode: zipcode}).or(left_outer_joins(:zcta_mappings).where(zipcode: zipcode)).distinct }
 
-    has_many :zcta_counties, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
-    has_many :counties, through: :zcta_counties
+    has_many :zcta_counties, -> { not_removed }, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
+    has_many :counties, -> { not_removed }, through: :zcta_counties
     belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
 
-    has_many :zcta_county_subdivisions, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
-    has_many :county_subdivisions, through: :zcta_county_subdivisions
+    has_many :zcta_county_subdivisions, -> { not_removed }, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
+    has_many :county_subdivisions, -> { not_removed }, through: :zcta_county_subdivisions
     belongs_to :primary_county_subdivision, foreign_key: :primary_county_subdivision_geoid, class_name: "USGeo::CountySubdivision"
 
-    has_many :zcta_places, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
-    has_many :places, through: :zcta_places
+    has_many :zcta_places, -> { not_removed }, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
+    has_many :places, -> { not_removed }, through: :zcta_places
     belongs_to :primary_place, foreign_key: :primary_place_geoid, class_name: "USGeo::Place"
 
-    has_many :zcta_mappings, foreign_key: :zcta_zipcode, inverse_of: :zcta, dependent: :destroy
+    has_many :zcta_mappings, -> { not_removed }, foreign_key: :zcta_zipcode, inverse_of: :zcta, dependent: :destroy
 
     validates :zipcode, length: {is: 5}
     validates :land_area, numericality: true, presence: true
@@ -44,9 +44,12 @@ module USGeo
     validates :housing_units, numericality: {only_integer: true}, presence: true
 
     delegate :core_based_statistical_area,
+      :combined_statistical_area,
+      :metropolitan_division,
       :designated_market_area,
       :state,
       :state_code,
+      :time_zone_name,
       :time_zone,
       to: :primary_county,
       allow_nil: true

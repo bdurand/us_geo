@@ -15,13 +15,15 @@ module USGeo
     belongs_to :metropolitan_division, foreign_key: :metropolitan_division_geoid, optional: true, inverse_of: :counties
     belongs_to :state, foreign_key: :state_code, inverse_of: :counties
 
-    has_many :subdivisions, foreign_key: :county_geoid, inverse_of: :county, class_name: "USGeo::CountySubdivision"
+    delegate :combined_statistical_area, to: :core_based_statistical_area, allow_nil: true
 
-    has_many :zcta_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
-    has_many :zctas, through: :zcta_counties
+    has_many :subdivisions, -> { not_removed }, foreign_key: :county_geoid, inverse_of: :county, class_name: "USGeo::CountySubdivision"
 
-    has_many :place_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
-    has_many :places, through: :place_counties
+    has_many :zcta_counties, -> { not_removed }, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
+    has_many :zctas, -> { not_removed }, through: :zcta_counties
+
+    has_many :place_counties, -> { not_removed }, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
+    has_many :places, -> { not_removed }, through: :place_counties
 
     validates :geoid, length: {is: 5}
     validates :name, presence: true, length: {maximum: 60}, uniqueness: {scope: :state_code}
@@ -50,6 +52,19 @@ module USGeo
 
     # @!attribute fips_class_code
     #   @return [String] 2-character FIPS class code.
+
+    # @!attribute time_zone_name
+    #   @return [String] Time zone name.
+
+    # @!method central?
+    #   @return [Boolean] True if the county is a central county in the CBSA.
+
+    # Full name of the county with the state.
+    #
+    # @return [String]
+    def full_name
+      "#{name}, #{state_code}"
+    end
 
     class << self
       def load!(uri = nil)
@@ -93,8 +108,18 @@ module USGeo
       core_based_statistical_area if core_based_statistical_area&.metropolitan?
     end
 
+    # Time zone for the county.
+    #
+    # @return [ActiveSupport::TimeZone]
     def time_zone
       ActiveSupport::TimeZone[time_zone_name] if time_zone_name
+    end
+
+    # True if the county is an outlying county in the CBSA.
+    #
+    # @return [Boolean]
+    def outlying?
+      !central?
     end
   end
 end

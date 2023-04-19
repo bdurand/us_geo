@@ -1,0 +1,26 @@
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>GEOID</th>
+      <th>Name</th>
+      <% unless defined?(county) && county %>
+        <th>County</th>
+      <% end %>
+      <th>FIPS Class Code</th>
+      <%= demographics_headers %>
+    </th>
+  </thead>
+  <tbody>
+    <% county_subdivisions.each do |county_subdivision| %>
+      <tr>
+        <td><%= county_subdivision.geoid %></td>
+        <td><%= link_to county_subdivision.name, county_subdivision_path(county_subdivision, breadcrumb_params) %></td>
+        <% unless defined?(county) && county %>
+          <td><%= link_to county_subdivision.county.full_name, county_path(county_subdivision.county, breadcrumb_params) %></td>
+        <% end %>
+        <td><%= county_subdivision.fips_class_code %></td>
+        <%= demographics_cells(county_subdivision, round_area: 1) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

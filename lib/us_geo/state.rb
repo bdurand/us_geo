@@ -15,8 +15,11 @@ module USGeo
 
     belongs_to :region, optional: -> { territory? }, inverse_of: :states
     belongs_to :division, optional: -> { territory? }, inverse_of: :states
-    has_many :counties, foreign_key: :state_code, inverse_of: :state
-    has_many :places, foreign_key: :state_code, inverse_of: :state
+
+    delegate :region, to: :division, allow_nil: true
+
+    has_many :counties, -> { not_removed }, foreign_key: :state_code, inverse_of: :state
+    has_many :places, -> { not_removed }, foreign_key: :state_code, inverse_of: :state
 
     validates :code, length: {is: 2}, uniqueness: true
     validates :fips, length: {is: 2}

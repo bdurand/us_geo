@@ -1,0 +1,13 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb mt-2">
+    <% links.each do |label, url| %>
+      <li class="breadcrumb-item">
+        <%= link_to label, url %>
+      </li>
+    <% end %>
+
+    <li class="breadcrumb-item active" aria-current="page"">
+      <%= active_label %>
+    </li>
+  </ol>
+</nav>

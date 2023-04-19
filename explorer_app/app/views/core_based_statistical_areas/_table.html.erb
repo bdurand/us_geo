@@ -1,0 +1,32 @@
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>GEOID</th>
+      <th>Name</th>
+      <th>Type</th>
+      <% unless defined?(combined_statistical_area) && combined_statistical_area %>
+        <th>Combined Statistical Area</th>
+      <% end %>
+      <%= demographics_headers %>
+    </th>
+  </thead>
+  <tbody>
+    <% core_based_statistical_areas.each do |core_based_statistical_area| %>
+      <tr>
+        <td><%= core_based_statistical_area.geoid %></td>
+        <td><%= link_to core_based_statistical_area.name, core_based_statistical_area_path(core_based_statistical_area, breadcrumb_params) %></td>
+        <td><%= core_based_statistical_area.metropolitan? ? "Metropolitan" : "Micropolitan" %> Area</td>
+        <% unless defined?(combined_statistical_area) && combined_statistical_area %>
+          <td>
+            <% if core_based_statistical_area.combined_statistical_area %>
+              <%= link_to core_based_statistical_area.combined_statistical_area.name, combined_statistical_area_path(core_based_statistical_area.combined_statistical_area) %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+        <% end %>
+        <%= demographics_cells(core_based_statistical_area, round_area: 0) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

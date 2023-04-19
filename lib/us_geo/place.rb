@@ -9,11 +9,11 @@ module USGeo
     self.primary_key = "geoid"
     self.ignored_columns = %w[urban_area_geoid]
 
-    has_many :zcta_places, foreign_key: :place_geoid, inverse_of: :place, dependent: :destroy
-    has_many :zctas, through: :zcta_places
+    has_many :zcta_places, -> { not_removed }, foreign_key: :place_geoid, inverse_of: :place, dependent: :destroy
+    has_many :zctas, -> { not_removed }, through: :zcta_places
 
-    has_many :place_counties, foreign_key: :place_geoid, inverse_of: :place, dependent: :destroy
-    has_many :counties, through: :place_counties
+    has_many :place_counties, -> { not_removed }, foreign_key: :place_geoid, inverse_of: :place, dependent: :destroy
+    has_many :counties, -> { not_removed }, through: :place_counties
 
     belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
     belongs_to :state, foreign_key: :state_code, inverse_of: :places
@@ -29,6 +29,15 @@ module USGeo
     validates :population, numericality: {only_integer: true}, allow_nil: true
     validates :housing_units, numericality: {only_integer: true}, allow_nil: true
 
+    delegate :core_based_statistical_area,
+      :combined_statistical_area,
+      :metropolitan_division,
+      :designated_market_area,
+      :time_zone_name,
+      :time_zone,
+      to: :primary_county,
+      allow_nil: true
+
     # @!attribute geoid
     #   @return [String] 7-digit code for the place.
 
@@ -43,6 +52,13 @@ module USGeo
 
     # @!attribute fips_class_code
     #   @return [String] 2-character FIPS class code.
+
+    # Full name of the place as short name plus the state.
+    #
+    # @return [String]
+    def full_name
+      "#{short_name}, #{state_code}"
+    end
 
     class << self
       def load!(uri = nil)

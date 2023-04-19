@@ -1,0 +1,34 @@
+<%= breadcrumbs @designated_market_area.name, active: @designated_market_area %>
+
+<h1><%= @designated_market_area.name %></h1>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>Code</th>
+      <td><%= @designated_market_area.code %></td>
+    </tr>
+    <tr>
+      <th>Population</th>
+      <td><%= formatted_number(@designated_market_area.population) %></td>
+    </tr>
+    <tr>
+      <th>Housing Units</th>
+      <td><%= formatted_number(@designated_market_area.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Land Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@designated_market_area.land_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Water Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@designated_market_area.water_area, round: 0) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h2><%= pluralize(@designated_market_area.counties.count, "County") %></h2>
+
+<%= render "counties/table", counties: @designated_market_area.counties, designated_market_area: @designated_market_area %>
