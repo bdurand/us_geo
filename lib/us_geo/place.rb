@@ -7,7 +7,6 @@ module USGeo
     include Area
 
     self.primary_key = "geoid"
-    self.ignored_columns = %w[urban_area_geoid]
 
     has_many :zcta_places, -> { not_removed }, foreign_key: :place_geoid, inverse_of: :place, dependent: :destroy
     has_many :zctas, -> { not_removed }, through: :zcta_places
@@ -16,11 +15,13 @@ module USGeo
     has_many :counties, -> { not_removed }, through: :place_counties
 
     belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
+    belongs_to :urban_area, foreign_key: :urban_area_geoid, optional: true, class_name: "USGeo::UrbanArea"
     belongs_to :state, foreign_key: :state_code, inverse_of: :places
 
     validates :geoid, length: {is: 7}
     validates :state_code, length: {is: 2}
     validates :primary_county_geoid, length: {is: 5}
+    validates :urban_area_geoid, length: {is: 5}, allow_nil: true
     validates :name, presence: true, length: {maximum: 60}
     validates :short_name, length: {maximum: 30}
     validates :fips_class_code, length: {is: 2}
@@ -71,6 +72,7 @@ module USGeo
               record.short_name = row["Short Name"]
               record.state_code = row["State"]
               record.primary_county_geoid = row["County GEOID"]
+              record.urban_area_geoid = row["Urban Area GEOID"]
               record.fips_class_code = row["FIPS Class"]
               record.population = row["Population"]
               record.housing_units = row["Housing Units"]

@@ -17,7 +17,6 @@ module USGeo
 
     self.table_name = "us_geo_zctas"
     self.primary_key = "zipcode"
-    self.ignored_columns = %w[primary_urban_area_geoid]
 
     # This scope will search for ZCTA's via the ZCTAMappings table. This is useful
     # when you have a retired ZIP code and want to find the current ZCTA for that ZIP code.
@@ -26,6 +25,10 @@ module USGeo
     has_many :zcta_counties, -> { not_removed }, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
     has_many :counties, -> { not_removed }, through: :zcta_counties
     belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
+
+    has_many :zcta_urban_areas, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
+    has_many :urban_areas, through: :zcta_urban_areas
+    belongs_to :primary_urban_area, foreign_key: :primary_urban_area_geoid, class_name: "USGeo::UrbanArea"
 
     has_many :zcta_county_subdivisions, -> { not_removed }, foreign_key: :zipcode, inverse_of: :zcta, dependent: :destroy
     has_many :county_subdivisions, -> { not_removed }, through: :zcta_county_subdivisions
@@ -64,6 +67,7 @@ module USGeo
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"]) do |record|
               record.primary_county_geoid = row["Primary County"]
+              record.primary_urban_area_geoid = row["Primary Urban Area"]
               record.primary_county_subdivision_geoid = row["Primary County Subdivision"]
               record.primary_place_geoid = row["Primary Place"]
               record.population = row["Population"]

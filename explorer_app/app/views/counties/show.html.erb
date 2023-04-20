@@ -69,6 +69,14 @@
   </tbody>
 </table>
 
+<% if @county.urban_areas.present? %>
+  <br>
+
+  <h2><%= pluralize(@county.urban_areas.count, "Urban Area") %></h2>
+
+  <%= render "urban_areas/table", urban_areas: @county.urban_areas, county: @county %>
+<% end %>
+
 <br>
 
 <h2><%= pluralize(@county.subdivisions.count, "County Subdivision") %></h2>

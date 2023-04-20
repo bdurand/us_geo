@@ -84,7 +84,7 @@ module USGeoData
 
     def dump_csv(output)
       csv = CSV.new(output)
-      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "County GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "County GEOID", "Urban Area GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       place_data.each_value do |data|
         unless data[:gnis_id] && data[:fips_class]
           puts "Missing data for place #{data[:geoid]} #{data[:name]}, #{data[:state]}: #{data.inspect}"
@@ -97,6 +97,7 @@ module USGeoData
           short_name(data[:name]),
           data[:state],
           data[:county_geoid],
+          data[:urban_area_geoid],
           data[:fips_class],
           data[:population],
           data[:housing_units],
@@ -148,6 +149,7 @@ module USGeoData
 
         add_demographics(places)
         add_counties(places)
+        add_urban_areas(places)
 
         @place_data ||= places
       end
@@ -194,6 +196,31 @@ module USGeoData
         next unless place
 
         place[:counties] << county_geoid unless place[:counties].include?(county_geoid)
+      end
+    end
+
+    def add_urban_areas(places)
+      overlaps = {}
+      foreach(data_file(USGeoData::PLACE_URBAN_AREA_REL_FILE), col_sep: "|") do |row|
+        urban_area_geoid = row["GEOID_UA_20"]
+        place_geoid = row["GEOID_PLACE_20"]
+        overlap_land_area = row["AREALAND_PART"].to_f * SQUARE_METERS_TO_MILES
+        place_land_area = row["AREALAND_PLACE_20"].to_f * SQUARE_METERS_TO_MILES
+
+        next unless urban_area_geoid && place_geoid && overlap_land_area > 0 && place_land_area > 0
+        next unless places.include?(place_geoid)
+
+        info = overlaps[place_geoid]
+        unless info
+          info = {}
+          overlaps[place_geoid] = info
+        end
+        info[urban_area_geoid] = overlap_land_area / place_land_area
+      end
+
+      overlaps.each do |place_geoid, overlap|
+        primary_urban_area = overlap.max_by { |_, percent| percent }.first
+        places[place_geoid][:urban_area_geoid] = primary_urban_area
       end
     end
 

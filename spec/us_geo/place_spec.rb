@@ -18,6 +18,13 @@ describe USGeo::Place do
       expect(place.build_primary_county).to be_a(USGeo::County)
     end
 
+    it "should have an urban area" do
+      place = USGeo::Place.new
+      place.urban_area_geoid = "00001"
+      expect { place.urban_area }.to_not raise_error
+      expect(place.build_urban_area).to be_a(USGeo::UrbanArea)
+    end
+
     it "should have counties" do
       place = USGeo::Place.new
       place.geoid = "0000001"
@@ -58,6 +65,7 @@ describe USGeo::Place do
       expect(place.short_name).to eq "Moraga"
       expect(place.state_code).to eq "CA"
       expect(place.primary_county_geoid).to eq "06013"
+      expect(place.urban_area_geoid).to eq "19504"
       expect(place.population).to be_between(15_000, 20_000)
       expect(place.housing_units).to be_between(5000, 7000)
       expect(place.fips_class_code).to eq "C1"

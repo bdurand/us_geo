@@ -18,11 +18,17 @@ require_relative "us_geo/county"
 require_relative "us_geo/county_subdivision"
 require_relative "us_geo/place"
 require_relative "us_geo/place_county"
+require_relative "us_geo/urban_area"
+require_relative "us_geo/urban_area_county"
+require_relative "us_geo/urban_area_county_subdivision"
+require_relative "us_geo/urban_cluster"
+require_relative "us_geo/urbanized_area"
 require_relative "us_geo/zcta"
 require_relative "us_geo/zcta_county"
 require_relative "us_geo/zcta_county_subdivision"
 require_relative "us_geo/zcta_mapping"
 require_relative "us_geo/zcta_place"
+require_relative "us_geo/zcta_urban_area"
 
 require_relative "us_geo/engine" if defined?(::Rails::Engine)
 

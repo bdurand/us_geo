@@ -22,6 +22,9 @@ module USGeo
     has_many :zcta_county_subdivisions, -> { not_removed }, foreign_key: :county_subdivision_geoid, inverse_of: :county_subdivision, dependent: :destroy
     has_many :zctas, -> { not_removed }, through: :zcta_county_subdivisions
 
+    has_many :urban_area_county_subdivisions, foreign_key: :county_subdivision_geoid, inverse_of: :county_subdivision, dependent: :destroy
+    has_many :urban_areas, through: :urban_area_county_subdivisions
+
     validates :geoid, length: {is: 10}
     validates :name, presence: true, length: {maximum: 60}, uniqueness: {scope: :county_geoid}
     validates :fips_class_code, length: {is: 2}

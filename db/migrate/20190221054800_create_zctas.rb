@@ -5,6 +5,7 @@ class CreateZctas < ActiveRecord::Migration[5.0]
     create_table :us_geo_zctas, id: false do |t|
       t.string :zipcode, primary_key: true, null: false, limit: 5
       t.string :primary_county_geoid, null: false, limit: 5, index: true
+      t.string :primary_urban_area_geoid, null: true, limit: 5, index: true
       t.float :land_area, null: false
       t.float :water_area, null: false
       t.integer :population, null: false

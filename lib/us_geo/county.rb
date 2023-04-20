@@ -9,7 +9,6 @@ module USGeo
     include Area
 
     self.primary_key = "geoid"
-    self.ignored_columns = %w[dma_code]
 
     belongs_to :core_based_statistical_area, foreign_key: :cbsa_geoid, optional: true, inverse_of: :counties
     belongs_to :metropolitan_division, foreign_key: :metropolitan_division_geoid, optional: true, inverse_of: :counties
@@ -21,6 +20,9 @@ module USGeo
 
     has_many :zcta_counties, -> { not_removed }, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
     has_many :zctas, -> { not_removed }, through: :zcta_counties
+
+    has_many :urban_area_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
+    has_many :urban_areas, through: :urban_area_counties
 
     has_many :place_counties, -> { not_removed }, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
     has_many :places, -> { not_removed }, through: :place_counties
