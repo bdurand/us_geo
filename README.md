@@ -26,7 +26,6 @@ The data set currently contains
 * 4 Regions
 * 9 Divisions
 * 56 States and Territories
-* 210 Designated Market Areas
 * 175 Combined Statistical Areas
 * 939 Core Based Statistical Areas
 * 31 Metropolitan Divisions
@@ -75,6 +74,12 @@ Basic organizational unit of states and territories. The actual name of the unit
 ### County Subdivision
 
 Subdivision of counties. These could be minor civil divisions like townships or borroughs, but in some states that don't divide counties, they are census designated places. See https://www.census.gov/geo/reference/gtc/gtc_cousub.html.
+
+### Urban Area
+
+Urbanized areas or clusters. Areas with 2,500 to 50,000 inhabitants is considered an urban cluster while more than 50,000 is an urbanized area. Urban areas can span counties, but the one with the majority of the population is identified as the primary county.
+
+Urban area data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
 
 ### Place
 

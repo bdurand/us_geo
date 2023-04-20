@@ -84,7 +84,7 @@ describe USGeo::UrbanArea do
       expect(chicago.primary_county_geoid).to eq "17031"
       expect(chicago.population).to be_between(8_000_000, 10_000_000)
       expect(chicago.housing_units).to be_between(3_000_000, 4_000_000)
-      expect(chicago.land_area.round).to eq 2441
+      expect(chicago.land_area.round).to eq 2338
       expect(chicago.water_area.round).to eq 43
       expect(chicago.lat.round(1)).to eq 41.8
       expect(chicago.lng.round(1)).to eq(-87.9)
