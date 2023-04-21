@@ -3,7 +3,11 @@
 [![Build Status](https://travis-ci.com/bdurand/us_geo.svg?branch=master)](https://travis-ci.com/bdurand/us_geo)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
 
-This gem provides a variety of U.S. geographic data ActiveRecord models. It is designed to provide a normalized way to access the data from a relational database. This is by no means a complete set of data. The primary purpose it was built is to provide a way to match most ZIP codes to higher level geographic entities.
+This gem provides a variety of U.S. geographic data ActiveRecord models. It is designed to provide a normalized way to access the data from a relational database. This is by no means a complete set of data.
+
+The primary purpose it was built for is to provide a way to match ZIP codes to higher level geographic entities.
+
+You can use this gem in conjunction with non-Ruby projects if you just want to use the data. The core data is provided as [CSV files](./data/2020_dist/) which you can import yourself, or you can use the gem to import them for you.
 
 ## Entities
 
@@ -11,6 +15,8 @@ All of the entities are defined by the U.S. Census Bureau. For more details.
 
 https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf
 https://www2.census.gov/geo/pdfs/reference/GARM/Ch2GARM.pdf
+
+[![](https://mermaid.ink/img/pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd?type=png)](https://mermaid.live/edit#pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd)
 
 All entities in the system are keyed using external identifier.
 
@@ -99,9 +105,8 @@ ZCTA data is only provided for states, the District of Columbia, Puerto Rico. It
 
 The U.S. Postal Service adds and removes ZIP Codes as necessary for the efficient delivery of mail. The U.S. Census Bureau updates the ZCTA's to reflect these changes during the decenniel census. The list of retired 2010 ZCTA's can still be used via the `USGeo::Zcta.for_zipcode` method. This scope will
 
-### Entity Relationships
+## Installation
 
-[![](https://mermaid.ink/img/pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd?type=png)](https://mermaid.live/edit#pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd)
 First add to you Gemfile:
 
 `gem us_geo`
@@ -155,4 +160,16 @@ You can cleanup all previously imported records that are no longer in the curren
 rake us_geo:import:cleanup
 ```
 
+### Using in a non-Rails environment.
+
 This gem can be used outside of a Rails application. You'll just need to copy the migrations by hand and install the import rake tasks.
+
+## Contributing
+
+Open a pull request on GitHub.
+
+Please use the [standardrb](https://github.com/testdouble/standard) syntax and lint your code with `standardrb --fix` before submitting.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
