@@ -54,4 +54,11 @@ class ApplicationController < ActionController::Base
       add_breadcrumb(metropolitan_division_id: @metropolitan_division)
     end
   end
+
+  def add_urban_area_breadcrumb
+    if params[:urban_area_id]
+      @urban_area = USGeo::UrbanArea.find(params[:urban_area_id])
+      add_breadcrumb(urban_area_id: @urban_area)
+    end
+  end
 end

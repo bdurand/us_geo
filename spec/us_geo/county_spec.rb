@@ -43,6 +43,14 @@ describe USGeo::County do
       expect(county.zcta_counties.build).to be_a(USGeo::ZctaCounty)
     end
 
+    it "should have urban_areas" do
+      county = USGeo::County.new
+      county.geoid = "00001"
+      expect { county.urban_areas }.to_not raise_error
+      expect { county.urban_area_counties }.to_not raise_error
+      expect(county.urban_area_counties.build).to be_a(USGeo::UrbanAreaCounty)
+    end
+
     it "should have places" do
       county = USGeo::County.new
       county.geoid = "00001"

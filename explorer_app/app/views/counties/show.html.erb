@@ -22,7 +22,7 @@
     </tr>
    <tr>
       <th>Time Zone</th>
-      <td><%= @county.time_zone_name %></td>
+      <td><%= @county&.time_zones.collect(&:name).join(", ") %></td>
     </tr>
     <% if @county.combined_statistical_area %>
       <tr>
@@ -68,6 +68,14 @@
     </tr>
   </tbody>
 </table>
+
+<% if @county.urban_areas.present? %>
+  <br>
+
+  <h2><%= pluralize(@county.urban_areas.count, "Urban Area") %></h2>
+
+  <%= render "urban_areas/table", urban_areas: @county.urban_areas, county: @county %>
+<% end %>
 
 <br>
 

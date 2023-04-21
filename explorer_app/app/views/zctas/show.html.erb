@@ -24,10 +24,6 @@
         <% end %>
       </td>
     </tr>
-    <tr>
-      <th>Time Zone</th>
-      <td><%= @zcta.time_zone_name %></td>
-    </tr>
     <% if @zcta.combined_statistical_area %>
       <tr>
         <th>Combined Statistical Area</th>
@@ -44,6 +40,12 @@
       <tr>
         <th>Metropolitan Division</th>
         <td><%= link_to @zcta.metropolitan_division.name, metropolitan_division_path(@zcta.metropolitan_division, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <% if @zcta.primary_urban_area %>
+      <tr>
+        <th>Primary Urban Area</th>
+        <td><%= link_to @zcta.primary_urban_area.name, urban_area_path(@zcta.primary_urban_area, breadcrumb_params) %></td>
       </tr>
     <% end %>
     <tr>
@@ -73,22 +75,30 @@
   </tbody>
 </table>
 
-<br>
+<% if @zcta.urban_areas.size > 1 %>
+  <br>
+
+  <h2><%= pluralize(@zcta.urban_areas.count, "Urban Area") %></h2>
+
+  <%= render "urban_areas/table", urban_areas: @zcta.urban_areas, zcta: @zcta %>
+<% end %>
 
 <% if @zcta.counties.size > 1 %>
+  <br>
+
   <h2><%= pluralize(@zcta.counties.count, "County") %></h2>
 
-  <%= render "counties/table", counties: @zcta.counties %>
-
-  <br>
+  <%= render "counties/table", counties: @zcta.counties, zcta: @zcta %>
 <% end %>
+
+<br>
 
 <h2><%= pluralize(@zcta.county_subdivisions.count, "County Subdivision") %></h2>
 
-<%= render "county_subdivisions/table", county_subdivisions: @zcta.county_subdivisions %>
+<%= render "county_subdivisions/table", county_subdivisions: @zcta.county_subdivisions, zcta: @zcta %>
 
 <br>
 
 <h2><%= pluralize(@zcta.places.count, "Place") %></h2>
 
-<%= render "places/table", places: @zcta.places %>
+<%= render "places/table", places: @zcta.places, zcta: @zcta %>

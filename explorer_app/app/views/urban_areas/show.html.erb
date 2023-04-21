@@ -1,0 +1,68 @@
+<%= breadcrumbs @urban_area.name, active: @urban_area %>
+
+<h1><%= @urban_area.name %></h1>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>GEOID</th>
+      <td><%= @urban_area.geoid %></td>
+    </tr>
+    <tr>
+      <th>Short Name</th>
+      <td><%= @urban_area.short_name %></td>
+    </tr>
+    <tr>
+      <th>Type</th>
+      <td><%= @urban_area.urbanized? ? "Urbanized Area" : "Urban Cluster" %></td>
+    </tr>
+    <tr>
+      <th>Primary County</th>
+      <td><%= link_to @urban_area.primary_county.full_name, county_path(@urban_area.primary_county) %></td>
+    </tr>
+    <tr>
+      <th>Population</th>
+      <td><%= formatted_number(@urban_area.population) %></td>
+    </tr>
+    <tr>
+      <th>Housing Units</th>
+      <td><%= formatted_number(@urban_area.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Land Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@urban_area.land_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Water Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@urban_area.water_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Coordinates</th>
+      <td><%= google_maps_link(@urban_area) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h2><%= pluralize(@urban_area.counties.count, "County") %></h2>
+
+<%= render "counties/table", counties: @urban_area.counties, urban_area: @urban_area %>
+
+<br>
+
+<h2><%= pluralize(@urban_area.county_subdivisions.count, "County Subdivision") %></h2>
+
+<%= render "county_subdivisions/table", county_subdivisions: @urban_area.county_subdivisions, urban_area: @urban_area %>
+
+<br>
+
+<h2><%= pluralize(@urban_area.places.count, "Place") %></h2>
+
+<%= render "places/table", places: @urban_area.places, urban_area: @urban_area %>
+
+<br>
+
+<h2><%= pluralize(@urban_area.zctas.count, "ZIP Code Tabulation Area") %></h2>
+
+<%= render "zctas/table", zctas: @urban_area.zctas, urban_area: @urban_area %>

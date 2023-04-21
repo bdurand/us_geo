@@ -1,3 +1,8 @@
+<%
+  zcta ||= nil
+  overlap = (zcta)
+%>
+
 <table class="table table-striped sortable">
   <thead>
     <tr>
@@ -5,7 +10,12 @@
       <th>Name</th>
       <th>Primary County</th>
       <th>FIPS Class Code</th>
+
       <%= demographics_headers %>
+
+      <% if overlap %>
+        <th class="text-end">Overlap</th>
+      <% end %>
     </th>
   </thead>
   <tbody>
@@ -21,7 +31,16 @@
           <% end %>
         </td>
         <td><%= place.fips_class_code %></td>
+
         <%= demographics_cells(place, round_area: 1) %>
+
+        <% if overlap %>
+          <td class="text-end">
+            <% if zcta %>
+              <%= overlap_percentage(zcta, place, :zcta_places) %>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -1,3 +1,9 @@
+<%
+  urban_area ||= nil
+  zcta ||= nil
+  overlap = (urban_area || zcta)
+%>
+
 <table class="table table-striped sortable">
   <thead>
     <tr>
@@ -7,7 +13,12 @@
         <th>County</th>
       <% end %>
       <th>FIPS Class Code</th>
+
       <%= demographics_headers %>
+
+      <% if overlap %>
+        <th class="text-end">Overlap</th>
+      <% end %>
     </th>
   </thead>
   <tbody>
@@ -19,7 +30,18 @@
           <td><%= link_to county_subdivision.county.full_name, county_path(county_subdivision.county, breadcrumb_params) %></td>
         <% end %>
         <td><%= county_subdivision.fips_class_code %></td>
+
         <%= demographics_cells(county_subdivision, round_area: 1) %>
+
+        <% if overlap %>
+          <td class="text-end">
+            <% if urban_area %>
+              <%= overlap_percentage(urban_area, county_subdivision, :urban_area_county_subdivisions) %>
+            <% elsif zcta %>
+              <%= overlap_percentage(zcta, county_subdivision, :zcta_county_subdivisions) %>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

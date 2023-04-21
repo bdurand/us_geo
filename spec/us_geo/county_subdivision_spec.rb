@@ -18,6 +18,14 @@ describe USGeo::CountySubdivision do
       expect { subdivision.zcta_county_subdivisions }.to_not raise_error
       expect(subdivision.zcta_county_subdivisions.build).to be_a(USGeo::ZctaCountySubdivision)
     end
+
+    it "should have urban_areas" do
+      subdivision = USGeo::CountySubdivision.new
+      subdivision.geoid = "0000000001"
+      expect { subdivision.urban_areas }.to_not raise_error
+      expect { subdivision.urban_area_county_subdivisions }.to_not raise_error
+      expect(subdivision.urban_area_county_subdivisions.build).to be_a(USGeo::UrbanAreaCountySubdivision)
+    end
   end
 
   describe "load" do

@@ -11,6 +11,9 @@
 /db/*.sqlite3
 /db/*.sqlite3-*
 
+/db/schema.rb
+/db/migrate/*
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -21,7 +24,6 @@
 /tmp/pids/*
 !/tmp/pids/
 !/tmp/pids/.keep
-
 
 /public/assets
 

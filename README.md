@@ -21,28 +21,31 @@ All entities in the system are keyed using external identifier.
 
 There are no foreign key constraints defined on the tables. This is intentional so that you can only import as much data as you need if you don't need the whole set.
 
-The data set currently contains
+The data set currently contains:
 
 * 4 Regions
 * 9 Divisions
 * 56 States and Territories
-* 210 Designated Market Areas
 * 175 Combined Statistical Areas
 * 939 Core Based Statistical Areas
 * 31 Metropolitan Divisions
-* 3226 Counties or equivalents
-* 35,697 County Subdivisions
-* 31,847 Places
-* 33,792 ZIP Code Tabulation Areas
+* 3234 Counties or equivalents
+* 35,657 County Subdivisions
+* 2,313 Urban Areas
+* 31,846 Places
+* 33,791 ZIP Code Tabulation Areas
+
+The population, number of housing units, land area, and water area is supplied for all geographic entities.
 
 In addition, there entity to entity mapping tables:
 
 * 46,953 ZCTA to County
-* 109549 ZCTA to County Subdivision
+* 109,549 ZCTA to County Subdivision
+* 14,455 ZCTA to Urban Area
 * 53,131 ZCTA to Place
-* 33,084 Place to County
-
-The land and water area for all entities is given in square miles.
+* 33,276 Place to County
+* 33,09 County to Urban Area
+* 11,755 County Subdivison to Urban Area
 
 ### Region
 
@@ -76,6 +79,12 @@ Basic organizational unit of states and territories. The actual name of the unit
 
 Subdivision of counties. These could be minor civil divisions like townships or borroughs, but in some states that don't divide counties, they are census designated places. See https://www.census.gov/geo/reference/gtc/gtc_cousub.html.
 
+### Urban Area
+
+Urbanized areas or clusters. Areas with 2,500 to 50,000 inhabitants is considered an urban cluster while more than 50,000 is an urbanized area. Urban areas can span counties, but the one with the majority of the population is identified as the primary county.
+
+Urban area data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
+
 ### Place
 
 A place is an organized area within a state usually corresponding to a city, town, village, etc. Places are within a single state, but may span counties. If a place spans multiple counties, the county with the most land area will be identified as the primary county.
@@ -88,10 +97,11 @@ ZCTAs can span counties, county subdivisions, and places. A primary county, coun
 
 ZCTA data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
 
+The U.S. Postal Service adds and removes ZIP Codes as necessary for the efficient delivery of mail. The U.S. Census Bureau updates the ZCTA's to reflect these changes during the decenniel census. The list of retired 2010 ZCTA's can still be used via the `USGeo::Zcta.for_zipcode` method. This scope will
+
 ### Entity Relationships
 
-[![](https://mermaid.ink/img/pako:eNqFU0FuwyAQ_AriHH_Aiiq1dY-VqvoWcdnAJkWyIYKlUpTm77XBrmJKHJ_Ws7PDMiMuXFqFvOayA-8bDUcHvTBs-CLCPvGorRHmFmv0t_b_0JaAkC2xVxsMnUtYG_aqKLOTBEvkowOJuYbDF_CoxkO1Jy2he3YIOavfa_OA9I7k7Ml2msAUulqudW9mc1PGe7BtVT39mVBCFzYsCdO1RzCW7FYr4Smc2GgWKvNfbMVgEp4yypdKNbuzVeLkNrHtT1Wt5BBnMvMezszrFGOb9ls78F63YF0puoIxK3rl8PmG9-h60Gp4VJdRRnD6wh4Fr4dS4QFCR4ILcx2o4aSGQN6UJut4fYDO44ZDINuejeQ1uYAzaXqbE-v6C9NYRww?type=png)](https://mermaid.live/edit#pako:eNqFU0FuwyAQ_AriHH_Aiiq1dY-VqvoWcdnAJkWyIYKlUpTm77XBrmJKHJ_Ws7PDMiMuXFqFvOayA-8bDUcHvTBs-CLCPvGorRHmFmv0t_b_0JaAkC2xVxsMnUtYG_aqKLOTBEvkowOJuYbDF_CoxkO1Jy2he3YIOavfa_OA9I7k7Ml2msAUulqudW9mc1PGe7BtVT39mVBCFzYsCdO1RzCW7FYr4Smc2GgWKvNfbMVgEp4yypdKNbuzVeLkNrHtT1Wt5BBnMvMezszrFGOb9ls78F63YF0puoIxK3rl8PmG9-h60Gp4VJdRRnD6wh4Fr4dS4QFCR4ILcx2o4aSGQN6UJut4fYDO44ZDINuejeQ1uYAzaXqbE-v6C9NYRww)## Usage
-
+[![](https://mermaid.ink/img/pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd?type=png)](https://mermaid.live/edit#pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd)
 First add to you Gemfile:
 
 `gem us_geo`
@@ -120,8 +130,11 @@ rake us_geo:import:core_based_statistical_areas
 rake us_geo:import:metropolitan_divisions
 rake us_geo:import:counties
 rake us_geo:import:county_subdivisions
+rake us_geo:import:urban_areas
 rake us_geo:import:places
 rake us_geo:import:zctas
+rake us_geo:import:urban_area_counties
+rake us_geo:import:urban_area_county_subdivisions
 rake us_geo:import:place_counties
 rake us_geo:import:zcta_counties
 rake us_geo:import:zcta_county_subdivisions

@@ -10,17 +10,11 @@ module USGeo
 
     belongs_to :county, foreign_key: :county_geoid, inverse_of: :subdivisions
 
-    delegate :core_based_statistical_area,
-      :combined_statistical_area,
-      :metropolitan_division,
-      :state,
-      :state_code,
-      :time_zone,
-      :time_zone_name,
-      to: :county
-
     has_many :zcta_county_subdivisions, -> { not_removed }, foreign_key: :county_subdivision_geoid, inverse_of: :county_subdivision, dependent: :destroy
     has_many :zctas, -> { not_removed }, through: :zcta_county_subdivisions
+
+    has_many :urban_area_county_subdivisions, foreign_key: :county_subdivision_geoid, inverse_of: :county_subdivision, dependent: :destroy
+    has_many :urban_areas, through: :urban_area_county_subdivisions
 
     validates :geoid, length: {is: 10}
     validates :name, presence: true, length: {maximum: 60}, uniqueness: {scope: :county_geoid}
@@ -38,6 +32,26 @@ module USGeo
 
     # @!attribute fips_class_code
     #   @return [String] 2-character FIPS class code.
+
+    # @!method :core_based_statistical_area
+    #   @return [CoreBasedStatisticalArea] Core-based statistical area the subdivision is in.
+    delegate :core_based_statistical_area, to: :county
+
+    # @!method :combined_statistical_area
+    #   @return [CombinedStatisticalArea] Combined statistical area the subdivision is in.
+    delegate :combined_statistical_area, to: :county
+
+    # @!method :metropolitan_division
+    #   @return [MetropolitanDivision] Metropolitan division the subdivision is in.
+    delegate :metropolitan_division, to: :county
+
+    # @!method :state
+    #   @return [State] State the subdivision is in.
+    delegate :state, to: :county
+
+    # @!method :state_code
+    #   @return [String] 2-character state code.
+    delegate :state_code, to: :county
 
     class << self
       def load!(uri = nil)

@@ -33,6 +33,11 @@ Rails.application.routes.draw do
     get "metropolitan_divisions/:id", action: :show, as: :metropolitan_division
   end
 
+  controller :urban_areas do
+    get "urban_areas", action: :index, as: :urban_areas
+    get "urban_areas/:id", action: :show, as: :urban_area
+  end
+
   controller :counties do
     get "counties/:id", action: :show, as: :county
   end

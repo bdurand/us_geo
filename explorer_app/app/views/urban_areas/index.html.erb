@@ -1,0 +1,19 @@
+<%= breadcrumbs "Urban Areas" %>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "All", urban_areas_path(breadcrumb_params.merge(tab: nil)), class: "nav-link #{'active' if @tab.blank?}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Urbanized Areas", urban_areas_path(breadcrumb_params.merge(tab: "urbanized")), class: "nav-link #{'active' if @tab == 'metropolitan'}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Urban Cluster", urban_areas_path(breadcrumb_params.merge(tab: "cluster")), class: "nav-link #{'active' if @tab == 'micropolitan'}" %>
+  </li>
+</ul>
+
+<h1>
+  <%= pluralize @urban_areas.size, "Urban Area" %>
+</h1>
+
+<%= render "table", urban_areas: @urban_areas %>

@@ -69,8 +69,16 @@
   </tbody>
 </table>
 
+<% if @county_subdivision.urban_areas.present? %>
+  <br>
+
+  <h2><%= pluralize(@county_subdivision.urban_areas.count, "Urban Area") %></h2>
+
+  <%= render "urban_areas/table", urban_areas: @county_subdivision.urban_areas, county_subdivision: @county_subdivision %>
+<% end %>
+
 <br>
 
 <h2><%= pluralize(@county_subdivision.zctas.count, "ZIP Code Tabulation Area") %></h2>
 
-<%= render "zctas/table", zctas: @county_subdivision.zctas, county: @county_subdivision.county %>
+<%= render "zctas/table", zctas: @county_subdivision.zctas, county_subdivision: @county_subdivision %>
