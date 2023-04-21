@@ -7,7 +7,7 @@ This gem provides a variety of U.S. geographic data ActiveRecord models. It is d
 
 The primary purpose it was built for is to provide a way to match ZIP codes to higher level geographic entities.
 
-You can use this gem in conjunction with non-Ruby projects if you just want to use the data. The core data is provided as [CSV files](./data/2020_dist/) which you can import yourself, or you can use the gem to import them for you.
+You can use the data from this gem in non-Ruby probjects. The data is provided as [CSV files](./data/2020_dist/) which you can import into any database or spreadsheet. You can see the database structure in the [schema.rb file](./db/schema.rb).
 
 ## Entities
 
@@ -157,10 +157,6 @@ You can cleanup all previously imported records that are no longer in the curren
 ```bash
 rake us_geo:import:cleanup
 ```
-
-### Using in a non-Rails environment.
-
-This gem can be used outside of a Rails application. You'll just need to copy the migrations by hand and install the import rake tasks.
 
 ## Contributing
 

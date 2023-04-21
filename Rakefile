@@ -49,3 +49,16 @@ namespace :data do
     USGeoData.dump_all
   end
 end
+
+namespace :db do
+  desc "Dump the database schema to db/schema.rb"
+  task :dump_schema do
+    exec <<~BASH
+      cd explorer_app
+      BUNDLE_GEMFILE=$(pwd)/Gemfile bundle
+      BUNDLE_GEMFILE=$(pwd)/Gemfile DATABASE_URL=sqlite3:tmp/db.sqlite3: bundle exec rails db:migrate
+      rm -f tmp/db.sqlite3
+      mv db/schema.rb ../db/schema.rb
+    BASH
+  end
+end
