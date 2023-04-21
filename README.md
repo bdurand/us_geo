@@ -18,11 +18,11 @@ https://www2.census.gov/geo/pdfs/reference/GARM/Ch2GARM.pdf
 
 [![](https://mermaid.ink/img/pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd?type=png)](https://mermaid.live/edit#pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd)
 
-All entities in the system are keyed using external identifier.
+All entities in the system are keyed using external identifiers.
 
-* The various `geoid` columns reference the id used by the U.S. Census Bureau.
+* The various `geoid` columns reference the id used by the [U.S. Census Bureau](https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html).
 
-* The `gnis_id` columns are the official ID's assigned by the U.S. Board on Geographic Names https://geonames.usgs.gov.
+* The `gnis_id` columns are the official ID's assigned by the [U.S. Board on Geographic Names](https://geonames.usgs.gov).
 
 
 There are no foreign key constraints defined on the tables. This is intentional so that you can only import as much data as you need if you don't need the whole set.
@@ -43,7 +43,7 @@ The data set currently contains:
 
 The population, number of housing units, land area, and water area is supplied for all geographic entities.
 
-In addition, there entity to entity mapping tables:
+In addition, there entity to entity mapping tables containing information about how entities overlap with each other:
 
 * 46,953 ZCTA to County
 * 109,549 ZCTA to County Subdivision
@@ -63,15 +63,15 @@ A grouping of states within a region.
 
 ### State
 
-Includes both states and territories and the District of Columbia.
-
-### Combined Statistical Areas
-
-Groupings of adjacent CBSA's with regional ties to each other.
+Includes both states, territories, and the District of Columbia.
 
 ### Core Based Statistical Area (CBSA)
 
 A grouping of counties around an urban core defined by commuting patterns. CBSA's are split into metropolitan (population > 50,000) and micropolitan areas. Counties within a CBSA are either identified as being core or outlyer counties. Not all counties belong to a CBSA.
+
+### Combined Statistical Areas
+
+Groupings of adjacent CBSA's with regional ties to each other.
 
 ### Metropolitan Division
 
@@ -89,8 +89,6 @@ Subdivision of counties. These could be minor civil divisions like townships or 
 
 Urbanized areas or clusters. Areas with 2,500 to 50,000 inhabitants is considered an urban cluster while more than 50,000 is an urbanized area. Urban areas can span counties, but the one with the majority of the population is identified as the primary county.
 
-Urban area data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
-
 ### Place
 
 A place is an organized area within a state usually corresponding to a city, town, village, etc. Places are within a single state, but may span counties. If a place spans multiple counties, the county with the most land area will be identified as the primary county.
@@ -103,7 +101,7 @@ ZCTAs can span counties, county subdivisions, and places. A primary county, coun
 
 ZCTA data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
 
-The U.S. Postal Service adds and removes ZIP Codes as necessary for the efficient delivery of mail. The U.S. Census Bureau updates the ZCTA's to reflect these changes during the decenniel census. The list of retired 2010 ZCTA's can still be used via the `USGeo::Zcta.for_zipcode` method. This scope will
+The U.S. Postal Service adds and removes ZIP Codes as necessary for the efficient delivery of mail. The U.S. Census Bureau updates the ZCTA's to reflect these changes during the decenniel census. The list of retired 2010 ZCTA's can still be used via the `USGeo::Zcta.for_zipcode` method. If you search on a retired ZIP code with this method, it will return the ZCTA with the most land overlap with the retired ZIP code.
 
 ## Installation
 
