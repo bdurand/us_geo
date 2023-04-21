@@ -7,7 +7,7 @@ This gem provides a variety of U.S. geographic data ActiveRecord models. It is d
 
 ## Entities
 
-All of the entities except for DMA are defined by the U.S. Census Bureau. For more details.
+All of the entities are defined by the U.S. Census Bureau. For more details.
 
 https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf
 https://www2.census.gov/geo/pdfs/reference/GARM/Ch2GARM.pdf

@@ -18,11 +18,6 @@ The `data/raw/*_Gaz_*` files are are U.S. Census Gazetteer files update annually
 
 URL: https://www.census.gov/geographies/reference-files.html
 
-Header:
-```
-USPS	GEOID	ANSICODE	NAME	ALAND	AWATER	ALAND_SQMI	AWATER_SQMI	INTPTLAT	INTPTLONG
-```
-
 ### Relationship Files
 
 The `data/raw/tab*` files are relationship files from the U.S. Census describing the relationship between entities. They are updated with every census. The latest copies can be located from the Census geography reference files.
@@ -46,10 +41,6 @@ The `data/raw/NationalFedCodes_*` is the USGS GNIS names file with federal codes
 
 URL: https://www.usgs.gov/u.s.-board-on-geographic-names/download-gnis-data
 
-Header: ```
-FEATURE_ID|FEATURE_NAME|FEATURE_CLASS|CENSUS_CODE|CENSUS_CLASS_CODE|GSA_CODE|OPM_CODE|STATE_NUMERIC|STATE_ALPHA|COUNTY_SEQUENCE|COUNTY_NUMERIC|COUNTY_NAME|PRIMARY_LATITUDE|PRIMARY_LONGITUDE|DATE_CREATED|DATE_EDITED
-```
-
 ### Delineation File
 
 The `data/raw/list1_*` file is the CBSA deliniation file from the U.S. Census. It is updated every two years or so.
@@ -58,40 +49,16 @@ URL: https://www.census.gov/geographies/reference-files/time-series/demo/metro-m
 
 This files is exported from Excel and it may have extraneous header and footer information in the file. You should edit the downlownloaded file to remove any header and footer so that the file only includes the field names and data.
 
-Header:
-```
-CBSA Code,Metropolitan Division Code,CSA Code,CBSA Title,Metropolitan/Micropolitan Statistical Area,Metropolitan Division Title,CSA Title,County/County Equivalent,State Name,FIPS State Code,FIPS County Code,Central/Outlying County
-```
-
 ### Curated Files
 
-The `data/raw/county_info.csv` file is a hand maintained CSV file. It is the source of county short names, DMA codes, and time zones. If counties are missing the information needs to be looked up and added here manually. Run this rake task to validate the file and show any missing data.
+The files in the info directory are hand curated files to supply infomation missing in other data sources.
 
-Header:
-```
-GEOID,Short Name,Full Name,State,DMA Code,Time Zone,FIPS Class
-```
-
-The `data/raw/divisions.csv` file is a hand maintained CSV file of the divisions and regions defined for the United States.
-
-Header:
-```
-Region ID,Region Name,Division ID,Division Name
-```
-
-The `data/raw/states.csv` file is a hand maintained CSV file of the states and territories of the United States.
-
-Header:
-```
-Name,Code,Type,FIPS,Region ID,Division ID
-```
-
-The `data/raw/dmas.csv` file is a hand maintained CSV file of the list of Designated Market Areas.
-
-Header:
-```
-Code,Name
-```
+- regions.csv: list of regions
+- divisions.csv: list of divisions
+- states.csv: list of states and their relationship to divisions
+- state_data.csv: areas for all states
+- county_timezones.csv: time zones for all counties
+- extra_counties.csv: county information for counties not in the gazetteer file
 
 ### Pre-process the GNIS names file
 
@@ -101,14 +68,12 @@ The GNIS names file needs to be preprocessed and split by geographic entity type
 rake data:preprocess_gnis_data
 ```
 
-### Check the county_info.csv file
-
-Run this command:
-
-```bash
-rake data:validate_counties
-```
-
 If there are any errors, edit the `data/raw/counties_info.csv` to add any missing data.
 
 ### Generate the distribution files
+
+Update the files in the 2020_dist directory with this command:
+
+```bash
+rake data:dump_dist
+```
