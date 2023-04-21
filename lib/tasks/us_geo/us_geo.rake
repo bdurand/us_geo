@@ -31,8 +31,9 @@ namespace :us_geo do
         klass.load!
         puts "Loaded #{klass.count} rows into #{klass.table_name} in #{(Time.now - t).round(1)}s"
 
-        klass.removed.where(klass.arel_table(:updated_at).gt(t)).find_each do |record|
-          puts("  WARNING: #{klass}.#{record.id} status changed to removed")
+        removed_count = klass.removed.count
+        if removed_count > 0
+          puts "  #{removed_count} previously imported records in #{klass.table_name} no longer exist in the current data source"
         end
       end
 
@@ -42,6 +43,30 @@ namespace :us_geo do
           Rake::Task["us_geo:import:#{name}"].invoke
         end
       end
+    end
+
+    desc "List the number of records from previously imported data that no longer exists in the current data source"
+    task removed_counts: :environment do
+      klasses.each_value do |klass|
+        removed_count = klass.removed.count
+        puts "#{klass.table_name}: #{removed_count} previously imported records no longer exist in the current data source"
+      end
+    end
+
+    desc "Dump the data for all records from previously imported data that no longer exists in the current data source to JSON"
+    task dump_removed: :environment do
+      require "json"
+
+      puts "{"
+      klasses.each_value do |klass|
+        puts "  \"#{klass.table_name}\": ["
+        klass.removed.find_each do |record|
+          row_json JSON.dump(record.attributes.except("status", "updated_at"))
+          puts "#{row_json},"
+        end
+        puts "]"
+      end
+      puts "}"
     end
 
     desc "Remove all records from previously imported data that no longer exists in the current data source"

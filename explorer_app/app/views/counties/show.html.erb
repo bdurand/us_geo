@@ -22,7 +22,7 @@
     </tr>
    <tr>
       <th>Time Zone</th>
-      <td><%= @county.time_zone_name %></td>
+      <td><%= @county&.time_zones.collect(&:name).join(", ") %></td>
     </tr>
     <% if @county.combined_statistical_area %>
       <tr>

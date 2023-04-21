@@ -25,24 +25,6 @@ describe USGeo::UrbanArea do
       expect(urban_area.build_primary_county).to be_a(USGeo::County)
     end
 
-    it "should have a time zone via the primary county" do
-      urban_area = USGeo::UrbanArea.new
-      county = USGeo::County.new(time_zone_name: "America/Chicago")
-      urban_area.primary_county = county
-      expect(urban_area.time_zone).to eq ActiveSupport::TimeZone["America/Chicago"]
-    end
-
-    it "should have a state via the primary county" do
-      urban_area = USGeo::UrbanArea.new
-      state = USGeo::State.new
-      state.code = "XX"
-      county = USGeo::County.new(state_code: "XX")
-      county.state = state
-      urban_area.primary_county = county
-      expect(urban_area.state_code).to eq "XX"
-      expect(urban_area.state).to eq state
-    end
-
     it "should have county subdivisions" do
       urban_area = USGeo::UrbanArea.new
       urban_area.geoid = "00001"
@@ -58,13 +40,6 @@ describe USGeo::UrbanArea do
       county.core_based_statistical_area = cbsa
       urban_area.primary_county = county
       expect(urban_area.core_based_statistical_area).to eq cbsa
-    end
-
-    it "should have a time zone via the primary county" do
-      urban_area = USGeo::UrbanArea.new
-      county = USGeo::County.new(time_zone_name: "America/Chicago")
-      urban_area.primary_county = county
-      expect(urban_area.time_zone_name).to eq "America/Chicago"
     end
   end
 
@@ -85,7 +60,7 @@ describe USGeo::UrbanArea do
       expect(chicago.population).to be_between(8_000_000, 10_000_000)
       expect(chicago.housing_units).to be_between(3_000_000, 4_000_000)
       expect(chicago.land_area.round).to eq 2338
-      expect(chicago.water_area.round).to eq 43
+      expect(chicago.water_area.round).to eq 39
       expect(chicago.lat.round(1)).to eq 41.8
       expect(chicago.lng.round(1)).to eq(-87.9)
       expect(chicago.urbanized?).to eq true

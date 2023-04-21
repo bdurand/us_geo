@@ -3,9 +3,11 @@
 require "active_record"
 
 require_relative "us_geo/version"
+
 require_relative "us_geo/area"
 require_relative "us_geo/population"
 require_relative "us_geo/base_record"
+
 require_relative "us_geo/region"
 require_relative "us_geo/division"
 require_relative "us_geo/state"

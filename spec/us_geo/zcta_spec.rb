@@ -95,7 +95,7 @@ describe USGeo::Zcta do
     end
   end
 
-  describe "for_zipecode" do
+  describe "for_zipcode" do
     after { USGeo::Zcta.delete_all }
 
     it "should return a zcta with an active ZIP code" do

@@ -5,6 +5,7 @@ module USGeo
   # is in square miles.
   module Area
     SQUARE_MILES_TO_KILOMETERS = 2.59
+    private_constant :SQUARE_MILES_TO_KILOMETERS
 
     # @!attribute land_area
     #   @return [Float, nil] Land area in square miles.

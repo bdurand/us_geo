@@ -6,7 +6,7 @@ module USGeoData
 
     def dump_csv(output)
       csv = CSV.new(output)
-      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "CBSA", "Metropolitan Division", "Central", "Time Zone", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "CBSA", "Metropolitan Division", "Central", "Time Zone", "Time Zone 2", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       county_data.each_value do |data|
         unless data[:time_zone] && data[:gnis_id] && data[:fips_class]
           puts "Missing data for county #{data[:geoid]} #{data[:name]}, #{data[:state]}: #{data.inspect}"
@@ -22,6 +22,7 @@ module USGeoData
           data[:metropolitan_division],
           data[:central] ? "T" : "F",
           data[:time_zone],
+          data[:time_zone_2],
           data[:fips_class],
           data[:population],
           data[:housing_units],
@@ -95,6 +96,7 @@ module USGeoData
         data = counties[county_geoid]
         if data
           data[:time_zone] = row["Time Zone"]
+          data[:time_zone_2] = row["Time Zone 2"]
         end
       end
     end

@@ -4,15 +4,9 @@ rescue LoadError
   warn "You must `gem install bundler` and `bundle install` to run rake tasks"
 end
 
-require "rdoc/task"
+require "yard"
 
-RDoc::Task.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = "rdoc"
-  rdoc.title = "USGeo"
-  rdoc.options << "--line-numbers"
-  rdoc.rdoc_files.include("README.md")
-  rdoc.rdoc_files.include("lib/**/*.rb")
-end
+YARD::Rake::YardocTask.new(:yard)
 
 begin
   require "bundler/gem_tasks"

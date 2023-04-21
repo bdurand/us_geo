@@ -21,7 +21,7 @@ All entities in the system are keyed using external identifier.
 
 There are no foreign key constraints defined on the tables. This is intentional so that you can only import as much data as you need if you don't need the whole set.
 
-The data set currently contains
+The data set currently contains:
 
 * 4 Regions
 * 9 Divisions
@@ -29,19 +29,23 @@ The data set currently contains
 * 175 Combined Statistical Areas
 * 939 Core Based Statistical Areas
 * 31 Metropolitan Divisions
-* 3226 Counties or equivalents
-* 35,697 County Subdivisions
-* 31,847 Places
-* 33,792 ZIP Code Tabulation Areas
+* 3234 Counties or equivalents
+* 35,657 County Subdivisions
+* 2,313 Urban Areas
+* 31,846 Places
+* 33,791 ZIP Code Tabulation Areas
+
+The population, number of housing units, land area, and water area is supplied for all geographic entities.
 
 In addition, there entity to entity mapping tables:
 
 * 46,953 ZCTA to County
-* 109549 ZCTA to County Subdivision
+* 109,549 ZCTA to County Subdivision
+* 14,455 ZCTA to Urban Area
 * 53,131 ZCTA to Place
-* 33,084 Place to County
-
-The land and water area for all entities is given in square miles.
+* 33,276 Place to County
+* 33,09 County to Urban Area
+* 11,755 County Subdivison to Urban Area
 
 ### Region
 
@@ -92,6 +96,8 @@ Approximate equivalent to U.S. Postal Service ZIP codes, but designed for geogra
 ZCTAs can span counties, county subdivisions, and places. A primary county, county subdivision, and place are identified for ZCTA's. This will be the one that includes most of the ZCTA's land area.
 
 ZCTA data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
+
+The U.S. Postal Service adds and removes ZIP Codes as necessary for the efficient delivery of mail. The U.S. Census Bureau updates the ZCTA's to reflect these changes during the decenniel census. The list of retired 2010 ZCTA's can still be used via the `USGeo::Zcta.for_zipcode` method. This scope will
 
 ### Entity Relationships
 
