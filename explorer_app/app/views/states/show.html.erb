@@ -1,0 +1,54 @@
+<%= breadcrumbs @state.name, active: @state %>
+
+<h1><%= @state.name %></h1>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>Code</th>
+      <td><%= @state.code %></td>
+    </tr>
+    <tr>
+      <th>FIPS ID</th>
+      <td><%= @state.fips %></td>
+    </tr>
+    <tr>
+      <th>Type</th>
+      <td><%= @state.type %></td>
+    </tr>
+    <% if @state.region %>
+      <tr>
+        <th>Region</th>
+        <td><%= link_to @state.region.name, region_path(@state.region) %></td>
+      </tr>
+    <% end %>
+    <% if @state.division %>
+      <tr>
+        <th>Division</th>
+        <td><%= link_to @state.division.name, division_path(@state.division) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Population</th>
+      <td><%= formatted_number(@state.population) %></td>
+    </tr>
+    <tr>
+      <th>Housing Units</th>
+      <td><%= formatted_number(@state.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Land Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@state.land_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Water Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@state.water_area, round: 0) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h2><%= pluralize(@state.counties.count, "County") %></h2>
+
+<%= render "counties/table", counties: @state.counties, state: @state %>

@@ -7,7 +7,7 @@ module USGeo
     include Area
 
     belongs_to :region, inverse_of: :divisions
-    has_many :states, inverse_of: :division
+    has_many :states, -> { not_removed }, inverse_of: :division
 
     validates :name, presence: true, length: {maximum: 30}, uniqueness: true
 

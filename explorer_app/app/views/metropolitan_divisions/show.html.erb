@@ -1,0 +1,46 @@
+<%= breadcrumbs @metropolitan_division.name, active: @metropolitan_division %>
+
+<h1><%= @metropolitan_division.name %></h1>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>GEOID</th>
+      <td><%= @metropolitan_division.geoid %></td>
+    </tr>
+    <% if @metropolitan_division.combined_statistical_area %>
+      <tr>
+        <th>Combined Statistical Area</th>
+        <td><%= link_to @metropolitan_division.combined_statistical_area.name, combined_statistical_area_path(@metropolitan_division.combined_statistical_area) %></td>
+      </tr>
+    <% end %>
+    <% if @metropolitan_division.core_based_statistical_area %>
+      <tr>
+        <th>Core Based Statistical Area</th>
+        <td><%= link_to @metropolitan_division.core_based_statistical_area.name, core_based_statistical_area_path(@metropolitan_division.core_based_statistical_area) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Population</th>
+      <td><%= formatted_number(@metropolitan_division.population) %></td>
+    </tr>
+    <tr>
+      <th>Housing Units</th>
+      <td><%= formatted_number(@metropolitan_division.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Land Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@metropolitan_division.land_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Water Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@metropolitan_division.water_area, round: 0) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<h2><%= pluralize(@metropolitan_division.counties.count, "County") %></h2>
+
+<%= render "counties/table", counties: @metropolitan_division.counties, metropolitan_division: @metropolitan_division %>

@@ -1,0 +1,45 @@
+<%
+  county ||= nil
+  county_subdivision ||= nil
+  zcta ||= nil
+  overlap = (county || county_subdivision || zcta)
+%>
+
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>GEOID</th>
+      <th>Name</th>
+      <th>Type</th>
+
+      <%= demographics_headers %>
+
+      <% if overlap %>
+        <th class="text-end">Overlap</th>
+      <% end %>
+    </th>
+  </thead>
+  <tbody>
+    <% urban_areas.each do |urban_area| %>
+      <tr>
+        <td><%= urban_area.geoid %></td>
+        <td><%= link_to urban_area.name, urban_area_path(urban_area, breadcrumb_params) %></td>
+        <td><%= urban_area.urbanized? ? "Urbanized Area" : "Urban Cluster" %></td>
+
+        <%= demographics_cells(urban_area, round_area: 0) %>
+
+        <% if overlap %>
+          <td class="text-end">
+            <% if county %>
+              <%= overlap_percentage(county, urban_area, :urban_area_counties) %>
+            <% elsif county_subdivision %>
+              <%= overlap_percentage(county_subdivision, urban_area, :urban_area_county_subdivisions) %>
+            <% elsif zcta %>
+              <%= overlap_percentage(zcta, urban_area, :zcta_urban_areas) %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

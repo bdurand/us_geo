@@ -18,7 +18,7 @@ module USGeo
     scope :imported, -> { where(status: STATUS_IMPORTED) }
     scope :removed, -> { where(status: STATUS_REMOVED) }
     scope :manual, -> { where(status: STATUS_MANUAL) }
-    scope :not_removed, -> { where(status: [STATUS_IMPORTED, STATUS_MANUAL]) }
+    scope :not_removed, -> { where.not(status: STATUS_REMOVED) }
 
     class << self
       def load!(location = nil, gzipped: true)

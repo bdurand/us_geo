@@ -8,7 +8,7 @@ module USGeo
 
     self.primary_key = "geoid"
 
-    has_many :counties, foreign_key: :metropolitan_division_geoid, inverse_of: :metropolitan_division
+    has_many :counties, -> { not_removed }, foreign_key: :metropolitan_division_geoid, inverse_of: :metropolitan_division
     belongs_to :core_based_statistical_area, foreign_key: :cbsa_geoid, optional: true, inverse_of: :metropolitan_divisions
 
     validates :geoid, length: {is: 5}
@@ -23,6 +23,10 @@ module USGeo
 
     # @!attribute name
     #   @return [String] Name of the metropolitan division.
+
+    # @!method combined_statistical_area
+    #   @return [CombinedStatisticalArea, nil] Combined statistical area that the metropolitan division is a part of.
+    delegate :combined_statistical_area, to: :core_based_statistical_area, allow_nil: true
 
     class << self
       def load!(uri = nil)

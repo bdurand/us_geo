@@ -9,7 +9,9 @@ module USGeo
 
     self.primary_key = "geoid"
 
-    has_many :core_based_statistical_areas, foreign_key: :csa_geoid, inverse_of: :combined_statistical_area
+    has_many :core_based_statistical_areas, -> { not_removed }, foreign_key: :csa_geoid, inverse_of: :combined_statistical_area
+    has_many :counties, -> { not_removed }, through: :core_based_statistical_areas
+    has_many :metropolitan_divisions, -> { not_removed }, through: :core_based_statistical_areas
 
     validates :geoid, length: {is: 3}
     validates :name, presence: true, length: {maximum: 60}, uniqueness: true
@@ -24,6 +26,9 @@ module USGeo
     # @!attribute name
     #   @return [String] Name of the CSA.
 
+    # @!attribute short_name
+    #   @return [String] Short name of the CSA.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "combined_statistical_areas.csv")
@@ -31,6 +36,7 @@ module USGeo
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|
               record.name = row["Name"]
+              record.short_name = row["Short Name"]
               record.population = row["Population"]
               record.housing_units = row["Housing Units"]
               record.land_area = row["Land Area"]

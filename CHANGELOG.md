@@ -8,12 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Data is now based on the 2020 U.S. Census.
+- Data is now based on the 2020 U.S. Census
   * ZCTAs have been both added and removed
   * Places have been both added and removed
   * Some counties and subdivisions have been renamed
-  * Former U.S. territories (Micronesia, Palau, and Marshall Islands) have been removed.
-  * Counties are no longer available for the territories of Guam, U.S. Virgin Islands, and Northern Mariana Islands.
+  * A number of smaller urban areas have been removed
+  * Former U.S. territories (Micronesia, Palau, and Marshall Islands) have been removed
 
 - Population and housing unit numbers are now based on the 2021 American Community Survey Five Year Estimates.
 
@@ -29,20 +29,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 2010 ZCTAs can still be used to lookup the active ZCTA through the ZCTAMapping model.
 
-- Core Based Statistical Areas now have a short name which is the name of just the most prominant place in the area.
+- Core Based Statistical Areas and Combined Statistical Areas now have a short name which is the name of just the largest city in the area. This makes them a little easier to refer to by name.
 
 - All Geographic entity models now have land area, water area, population, and housing units columns.
 
-- More military bases have been added as places.
+- Urban Areas are now associated with county subdivisions.
+
+- Counties can now have multiple time zones. You can still call `time_zone` to get a single time zone for a county, but it is more accurate to call `time_zones` instead. There are only a handful of counties that span time zones and none are heavily populated (the largest is Coconino County, AZ with 145K people).
 
 ### Removed
 
-- Urbanized area models have been removed. This data is still not available in the 2020 U.S. Census data sets. It was also mostly duplicative with metropolitan areas and created a bit of confusion in the data model. These tables and columns from the 1.0 release are no longer needed. They are left in place in case you want to supply your own models to work with them. Otherwise, you can create migrations to drop them.
-  * us_geo_urban_areas
-  * us_geo_urban_area_counties
-  * us_geo_zcta_urban_areas
-  * us_geo_zctas.primary_urban_area_geoid
-  * us_geo_places.urban_area_geoid
+- Designated market area model has been removed. This data was a crude mapping from counties to DMA's and was not accurate since it didn't respect the actual borders. The table and foreign keys to it will not be removed. See the [updating guide](UPDATING_TO_VERSION_2.md) form more details.
+
+- Urbanized area models have been removed. This data is still not available in the 2020 U.S. Census data sets. It was also mostly duplicative with metropolitan areas and created a bit of confusion in the data model. The table and foreign keys to it will not be removed. See the [updating guide](UPDATING_TO_VERSION_2.md) form more details.
 
 - Population and housing unit data has been removed from the overlap models used to join entities (i.e. ZctaCounty, ZctaPlace, PlaceCounty). This information is no longer available directly from the Census relationship files. Only the overlapping land and water area is now available.
 

@@ -11,8 +11,11 @@ module USGeo
     self.primary_key = "geoid"
     self.store_full_sti_class = false
 
-    has_many :counties, foreign_key: :cbsa_geoid, inverse_of: :core_based_statistical_area
-    has_many :metropolitan_divisions, foreign_key: :cbsa_geoid, inverse_of: :core_based_statistical_area
+    has_many :counties, -> { not_removed }, foreign_key: :cbsa_geoid, inverse_of: :core_based_statistical_area
+    has_many :metropolitan_divisions, -> { not_removed }, foreign_key: :cbsa_geoid, inverse_of: :core_based_statistical_area
+    has_many :zctas, -> { not_removed }, through: :counties
+    has_many :places, -> { not_removed }, through: :counties
+
     belongs_to :combined_statistical_area, foreign_key: :csa_geoid, optional: true, inverse_of: :core_based_statistical_areas
 
     validates :geoid, length: {is: 5}

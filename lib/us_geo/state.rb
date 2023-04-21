@@ -15,8 +15,9 @@ module USGeo
 
     belongs_to :region, optional: -> { territory? }, inverse_of: :states
     belongs_to :division, optional: -> { territory? }, inverse_of: :states
-    has_many :counties, foreign_key: :state_code, inverse_of: :state
-    has_many :places, foreign_key: :state_code, inverse_of: :state
+
+    has_many :counties, -> { not_removed }, foreign_key: :state_code, inverse_of: :state
+    has_many :places, -> { not_removed }, foreign_key: :state_code, inverse_of: :state
 
     validates :code, length: {is: 2}, uniqueness: true
     validates :fips, length: {is: 2}
@@ -34,6 +35,10 @@ module USGeo
 
     # @!attribute type
     #   @return [String] Type of the state or territory.
+
+    # @!method :region
+    #   @return [Region] Region the state is in.
+    delegate :region, to: :division, allow_nil: true
 
     class << self
       def load!(uri = nil)

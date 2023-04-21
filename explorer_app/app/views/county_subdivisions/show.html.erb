@@ -1,0 +1,84 @@
+<%= breadcrumbs @county_subdivision.name, active: @county_subdivision %>
+
+<h1><%= @county_subdivision.name %></h1>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>GEOID</th>
+      <td><%= @county_subdivision.geoid %></td>
+    </tr>
+    <tr>
+      <th>County</th>
+      <td><%= link_to @county_subdivision.county.name, county_path(@county_subdivision.county, breadcrumb_params) %></td>
+    </tr>
+    <tr>
+      <th>State</th>
+      <td><%= link_to @county_subdivision.state.name, state_path(@county_subdivision.state, breadcrumb_params) %></td>
+    </tr>
+    <tr>
+      <th>FIP Class Code</th>
+      <td><%= @county_subdivision.fips_class_code %></td>
+    </tr>
+    <tr>
+      <th>Time Zone</th>
+      <td><%= @county_subdivision.time_zone_name %></td>
+    </tr>
+    <% if @county_subdivision.combined_statistical_area %>
+      <tr>
+        <th>Combined Statistical Area</th>
+        <td><%= link_to @county_subdivision.combined_statistical_area.name, combined_statistical_area_path(@county_subdivision.combined_statistical_area, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <% if @county_subdivision.core_based_statistical_area %>
+      <tr>
+        <th>Core Based Statistical Area</th>
+        <td><%= link_to @county_subdivision.core_based_statistical_area.name, core_based_statistical_area_path(@county_subdivision.core_based_statistical_area, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <% if @county_subdivision.metropolitan_division %>
+      <tr>
+        <th>Metropolitan Division</th>
+        <td><%= link_to @county_subdivision.metropolitan_division.name, metropolitan_division_path(@county_subdivision.metropolitan_division, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Population</th>
+      <td><%= formatted_number(@county_subdivision.population) %></td>
+    </tr>
+    <tr>
+      <th>Population Density</th>
+      <td><%= population_density(@county_subdivision) %></td>
+    </tr>
+    <tr>
+      <th>Housing Units</th>
+      <td><%= formatted_number(@county_subdivision.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Land Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@county_subdivision.land_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Water Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@county_subdivision.water_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Coordinates</th>
+      <td><%= google_maps_link(@county_subdivision) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<% if @county_subdivision.urban_areas.present? %>
+  <br>
+
+  <h2><%= pluralize(@county_subdivision.urban_areas.count, "Urban Area") %></h2>
+
+  <%= render "urban_areas/table", urban_areas: @county_subdivision.urban_areas, county_subdivision: @county_subdivision %>
+<% end %>
+
+<br>
+
+<h2><%= pluralize(@county_subdivision.zctas.count, "ZIP Code Tabulation Area") %></h2>
+
+<%= render "zctas/table", zctas: @county_subdivision.zctas, county_subdivision: @county_subdivision %>

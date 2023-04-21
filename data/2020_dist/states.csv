@@ -51,7 +51,7 @@ Wisconsin,WI,state,55,2,Midwest,3,East North Central,5871661,2718369,54158.0,113
 Wyoming,WY,state,56,4,West,8,Mountain,576641,271818,97093.0,720.0
 District of Columbia,DC,district,11,3,South,5,South Atlantic,683154,344306,61.0,7.0
 Puerto Rico,PR,territory,72,,,,,3311274,1553791,3424.0,1901.0
-U.S. Virgin Islands,VI,territory,74,,,,,0,0,134.0,599.0
-American Samoa,AS,territory,60,,,,,0,0,76.0,505.0
-Guam,GU,territory,66,,,,,0,0,210.0,361.0
-Northern Mariana Islands,MP,territory,69,,,,,0,0,182.0,1793.0
+U.S. Virgin Islands,VI,territory,74,,,,,106405,55901,134.0,599.0
+American Samoa,AS,territory,60,,,,,55519,10963,76.0,505.0
+Guam,GU,territory,66,,,,,159358,50567,210.0,361.0
+Northern Mariana Islands,MP,territory,69,,,,,53883,20850,182.0,1793.0

@@ -1,0 +1,96 @@
+<%= breadcrumbs @county.full_name, active: @county %>
+
+<h1><%= @county.name %></h1>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>GEOID</th>
+      <td><%= @county.geoid %></td>
+    </tr>
+    <tr>
+      <th>Short Name</th>
+      <td><%= @county.short_name %></td>
+    </tr>
+    <tr>
+      <th>State</th>
+      <td><%= link_to @county.state.name, state_path(@county.state, breadcrumb_params) %></td>
+    </tr>
+     <tr>
+      <th>FIP Class Code</th>
+      <td><%= @county.fips_class_code %></td>
+    </tr>
+   <tr>
+      <th>Time Zone</th>
+      <td><%= @county&.time_zones.collect(&:name).join(", ") %></td>
+    </tr>
+    <% if @county.combined_statistical_area %>
+      <tr>
+        <th>Combined Statistical Area</th>
+        <td><%= link_to @county.combined_statistical_area.name, combined_statistical_area_path(@county.combined_statistical_area, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <% if @county.core_based_statistical_area %>
+      <tr>
+        <th>Core Based Statistical Area</th>
+        <td><%= link_to @county.core_based_statistical_area.name, core_based_statistical_area_path(@county.core_based_statistical_area, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <% if @county.metropolitan_division %>
+      <tr>
+        <th>Metropolitan Division</th>
+        <td><%= link_to @county.metropolitan_division.name, metropolitan_division_path(@county.metropolitan_division, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Population</th>
+      <td><%= formatted_number(@county.population) %></td>
+    </tr>
+    <tr>
+      <th>Population Density</th>
+      <td><%= population_density(@county) %></td>
+    </tr>
+    <tr>
+      <th>Housing Units</th>
+      <td><%= formatted_number(@county.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Land Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@county.land_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Water Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@county.water_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Coordinates</th>
+      <td><%= google_maps_link(@county) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<% if @county.urban_areas.present? %>
+  <br>
+
+  <h2><%= pluralize(@county.urban_areas.count, "Urban Area") %></h2>
+
+  <%= render "urban_areas/table", urban_areas: @county.urban_areas, county: @county %>
+<% end %>
+
+<br>
+
+<h2><%= pluralize(@county.subdivisions.count, "County Subdivision") %></h2>
+
+<%= render "county_subdivisions/table", county_subdivisions: @county.subdivisions, county: @county %>
+
+<br>
+
+<h2><%= pluralize(@county.places.count, "Place") %></h2>
+
+<%= render "places/table", places: @county.places, county: @county %>
+
+<br>
+
+<h2><%= pluralize(@county.zctas.count, "ZIP Code Tabulation Area") %></h2>
+
+<%= render "zctas/table", zctas: @county.zctas, county: @county %>

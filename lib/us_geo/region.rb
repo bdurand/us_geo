@@ -6,8 +6,8 @@ module USGeo
     include Population
     include Area
 
-    has_many :divisions, inverse_of: :region
-    has_many :states, inverse_of: :region
+    has_many :divisions, -> { not_removed }, inverse_of: :region
+    has_many :states, -> { not_removed }, inverse_of: :region
 
     validates :name, presence: true, length: {maximum: 30}, uniqueness: true
 

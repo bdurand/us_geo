@@ -13,7 +13,7 @@ module USGeoData
       "C4" => [:place],
       "C5" => [:place, :subdivision],
       "C6" => [:place, :subdivision],
-      "C7" => [:place, :subdivision],
+      "C7" => [:county, :place],
       "M1" => [:place],
       "M2" => [:place],
       "U1" => [:place],

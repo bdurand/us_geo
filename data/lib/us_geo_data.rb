@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "csv"
+require "json"
 
 require_relative "us_geo_data/processor"
 
@@ -9,12 +10,12 @@ require_relative "us_geo_data/core_based_statistical_area"
 require_relative "us_geo_data/county_subdivision"
 require_relative "us_geo_data/county"
 require_relative "us_geo_data/division"
-require_relative "us_geo_data/dma"
 require_relative "us_geo_data/gnis"
 require_relative "us_geo_data/metropolitan_division"
 require_relative "us_geo_data/place"
 require_relative "us_geo_data/region"
 require_relative "us_geo_data/state"
+require_relative "us_geo_data/urban_area"
 require_relative "us_geo_data/zcta"
 
 module USGeoData
@@ -23,10 +24,10 @@ module USGeoData
   # Information files
   STATES_FILE = File.join("info", "states.csv")
   STATE_DATA_FILE = File.join("info", "state_data.csv")
-  COUNTY_INFO_FILE = File.join("info", "county_info.csv")
+  COUNTY_TIMEZONE_FILE = File.join("info", "county_timezones.csv")
+  EXTRA_COUNTIES_FILE = File.join("info", "extra_counties.csv")
   REGIONS_FILE = File.join("info", "regions.csv")
   DIVISIONS_FILE = File.join("info", "divisions.csv")
-  DMAS_FILE = File.join("info", "dmas.csv")
 
   # Gazetteer files
   CBSA_GAZETTEER_FILE = File.join("gazetteer", "2021_Gaz_cbsa_national.txt")
@@ -35,13 +36,17 @@ module USGeoData
   OLD_COUNTY_GAZETTEER_FILE = File.join("gazetteer", "2018_Gaz_counties_national.txt")
   SUBDIVISION_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_cousubs_national.txt")
   PLACE_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_place_national.txt")
+  URBAN_AREA_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_ua_national.txt")
 
   # Relationship files
   ZCTA_COUNTY_REL_FILE = File.join("relationships", "tab20_zcta520_county20_natl.txt")
   ZCTA_COUNTY_SUBDIVISION_REL_FILE = File.join("relationships", "tab20_zcta520_cousub20_natl.txt")
   ZCTA_PLACE_REL_FILE = File.join("relationships", "tab20_zcta520_place20_natl.txt")
+  ZCTA_URBAN_AREA_REL_FILE = File.join("relationships", "tab20_ua20_zcta520_natl.txt")
   ZCTA_10_ZCTA_20_REL_FILE = File.join("relationships", "tab20_zcta510_zcta520_natl.txt")
-  PLACE_COUNTY_REL_FILE = File.join("relationships", "tab20_zcta520_county20_natl.txt")
+  PLACE_URBAN_AREA_REL_FILE = File.join("relationships", "tab20_ua20_place20_natl.txt")
+  URBAN_AREA_COUNTY_REL_FILE = File.join("relationships", "tab20_ua20_county20_natl.txt")
+  URBAN_AREA_COUNTY_SUBDIVISION_REL_FILE = File.join("relationships", "tab20_ua20_cousub20_natl.txt")
   CBSA_DELINEATION_FILE = File.join("relationships", "list1_Mar_2020.csv")
 
   # Population and housing unit files
@@ -53,6 +58,7 @@ module USGeoData
   PLACE_HOUSING_UNITS_FILE = File.join("demographics", "Places-ACSDT5Y2021.B25001-Data.csv")
   ZCTA_POPULATION_FILE = File.join("demographics", "ZCTA5-ACSDT5Y2021.B01003-Data.csv")
   ZCTA_HOUSING_UNITS_FILE = File.join("demographics", "ZCTA5-ACSDT5Y2021.B25001-Data.csv")
+  URBAN_AREA_DEMOGRAPHICS_FILE = File.join("demographics", "urban_areas.json")
 
   # U.S.G.S names file
   GNIS_DATA_FILE = File.join("gnis", "NationalFedCodes_20210825.txt")
@@ -62,7 +68,7 @@ module USGeoData
       Gnis.new.preprocess
     end
 
-    def dump_all(files)
+    def dump_all(files = nil)
       files = Array(files)
       counties = County.new
       states = State.new(counties: counties)
@@ -81,10 +87,6 @@ module USGeoData
 
       if files.empty? || files.include?(:divisions)
         open_file("divisions.csv") { |file| Division.new(states: states).dump_csv(file) }
-      end
-
-      if files.empty? || files.include?(:dma)
-        open_file("dmas.csv") { |file| Dma.new(counties: counties).dump_csv(file) }
       end
 
       if files.empty? || files.include?(:metropolitan_divisions)
@@ -116,6 +118,14 @@ module USGeoData
         places = Place.new
         open_file("places.csv") { |file| places.dump_csv(file) }
         open_file("place_counties.csv") { |file| places.dump_counties_csv(file) }
+      end
+
+      if files.empty? || files.include?(:urban_areas)
+        urban_areas = UrbanArea.new
+        open_file("urban_areas.csv") { |file| urban_areas.dump_csv(file) }
+        open_file("urban_area_counties.csv") { |file| urban_areas.dump_counties_csv(file) }
+        open_file("urban_area_county_subdivisions.csv") { |file| urban_areas.dump_county_subdivisions_csv(file) }
+        open_file("zcta_urban_areas.csv") { |file| urban_areas.dump_zctas_csv(file) }
       end
     end
 

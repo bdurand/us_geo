@@ -1,0 +1,8 @@
+
+<h1>
+  <%= pluralize @metropolitan_divisions.size, "Metropolitan Division" %>
+</h1>
+
+<%= breadcrumbs "Metropolitan Divisions" %>
+
+<%= render "table", metropolitan_divisions: @metropolitan_divisions, core_based_statistical_area: @core_based_statistical_area, combined_statistical_area: @combined_statistical_area %>

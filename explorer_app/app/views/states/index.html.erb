@@ -1,0 +1,7 @@
+<%= breadcrumbs "States" %>
+
+<h1>
+  <%= pluralize @states.size, "State" %>
+</h1>
+
+<%= render "table", states: @states %>

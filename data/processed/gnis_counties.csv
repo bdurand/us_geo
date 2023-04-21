@@ -1382,6 +1382,7 @@ GNIS ID,GEOID,Name,Short Name,State,FIPS Class,Latitude,Longitude
 758567,29229,Wright County,Wright,MO,H1,37.27014,-92.4687042
 765805,29001,Adair County,Adair,MO,H1,40.1905622,-92.600719
 765806,29186,Sainte Genevieve County,Ste. Genevieve,MO,H1,37.8944044,-90.1944237
+767557,29510,City of Saint Louis,St. Louis (city),MO,C7,38.6358461,-90.245098
 793926,30049,Lewis and Clark County,Lewis and Clark,MT,H1,47.1224429,-112.390455
 835823,31001,Adams County,Adams,NE,H1,40.5244687,-98.501209
 835824,31003,Antelope County,Antelope,NE,H1,42.1769035,-98.0666853
@@ -1487,6 +1488,7 @@ GNIS ID,GEOID,Name,Short Name,State,FIPS Class,Latitude,Longitude
 858644,32021,Mineral County,Mineral,NV,H1,38.5385961,-118.4349956
 858645,32019,Lyon County,Lyon,NV,H1,39.0206409,-119.1889981
 858646,32027,Pershing County,Pershing,NV,H1,40.4403579,-118.4044381
+863219,32510,Carson City,Carson City (city),NV,C7,39.1511204,-119.7475563
 863310,32013,Humboldt County,Humboldt,NV,H1,41.4068466,-118.1119658
 863368,32015,Lander County,Lander,NV,H1,39.933806,-117.0379084
 863599,32023,Nye County,Nye,NV,H1,38.0423816,-116.4719313
@@ -2535,6 +2537,34 @@ GNIS ID,GEOID,Name,Short Name,State,FIPS Class,Latitude,Longitude
 1497999,51141,Patrick County,Patrick,VA,H1,36.6783637,-80.2842746
 1498172,51169,Scott County,Scott,VA,H1,36.7142829,-82.6029223
 1498359,51191,Washington County,Washington,VA,H1,36.7244517,-81.9598382
+1498415,51510,City of Alexandria,Alexandria (city),VA,C7,38.818453,-77.0862039
+1498416,51520,City of Bristol,Bristol (city),VA,C7,36.6180379,-82.1605389
+1498417,51530,City of Buena Vista,Buena Vista (city),VA,C7,37.7319276,-79.3568295
+1498420,51570,City of Colonial Heights,Colonial Heights (city),VA,C7,37.2650061,-77.3968816
+1498421,51590,City of Danville,Danville (city),VA,C7,36.5831913,-79.4088068
+1498422,51595,City of Emporia,Emporia (city),VA,C7,36.6953299,-77.5356107
+1498423,51610,City of Falls Church,Falls Church (city),VA,C7,38.8847267,-77.1751638
+1498424,51620,City of Franklin,Franklin (city),VA,C7,36.6830915,-76.9385846
+1498425,51630,City of Fredericksburg,Fredericksburg (city),VA,C7,38.2991926,-77.4871505
+1498426,51640,City of Galax,Galax (city),VA,C7,36.6660407,-80.917588
+1498428,51670,City of Hopewell,Hopewell (city),VA,C7,37.2914862,-77.2984913
+1498429,51680,City of Lynchburg,Lynchburg (city),VA,C7,37.4002849,-79.1908563
+1498430,51683,City of Manassas,Manassas (city),VA,C7,38.7478618,-77.4838178
+1498431,51685,City of Manassas Park,Manassas Park (city),VA,C7,38.7709632,-77.4429711
+1498434,51720,City of Norton,Norton (city),VA,C7,36.9314574,-82.6262027
+1498435,51730,City of Petersburg,Petersburg (city),VA,C7,37.204266,-77.3913376
+1498436,51735,City of Poquoson,Poquoson (city),VA,C7,37.1502783,-76.2705
+1498438,51750,City of Radford,Radford (city),VA,C7,37.1228912,-80.558749
+1498439,51770,City of Roanoke,Roanoke (city),VA,C7,37.2784856,-79.9580837
+1498443,51820,City of Waynesboro,Waynesboro (city),VA,C7,38.0674166,-78.9013542
+1498554,51650,City of Hampton,Hampton (city),VA,C7,37.0487627,-76.2953841
+1498555,51700,City of Newport News,Newport News (city),VA,C7,37.0760399,-76.5164541
+1498556,51740,City of Portsmouth,Portsmouth (city),VA,C7,36.8590008,-76.3567086
+1498557,51710,City of Norfolk,Norfolk (city),VA,C7,36.9233401,-76.2456337
+1498558,51550,City of Chesapeake,Chesapeake (city),VA,C7,36.6777445,-76.3024183
+1498559,51810,City of Virginia Beach,Virginia Beach (city),VA,C7,36.7777632,-76.0163281
+1498560,51800,City of Suffolk,Suffolk (city),VA,C7,36.7018433,-76.634046
+1498563,51660,City of Harrisonburg,Harrisonburg (city),VA,C7,38.4361881,-78.8734792
 1500440,51139,Page County,Page,VA,H1,38.6194232,-78.484398
 1500545,51173,Smyth County,Smyth,VA,H1,36.8437404,-81.5369666
 1500747,51117,Mecklenburg County,Mecklenburg,VA,H1,36.680361,-78.3626942
@@ -2996,6 +3026,7 @@ GNIS ID,GEOID,Name,Short Name,State,FIPS Class,Latitude,Longitude
 1702378,51093,Isle of Wight County,Isle of Wight,VA,H1,36.9067291,-76.7091265
 1702379,16079,Shoshone County,Shoshone,ID,H1,47.3529576,-115.8924355
 1702380,15005,Kalawao County,Kalawao,HI,H4,21.2118898,-156.9540416
+1702381,24510,City of Baltimore,Baltimore (city),MD,C7,39.3009792,-76.6106471
 1709077,24027,Howard County,Howard,MD,H1,39.2507177,-76.9311951
 1710958,24003,Anne Arundel County,Anne Arundel,MD,H1,38.9941572,-76.5675971
 1711058,24023,Garrett County,Garrett,MD,H1,39.5288947,-79.2729933
@@ -3090,6 +3121,16 @@ GNIS ID,GEOID,Name,Short Name,State,FIPS Class,Latitude,Longitude
 1785215,17199,Williamson County,Williamson,IL,H1,37.7302529,-88.9299245
 1785216,17201,Winnebago County,Winnebago,IL,H1,42.3362603,-89.1608659
 1785231,17203,Woodford County,Woodford,IL,H1,40.7882359,-89.2111062
+1789068,51540,City of Charlottesville,Charlottesville (city),VA,C7,38.0374915,-78.4854999
+1789069,51580,City of Covington,Covington (city),VA,C7,37.7786162,-79.9867559
+1789070,51600,City of Fairfax,Fairfax (city),VA,C7,38.8530983,-77.2997881
+1789071,51678,City of Lexington,Lexington (city),VA,C7,37.7825306,-79.4438938
+1789072,51690,City of Martinsville,Martinsville (city),VA,C7,36.6826586,-79.8636318
+1789073,51760,City of Richmond,Richmond (city),VA,C7,37.5294423,-77.4755889
+1789074,51775,City of Salem,Salem (city),VA,C7,37.2864041,-80.0554695
+1789075,51790,City of Staunton,Staunton (city),VA,C7,38.1593008,-79.0611168
+1789076,51830,City of Williamsburg,Williamsburg (city),VA,C7,37.2691738,-76.7076024
+1789077,51840,City of Winchester,Winchester (city),VA,C7,39.1735054,-78.1746436
 1796943,30047,Lake County,Lake,MT,H1,47.6459064,-114.0893743
 1804480,72001,Adjuntas Municipio,Adjuntas,PR,H1,18.1797327,-66.7539566
 1804481,72003,Aguada Municipio,Aguada,PR,H1,18.376289,-67.1867288
