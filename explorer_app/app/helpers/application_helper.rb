@@ -42,6 +42,17 @@ module ApplicationHelper
     "#{formatted_number(density, round: round)} / mi²"
   end
 
+  def overlap_percentage(entity, other_entity, association)
+    return nil unless entity && other_entity && entity.total_area > 0
+
+    belongs_to = other_entity.class.base_class.to_s.demodulize.underscore
+    overlap = entity.send(association).detect { |r| r.send(belongs_to) == other_entity }
+    return nil unless overlap
+
+    percent = overlap.total_area / entity.total_area
+    number_to_percentage(percent * 100, precision: 1)
+  end
+
   def auto_round(number)
     return number unless number.is_a?(Float)
 
@@ -79,8 +90,8 @@ module ApplicationHelper
     state = objects.detect { |b| b.is_a?(USGeo::State) }
     combined_statistical_area = objects.detect { |b| b.is_a?(USGeo::CombinedStatisticalArea) }
     core_based_statistical_area = objects.detect { |b| b.is_a?(USGeo::CoreBasedStatisticalArea) }
+    urban_area = objects.detect { |b| b.is_a?(USGeo::UrbanArea) }
     metropolitan_division = objects.detect { |b| b.is_a?(USGeo::MetropolitanDivision) }
-    designated_market_area = objects.detect { |b| b.is_a?(USGeo::DesignatedMarketArea) }
     county = objects.detect { |b| b.is_a?(USGeo::County) }
     county_subdivision = objects.detect { |b| b.is_a?(USGeo::CountySubdivision) }
     place = objects.detect { |b| b.is_a?(USGeo::Place) }
@@ -98,8 +109,8 @@ module ApplicationHelper
       links["Combined Statistical Areas"] = combined_statistical_areas_path
     elsif core_based_statistical_area
       links["Core Based Statistical Areas"] = core_based_statistical_areas_path
-    elsif designated_market_area
-      links["Designated Market Areas"] = designated_market_areas_path
+    elsif urban_area
+      links["Urban Areas"] = urban_areas_path
     end
 
     links[region.name] = region_path(region) if breadcrumb_link?(region, active)
@@ -108,7 +119,7 @@ module ApplicationHelper
     links[combined_statistical_area.name] = combined_statistical_area_path(combined_statistical_area) if breadcrumb_link?(combined_statistical_area, active)
     links[core_based_statistical_area.name] = core_based_statistical_area_path(core_based_statistical_area) if breadcrumb_link?(core_based_statistical_area, active)
     links[metropolitan_division.name] = metropolitan_division_path(metropolitan_division) if breadcrumb_link?(metropolitan_division, active)
-    links[designated_market_area.name] = designated_market_area_path(designated_market_area) if breadcrumb_link?(designated_market_area, active)
+    links[urban_area.name] = urban_area_path(urban_area) if breadcrumb_link?(urban_area, active)
 
     links[county.name] = county_path(county) if breadcrumb_link?(county, active)
     links[county_subdivision.name] = county_subdivision_path(county_subdivision) if breadcrumb_link?(county_subdivision, active)

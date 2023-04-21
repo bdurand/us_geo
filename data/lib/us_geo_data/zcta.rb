@@ -6,13 +6,14 @@ module USGeoData
 
     def dump_csv(output)
       csv = CSV.new(output)
-      csv << ["ZCTA5", "Primary County", "Primary County Subdivision", "Primary Place", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      csv << ["ZCTA5", "Primary County", "Primary County Subdivision", "Primary Place", "Primary Urban Area", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       zcta_data.each_value do |data|
         csv << [
           data[:zcta],
           data[:primary_county],
           data[:primary_county_subdivision],
           data[:primary_place],
+          data[:primary_urban_area],
           data[:population],
           data[:housing_units],
           data[:land_area]&.round(3),
@@ -98,6 +99,7 @@ module USGeoData
         add_counties(data)
         add_county_subdivisions(data)
         add_places(data)
+        add_urban_areas(data)
         add_demographics(data)
 
         @zcta_data = data
@@ -196,6 +198,31 @@ module USGeoData
 
       data.each_value do |info|
         info[:primary_place] = info[:places].max_by { |_, area| area[:land_area] }&.first
+      end
+    end
+
+    def add_urban_areas(zctas)
+      overlaps = {}
+      foreach(data_file(USGeoData::ZCTA_URBAN_AREA_REL_FILE), col_sep: "|") do |row|
+        urban_area_geoid = row["GEOID_UA_20"]
+        zcta5 = row["GEOID_ZCTA5_20"]
+        overlap_land_area = row["AREALAND_PART"].to_f * SQUARE_METERS_TO_MILES
+        zcta_land_area = row["AREALAND_ZCTA5_20"].to_f * SQUARE_METERS_TO_MILES
+
+        next unless urban_area_geoid && zcta5 && overlap_land_area > 0 && zcta_land_area > 0
+        next unless zctas.include?(zcta5)
+
+        info = overlaps[zcta5]
+        unless info
+          info = {}
+          overlaps[zcta5] = info
+        end
+        info[urban_area_geoid] = overlap_land_area / zcta_land_area
+      end
+
+      overlaps.each do |zcta5, overlap|
+        primary_urban_area = overlap.max_by { |_, percent| percent }.first
+        zctas[zcta5][:primary_urban_area] = primary_urban_area
       end
     end
 

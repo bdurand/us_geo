@@ -17,6 +17,6 @@ class CountiesController < ApplicationController
     add_combined_statistical_area_breadcrumb
     add_core_based_statistical_area_breadcrumb
     add_metropolitan_division_breadcrumb
-    add_designated_market_area_breadcrumb
+    add_urban_area_breadcrumb
   end
 end

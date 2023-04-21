@@ -22,7 +22,7 @@
     </tr>
    <tr>
       <th>Time Zone</th>
-      <td><%= @county.time_zone_name %></td>
+      <td><%= @county&.time_zones.collect(&:name).join(", ") %></td>
     </tr>
     <% if @county.combined_statistical_area %>
       <tr>
@@ -40,12 +40,6 @@
       <tr>
         <th>Metropolitan Division</th>
         <td><%= link_to @county.metropolitan_division.name, metropolitan_division_path(@county.metropolitan_division, breadcrumb_params) %></td>
-      </tr>
-    <% end %>
-    <% if @county.designated_market_area %>
-      <tr>
-        <th>Designated Market Area</th>
-        <td><%= link_to @county.designated_market_area.name, designated_market_area_path(@county.designated_market_area, breadcrumb_params) %></td>
       </tr>
     <% end %>
     <tr>
@@ -74,6 +68,14 @@
     </tr>
   </tbody>
 </table>
+
+<% if @county.urban_areas.present? %>
+  <br>
+
+  <h2><%= pluralize(@county.urban_areas.count, "Urban Area") %></h2>
+
+  <%= render "urban_areas/table", urban_areas: @county.urban_areas, county: @county %>
+<% end %>
 
 <br>
 

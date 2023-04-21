@@ -4,11 +4,23 @@ class CoreBasedStatisticalAreasController < ApplicationController
   before_action :set_breadcrumbs
 
   def index
-    @core_based_statistical_areas = if @combined_statistical_area
+    cbsas = if @combined_statistical_area
       @combined_statistical_area.core_based_statistical_areas.order(:name)
     else
       USGeo::CoreBasedStatisticalArea.not_removed.order(:name)
     end
+
+    @tab = params[:tab]
+    if @tab.present?
+      type = if @tab == "metropolitan"
+        "MetropolitanArea"
+      elsif @tab == "micropolitan"
+        "MicropolitanArea"
+      end
+      cbsas = cbsas.where(type: type)
+    end
+
+    @core_based_statistical_areas = cbsas.order(:name)
   end
 
   def show

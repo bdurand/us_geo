@@ -3,9 +3,9 @@ ruby_version: 2.6
 format: progress
 
 ignore:
-  - '**/*':
+  - "**/*":
     - Standard/SemanticBlocks
-  - 'spec/**/*':
+  - "spec/**/*":
     - Lint/ConstantDefinitionInBlock
     - Lint/UselessAssignment
-
+  - "explorer_app/db/*"

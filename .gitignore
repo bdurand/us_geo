@@ -10,3 +10,4 @@ coverage/
 gemfiles/*.gemfile.lock
 log/*.log
 pkg/
+doc/

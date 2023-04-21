@@ -1,8 +1,8 @@
 GEOID,Full Name,State,Time Zone
 04027,Yuma County,AZ,America/Phoenix
-04001,Apache County,AZ,America/Denver
+04001,Apache County,AZ,America/Denver,America/Denver
 04003,Cochise County,AZ,America/Phoenix
-04005,Coconino County,AZ,America/Phoenix
+04005,Coconino County,AZ,America/Phoenix,America/Denver
 04009,Graham County,AZ,America/Phoenix
 04015,Mohave County,AZ,America/Phoenix
 04019,Pima County,AZ,America/Phoenix
@@ -11,7 +11,7 @@ GEOID,Full Name,State,Time Zone
 04007,Gila County,AZ,America/Phoenix
 04023,Santa Cruz County,AZ,America/Phoenix
 04011,Greenlee County,AZ,America/Phoenix
-04017,Navajo County,AZ,America/Denver
+04017,Navajo County,AZ,America/Phoenix,America/Denver
 04025,Yavapai County,AZ,America/Phoenix
 04012,La Paz County,AZ,America/Phoenix
 05001,Arkansas County,AR,America/Chicago
@@ -324,7 +324,7 @@ GEOID,Full Name,State,Time Zone
 12113,Santa Rosa County,FL,America/Chicago
 12091,Okaloosa County,FL,America/Chicago
 12073,Leon County,FL,America/New_York
-12045,Gulf County,FL,America/Chicago
+12045,Gulf County,FL,America/Chicago,America/New_York
 12039,Gadsden County,FL,America/New_York
 12013,Calhoun County,FL,America/Chicago
 12003,Baker County,FL,America/New_York
@@ -503,7 +503,7 @@ GEOID,Full Name,State,Time Zone
 16013,Blaine County,ID,America/Boise
 16035,Clearwater County,ID,America/Los_Angeles
 16031,Cassia County,ID,America/Boise
-16049,Idaho County,ID,America/Los_Angeles
+16049,Idaho County,ID,America/Los_Angeles,America/Boise
 16081,Teton County,ID,America/Boise
 16083,Twin Falls County,ID,America/Boise
 16069,Nez Perce County,ID,America/Los_Angeles
@@ -1398,7 +1398,7 @@ GEOID,Full Name,State,Time Zone
 31025,Cass County,NE,America/Chicago
 31027,Cedar County,NE,America/Chicago
 31029,Chase County,NE,America/Denver
-31031,Cherry County,NE,America/Denver
+31031,Cherry County,NE,America/Denver,America/Chicago
 31033,Cheyenne County,NE,America/Denver
 31035,Clay County,NE,America/Chicago
 31037,Colfax County,NE,America/Chicago
@@ -1477,7 +1477,7 @@ GEOID,Full Name,State,Time Zone
 31183,Wheeler County,NE,America/Chicago
 31185,York County,NE,America/Chicago
 31013,Box Butte County,NE,America/Denver
-32007,Elko County,NV,America/Los_Angeles
+32007,Elko County,NV,America/Los_Angeles,America/Denver
 32031,Washoe County,NV,America/Los_Angeles
 32033,White Pine County,NV,America/Los_Angeles
 32001,Churchill County,NV,America/Los_Angeles
@@ -1716,7 +1716,7 @@ GEOID,Full Name,State,Time Zone
 38065,Oliver County,ND,America/North_Dakota/Center
 38043,Kidder County,ND,America/Chicago
 38059,Morton County,ND,America/North_Dakota/New_Salem
-38085,Sioux County,ND,America/Chicago
+38085,Sioux County,ND,America/Chicago,America/Denver
 38041,Hettinger County,ND,America/Denver
 38001,Adams County,ND,America/Denver
 38051,McIntosh County,ND,America/Chicago
@@ -1744,7 +1744,7 @@ GEOID,Full Name,State,Time Zone
 38057,Mercer County,ND,America/Denver
 38023,Divide County,ND,America/Chicago
 38013,Burke County,ND,America/Chicago
-38053,McKenzie County,ND,America/Chicago
+38053,McKenzie County,ND,America/Chicago,America/Denver
 38037,Grant County,ND,America/Denver
 38073,Ransom County,ND,America/Chicago
 38077,Richland County,ND,America/Chicago
@@ -1762,7 +1762,7 @@ GEOID,Full Name,State,Time Zone
 38047,Logan County,ND,America/Chicago
 38045,LaMoure County,ND,America/Chicago
 38021,Dickey County,ND,America/Chicago
-38025,Dunn County,ND,America/Denver
+38025,Dunn County,ND,America/Denver,America/Chicago
 38087,Slope County,ND,America/Denver
 39013,Belmont County,OH,America/New_York
 39151,Stark County,OH,America/New_York
@@ -1942,7 +1942,7 @@ GEOID,Full Name,State,Time Zone
 41039,Lane County,OR,America/Los_Angeles
 41041,Lincoln County,OR,America/Los_Angeles
 41043,Linn County,OR,America/Los_Angeles
-41045,Malheur County,OR,America/Boise
+41045,Malheur County,OR,America/Boise,America/Los_Angeles
 41047,Marion County,OR,America/Los_Angeles
 41049,Morrow County,OR,America/Los_Angeles
 41051,Multnomah County,OR,America/Los_Angeles
@@ -2147,7 +2147,7 @@ GEOID,Full Name,State,Time Zone
 46103,Pennington County,SD,America/Denver
 46081,Lawrence County,SD,America/Denver
 46009,Bon Homme County,SD,America/Chicago
-46117,Stanley County,SD,America/Denver
+46117,Stanley County,SD,America/Chicago,America/Denver
 46095,Mellette County,SD,America/Chicago
 48001,Anderson County,TX,America/Chicago
 48003,Andrews County,TX,America/Chicago
@@ -2203,7 +2203,7 @@ GEOID,Full Name,State,Time Zone
 48103,Crane County,TX,America/Chicago
 48105,Crockett County,TX,America/Chicago
 48107,Crosby County,TX,America/Chicago
-48109,Culberson County,TX,America/Chicago
+48109,Culberson County,TX,America/Chicago,America/Denver
 48111,Dallam County,TX,America/Chicago
 48113,Dallas County,TX,America/Chicago
 48115,Dawson County,TX,America/Chicago
@@ -3216,11 +3216,11 @@ GEOID,Full Name,State,Time Zone
 72151,Yabucoa Municipio,PR,America/Puerto_Rico
 72153,Yauco Municipio,PR,America/Puerto_Rico
 06027,Inyo County,CA,America/Los_Angeles
-60010,Eastern District,AS,Pacific/Samoa
-60050,Western District,AS,Pacific/Samoa
-60020,Manu'a District,AS,Pacific/Samoa
-60030,Rose Island,AS,Pacific/Samoa
-60040,Swains Island,AS,Pacific/Samoa
+60010,Eastern District,AS,Pacific/Pago_Pago
+60050,Western District,AS,Pacific/Pago_Pago
+60020,Manu'a District,AS,Pacific/Pago_Pago
+60030,Rose Island,AS,Pacific/Pago_Pago
+60040,Swains Island,AS,Pacific/Pago_Pago
 69085,Municipality of Northern Islands,MP,Pacific/Saipan
 69100,Municipality of Rota,MP,Pacific/Saipan
 69110,Municipality of Saipan,MP,Pacific/Saipan

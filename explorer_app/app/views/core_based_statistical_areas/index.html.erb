@@ -1,5 +1,17 @@
 <%= breadcrumbs "Core Based Statistical Areas" %>
 
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to "All", core_based_statistical_areas_path(breadcrumb_params.merge(tab: nil)), class: "nav-link #{'active' if @tab.blank?}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Metropolitan Areas", core_based_statistical_areas_path(breadcrumb_params.merge(tab: "metropolitan")), class: "nav-link #{'active' if @tab == 'metropolitan'}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Micropolitan Areas", core_based_statistical_areas_path(breadcrumb_params.merge(tab: "micropolitan")), class: "nav-link #{'active' if @tab == 'micropolitan'}" %>
+  </li>
+</ul>
+
 <h1>
   <%= pluralize @core_based_statistical_areas.size, "Core Based Statistical Area" %>
 </h1>

@@ -21,28 +21,31 @@ All entities in the system are keyed using external identifier.
 
 There are no foreign key constraints defined on the tables. This is intentional so that you can only import as much data as you need if you don't need the whole set.
 
-The data set currently contains
+The data set currently contains:
 
 * 4 Regions
 * 9 Divisions
 * 56 States and Territories
-* 210 Designated Market Areas
 * 175 Combined Statistical Areas
 * 939 Core Based Statistical Areas
 * 31 Metropolitan Divisions
-* 3226 Counties or equivalents
-* 35,697 County Subdivisions
-* 31,847 Places
-* 33,792 ZIP Code Tabulation Areas
+* 3234 Counties or equivalents
+* 35,657 County Subdivisions
+* 2,313 Urban Areas
+* 31,846 Places
+* 33,791 ZIP Code Tabulation Areas
+
+The population, number of housing units, land area, and water area is supplied for all geographic entities.
 
 In addition, there entity to entity mapping tables:
 
 * 46,953 ZCTA to County
-* 109549 ZCTA to County Subdivision
+* 109,549 ZCTA to County Subdivision
+* 14,455 ZCTA to Urban Area
 * 53,131 ZCTA to Place
-* 33,084 Place to County
-
-The land and water area for all entities is given in square miles.
+* 33,276 Place to County
+* 33,09 County to Urban Area
+* 11,755 County Subdivison to Urban Area
 
 ### Region
 
@@ -56,10 +59,6 @@ A grouping of states within a region.
 
 Includes both states and territories and the District of Columbia.
 
-### Designated Market Area (DMA)
-
-Media marketing areas of counties served by the same over the air radio and television signals. DMA's are not official government designations and are defined by the Nielsen Company.
-
 ### Combined Statistical Areas
 
 Groupings of adjacent CBSA's with regional ties to each other.
@@ -70,17 +69,21 @@ A grouping of counties around an urban core defined by commuting patterns. CBSA'
 
 ### Metropolitan Division
 
-The largest CBSAs (New York, Chicago, etc.) are split into metropolitan divisions.
+The largest CBSAs (New York, Chicago, etc.) are further split into metropolitan divisions based around the largest regional cities.
 
 ### County (or county equivalent)
 
-Basic organizational unit of states and territories. The actual name of the unit can vary depending on the state (i.e. parishes is Louisiana).
-
-County data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
+Basic organizational unit of states and territories. The actual name of the unit can vary depending on the state (i.e. parishes is Louisiana). This also includes cities that are independent of any county.
 
 ### County Subdivision
 
 Subdivision of counties. These could be minor civil divisions like townships or borroughs, but in some states that don't divide counties, they are census designated places. See https://www.census.gov/geo/reference/gtc/gtc_cousub.html.
+
+### Urban Area
+
+Urbanized areas or clusters. Areas with 2,500 to 50,000 inhabitants is considered an urban cluster while more than 50,000 is an urbanized area. Urban areas can span counties, but the one with the majority of the population is identified as the primary county.
+
+Urban area data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
 
 ### Place
 
@@ -94,22 +97,23 @@ ZCTAs can span counties, county subdivisions, and places. A primary county, coun
 
 ZCTA data is only provided for states, the District of Columbia, Puerto Rico. It is not provided for other U.S. territories.
 
+The U.S. Postal Service adds and removes ZIP Codes as necessary for the efficient delivery of mail. The U.S. Census Bureau updates the ZCTA's to reflect these changes during the decenniel census. The list of retired 2010 ZCTA's can still be used via the `USGeo::Zcta.for_zipcode` method. This scope will
+
 ### Entity Relationships
 
-[![](https://mermaid.ink/img/pako:eNqFU8FuwyAM_RXEufmBqJq0LTtWmpZblYsLbmaNQAXOpKrrvy8h6ZRkNOVknp8f5hkuUjmNMpfKQAgFQe2hqazoVkTEB9bkbGWnWEHfFP6hJQOjmGOvrrV8TmFle9BJmb1imCPvBhQuNTy-QEDdH0qBSYF59ghLVnMg-4C0Q_bu5Awx2ESW1Fp2Ups2pcBAte2M0TvwX8hTjf6mYptlT382pdCZUXPCaEwPxlBMtQZ8GF9MFDOV2y6m4ugGfJjisqkhFne6GjhLI8X2J8tWJhVrFvY-rBmbT7iauPyd-Y_Mtb7uZROHpN5Awr8VvfQrkhvZoG-AdPc7L71MJfkTG6xk3oUaj9AarmRlrx21PenOjjdN7LzMj2ACbiS07MqzVTJn3-KNNH7ykXX9BbKkYG4?type=png)](https://mermaid.live/edit#pako:eNqFU8FuwyAM_RXEufmBqJq0LTtWmpZblYsLbmaNQAXOpKrrvy8h6ZRkNOVknp8f5hkuUjmNMpfKQAgFQe2hqazoVkTEB9bkbGWnWEHfFP6hJQOjmGOvrrV8TmFle9BJmb1imCPvBhQuNTy-QEDdH0qBSYF59ghLVnMg-4C0Q_bu5Awx2ESW1Fp2Ups2pcBAte2M0TvwX8hTjf6mYptlT382pdCZUXPCaEwPxlBMtQZ8GF9MFDOV2y6m4ugGfJjisqkhFne6GjhLI8X2J8tWJhVrFvY-rBmbT7iauPyd-Y_Mtb7uZROHpN5Awr8VvfQrkhvZoG-AdPc7L71MJfkTG6xk3oUaj9AarmRlrx21PenOjjdN7LzMj2ACbiS07MqzVTJn3-KNNH7ykXX9BbKkYG4)
-## Usage
-
+[![](https://mermaid.ink/img/pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd?type=png)](https://mermaid.live/edit#pako:eNqFVEFuwjAQ_IrlM_kAQpVa0iNS1YhLlcvGXqglx0a2U4lS_t7EDlESlpALZmZ2s5qd-MKFlcjXXGjwPldwdFCXhrVPRNgnHpU1pRljufpR_g4tAgRkU2xrGxPOFFY0lSTbfIkAU-RDg8B5D4dv4FF2L1U-KAH61SHMVXWlzBPRDoOzJ6tVAEOwSiyxo1ralL2rqMIIq1-UD6itbnxAd2M6T9gmy14GQyl0YulU0FvYgfHIxr0SnhYdiXzS5fYvUnHJCU_7ng-VzuzBVEkzt5xt_rJsYaexZraIpzW3ccgI9PMtvfARS1hHxYAwZqHfUpCGCKVVpu-DIEY7njHjMUiK2NEkocnsUZYHRR_UOwFf8RpdDUq2d8ulKyh5-MYaS75ujxIP0OhQ8tJcW2lzkm2W3qUK1vH1AbTHFYcm2OJsxAAkVX9HDSjGql1_i3U_13-31qQd)
 First add to you Gemfile:
 
 `gem us_geo`
 
-Install the migrations:
+Install the migrations.
 
 ```bash
 rake us_geo_engine:install:migrations
+rake db:migrate
 ```
 
-Import the data:
+Import the data.
 
 ```bash
 rake us_geo:import:all
@@ -121,14 +125,16 @@ Or, if you only want to import some subset of the data, you can run any number o
 rake us_geo:import:regions
 rake us_geo:import:divisions
 rake us_geo:import:states
-rake us_geo:import:designated_market_areas
 rake us_geo:import:combined_statistical_areas
 rake us_geo:import:core_based_statistical_areas
 rake us_geo:import:metropolitan_divisions
 rake us_geo:import:counties
 rake us_geo:import:county_subdivisions
+rake us_geo:import:urban_areas
 rake us_geo:import:places
 rake us_geo:import:zctas
+rake us_geo:import:urban_area_counties
+rake us_geo:import:urban_area_county_subdivisions
 rake us_geo:import:place_counties
 rake us_geo:import:zcta_counties
 rake us_geo:import:zcta_county_subdivisions

@@ -10,18 +10,12 @@ Rails.application.routes.draw do
 
   controller :divisions do
     get "divisions", action: :index, as: :divisions
-    get "divisions/territories", action: :territories, as: :territories
     get "divisions/:id", action: :show, as: :division
   end
 
   controller :states do
     get "states", action: :index, as: :states
     get "states/:id", action: :show, as: :state
-  end
-
-  controller :designated_market_areas do
-    get "dmas", action: :index, as: :designated_market_areas
-    get "dmas/:id", action: :show, as: :designated_market_area
   end
 
   controller :combined_statistical_areas do
@@ -37,6 +31,11 @@ Rails.application.routes.draw do
   controller :metropolitan_divisions do
     get "metropolitan_divisions", action: :index, as: :metropolitan_divisions
     get "metropolitan_divisions/:id", action: :show, as: :metropolitan_division
+  end
+
+  controller :urban_areas do
+    get "urban_areas", action: :index, as: :urban_areas
+    get "urban_areas/:id", action: :show, as: :urban_area
   end
 
   controller :counties do

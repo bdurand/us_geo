@@ -16,10 +16,6 @@ class DivisionsController < ApplicationController
     add_breadcrumb(division_id: @division)
   end
 
-  def territories
-    @territories = USGeo::State.not_removed.where(division: nil)
-  end
-
   private
 
   def set_breadcrumbs

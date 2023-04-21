@@ -55,10 +55,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def add_designated_market_area_breadcrumb
-    if params[:designated_market_area_id]
-      @designated_market_area = USGeo::DesignatedMarketArea.find(params[:designated_market_area_id])
-      add_breadcrumb(designated_market_area_id: @designated_market_area)
+  def add_urban_area_breadcrumb
+    if params[:urban_area_id]
+      @urban_area = USGeo::UrbanArea.find(params[:urban_area_id])
+      add_breadcrumb(urban_area_id: @urban_area)
     end
   end
 end

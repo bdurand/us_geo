@@ -26,6 +26,9 @@ module USGeo
     # @!attribute name
     #   @return [String] Name of the CSA.
 
+    # @!attribute short_name
+    #   @return [String] Short name of the CSA.
+
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "combined_statistical_areas.csv")
@@ -33,6 +36,7 @@ module USGeo
           load_data_file(location) do |row|
             load_record!(geoid: row["GEOID"]) do |record|
               record.name = row["Name"]
+              record.short_name = row["Short Name"]
               record.population = row["Population"]
               record.housing_units = row["Housing Units"]
               record.land_area = row["Land Area"]

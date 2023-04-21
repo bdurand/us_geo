@@ -10,17 +10,17 @@ module USGeo
 
     self.primary_key = "geoid"
 
-    belongs_to :designated_market_area, foreign_key: :dma_code, optional: true, inverse_of: :counties
     belongs_to :core_based_statistical_area, foreign_key: :cbsa_geoid, optional: true, inverse_of: :counties
     belongs_to :metropolitan_division, foreign_key: :metropolitan_division_geoid, optional: true, inverse_of: :counties
     belongs_to :state, foreign_key: :state_code, inverse_of: :counties
-
-    delegate :combined_statistical_area, to: :core_based_statistical_area, allow_nil: true
 
     has_many :subdivisions, -> { not_removed }, foreign_key: :county_geoid, inverse_of: :county, class_name: "USGeo::CountySubdivision"
 
     has_many :zcta_counties, -> { not_removed }, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
     has_many :zctas, -> { not_removed }, through: :zcta_counties
+
+    has_many :urban_area_counties, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
+    has_many :urban_areas, through: :urban_area_counties
 
     has_many :place_counties, -> { not_removed }, foreign_key: :county_geoid, inverse_of: :county, dependent: :destroy
     has_many :places, -> { not_removed }, through: :place_counties
@@ -32,7 +32,6 @@ module USGeo
     validates :fips_class_code, length: {is: 2}
     validates :metropolitan_division_geoid, length: {is: 5}, allow_nil: true
     validates :cbsa_geoid, length: {is: 5}, allow_nil: true
-    validates :dma_code, length: {is: 3}, allow_nil: true
     validates :land_area, numericality: true, allow_nil: true
     validates :water_area, numericality: true, allow_nil: true
     validates :population, numericality: {only_integer: true}, allow_nil: true
@@ -59,12 +58,9 @@ module USGeo
     # @!method central?
     #   @return [Boolean] True if the county is a central county in the CBSA.
 
-    # Full name of the county with the state.
-    #
-    # @return [String]
-    def full_name
-      "#{name}, #{state_code}"
-    end
+    # @!method combined_statistical_area
+    #   @return [USGeo::CombinedStatisticalArea] Combined statistical area that the county belongs to.
+    delegate :combined_statistical_area, to: :core_based_statistical_area, allow_nil: true
 
     class << self
       def load!(uri = nil)
@@ -79,8 +75,8 @@ module USGeo
               record.state_code = row["State"]
               record.cbsa_geoid = row["CBSA"]
               record.metropolitan_division_geoid = row["Metropolitan Division"]
-              record.dma_code = row["DMA"]
               record.time_zone_name = row["Time Zone"]
+              record.time_zone_2_name = row["Time Zone 2"]
               record.fips_class_code = row["FIPS Class"]
               record.central = (row["Central"] == "T")
               record.population = row["Population"]
@@ -93,6 +89,13 @@ module USGeo
           end
         end
       end
+    end
+
+    # Full name of the county with the state.
+    #
+    # @return [String]
+    def full_name
+      "#{name}, #{state_code}"
     end
 
     def state_fips
@@ -108,11 +111,21 @@ module USGeo
       core_based_statistical_area if core_based_statistical_area&.metropolitan?
     end
 
-    # Time zone for the county.
+    # Return a single time zone for the county. If the county has two time zones,
+    # only one is returned.
     #
-    # @return [ActiveSupport::TimeZone]
+    # @return [ActiveSupport::TimeZone, nil]
     def time_zone
       ActiveSupport::TimeZone[time_zone_name] if time_zone_name
+    end
+
+    # Get all time zones for the county.
+    #
+    # @return [Array<ActiveSupport::TimeZone>]
+    def time_zones
+      [time_zone_name, time_zone_2_name].compact.collect do |tz_name|
+        ActiveSupport::TimeZone[tz_name]
+      end.compact
     end
 
     # True if the county is an outlying county in the CBSA.

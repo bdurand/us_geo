@@ -21,7 +21,7 @@
             <td><%= link_to state.division.name, division_path(state.division) %></td>
           <% else %>
             <td>-</td>
-            <td><%= link_to "Territories", territories_path %></td>
+            <td>-</td>
           <% end %>
         <% end %>
         <%= demographics_cells(state, round_area: 0) %>
