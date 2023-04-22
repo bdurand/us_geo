@@ -55,6 +55,9 @@ module USGeo
     # @!attribute time_zone_name
     #   @return [String] Time zone name.
 
+    # @!attribute time_zone_2_name
+    #   @return [String] Time zone name.
+
     # @!method central?
     #   @return [Boolean] True if the county is a central county in the CBSA.
 
