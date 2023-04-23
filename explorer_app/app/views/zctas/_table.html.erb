@@ -1,0 +1,60 @@
+<%
+  urban_area ||= nil
+  county ||= nil
+  county_subdivision ||= nil
+  place ||= nil
+  overlap = (urban_area || county || county_subdivision || place)
+%>
+
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>ZIP Code</th>
+      <th>Primary County</th>
+      <th>Primary Place</th>
+
+      <%= demographics_headers %>
+
+      <% if overlap %>
+        <th class="text-end">Overlap</th>
+      <% end %>
+    </th>
+  </thead>
+  <tbody>
+    <% zctas.each do |zcta| %>
+      <tr>
+        <td><%= link_to zcta.zipcode, zcta_path(zcta, breadcrumb_params) %></td>
+        <td>
+          <% if zcta.primary_county %>
+            <%= link_to zcta.primary_county.full_name, county_path(zcta.primary_county, breadcrumb_params) %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td>
+          <% if zcta.primary_place %>
+            <%= link_to zcta.primary_place.full_name, place_path(zcta.primary_place, breadcrumb_params) %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+
+        <%= demographics_cells(zcta, round_area: 1) %>
+
+        <% if overlap %>
+          <td class="text-end">
+            <% if county %>
+              <%= overlap_percentage(county, zcta, :zcta_counties) %>
+            <% elsif county_subdivision %>
+              <%= overlap_percentage(county_subdivision, zcta, :zcta_county_subdivisions) %>
+            <% elsif place %>
+              <%= overlap_percentage(place, zcta, :zcta_places) %>
+            <% elsif urban_area %>
+              <%= overlap_percentage(urban_area, zcta, :zcta_urban_areas) %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

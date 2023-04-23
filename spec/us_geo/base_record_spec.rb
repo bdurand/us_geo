@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe USGeo::BaseRecord do
-
   describe "status" do
     it "should be marked as imported" do
       record = USGeo::County.new(status: 1)
@@ -29,8 +30,8 @@ describe USGeo::BaseRecord do
     after { USGeo::Region.delete_all }
 
     it "should mark previously imported records as removed" do
-      data = File.read(File.expand_path("../../data/dist/divisions.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/divisions.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      data = File.read(File.expand_path("../../data/2020_dist/regions.csv", __dir__))
+      stub_request(:get, "#{USGeo.base_data_uri}/regions.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
 
       midwest = USGeo::Region.new
       midwest.id = 2
@@ -63,5 +64,4 @@ describe USGeo::BaseRecord do
       expect(manual.status).to eq USGeo::Region::STATUS_MANUAL
     end
   end
-
 end

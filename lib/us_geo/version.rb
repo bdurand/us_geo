@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module USGeo
-  VERSION = "1.0.3"
+  VERSION = File.read(File.expand_path("../../VERSION", __dir__)).chomp.freeze
 end

@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 module USGeo
-
-  # Mapping of ZCTA's to urban areas they overlap with.
+  # Mapping of ZCTA's to places they overlap with.
   class ZctaPlace < BaseRecord
-
-    include Demographics
+    include Area
 
     belongs_to :zcta, foreign_key: :zipcode, inverse_of: :zcta_places
     belongs_to :place, foreign_key: :place_geoid, inverse_of: :zcta_places
@@ -14,20 +12,16 @@ module USGeo
     validates :place_geoid, length: {is: 7}
     validates :land_area, numericality: true, presence: true
     validates :water_area, numericality: true, presence: true
-    validates :population, numericality: {only_integer: true}, presence: true
-    validates :housing_units, numericality: {only_integer: true}, presence: true
 
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "zcta_places.csv")
-        
+
         import! do
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"], place_geoid: row["Place GEOID"]) do |record|
-              record.population = row["Population"]
-              record.housing_units = row["Housing Units"]
-              record.land_area = area_meters_to_miles(row["Land Area"])
-              record.water_area = area_meters_to_miles(row["Water Area"])
+              record.land_area = row["Land Area"]
+              record.water_area = row["Water Area"]
             end
           end
         end
@@ -63,6 +57,5 @@ module USGeo
     def percent_place_total_area
       total_area / place.total_area
     end
-
   end
 end

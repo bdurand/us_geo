@@ -1,5 +1,6 @@
-class CreateZctaCounties < ActiveRecord::Migration[5.0]
+# frozen_string_literal: true
 
+class CreateZctaCounties < ActiveRecord::Migration[5.0]
   def up
     create_table :us_geo_zcta_counties do |t|
       t.string :zipcode, limit: 5, null: false
@@ -18,5 +19,4 @@ class CreateZctaCounties < ActiveRecord::Migration[5.0]
   def down
     drop_table :us_geo_zcta_counties
   end
-
 end

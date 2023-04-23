@@ -1,9 +1,28 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+begin
+  require "bundler/setup"
+rescue LoadError
+  warn "You must `gem install bundler` and `bundle install` to run rake tasks"
+end
 
-RSpec::Core::RakeTask.new(:spec)
+if defined?(YARD::Rake::YardocTask)
+  YARD::Rake::YardocTask.new(:yard)
+end
 
-task :default => :appraisals
+begin
+  require "bundler/gem_tasks"
+rescue Bundler::GemspecError
+  warn "Gem tasks not available because gemspec not defined"
+end
+
+begin
+  require "rspec/core/rake_task"
+  RSpec::Core::RakeTask.new(:spec)
+  task default: :spec
+rescue LoadError
+  warn "You must install rspec to run the spec rake tasks"
+end
+
+require "standard/rake"
 
 desc "run the specs using appraisal"
 task :appraisals do
@@ -14,5 +33,32 @@ namespace :appraisals do
   desc "install all the appraisal gemspecs"
   task :install do
     exec "bundle exec appraisal install"
+  end
+end
+
+namespace :data do
+  desc "Process the raw USGS GNIS file into separate CSV files"
+  task :preprocess_gnis_data do
+    require_relative "data/lib/us_geo_data"
+    USGeoData::Gnis.new.preprocess
+  end
+
+  desc "Generate the distribution CSV files from the raw data files and processed GNIS files"
+  task :dump_dist do
+    require_relative "data/lib/us_geo_data"
+    USGeoData.dump_all
+  end
+end
+
+namespace :db do
+  desc "Dump the database schema to db/schema.rb"
+  task :dump_schema do
+    exec <<~BASH
+      cd explorer_app
+      BUNDLE_GEMFILE=$(pwd)/Gemfile bundle
+      BUNDLE_GEMFILE=$(pwd)/Gemfile DATABASE_URL=sqlite3:tmp/db.sqlite3: bundle exec rails db:migrate
+      rm -f tmp/db.sqlite3
+      mv db/schema.rb ../db/schema.rb
+    BASH
   end
 end

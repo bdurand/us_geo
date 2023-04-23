@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 module USGeo
-
   # Mapping of ZCTA's to urban areas they overlap with.
   class ZctaUrbanArea < BaseRecord
-
-    include Demographics
+    include Area
 
     belongs_to :zcta, foreign_key: :zipcode, inverse_of: :zcta_urban_areas
     belongs_to :urban_area, foreign_key: :urban_area_geoid, inverse_of: :zcta_urban_areas
@@ -14,8 +12,6 @@ module USGeo
     validates :urban_area_geoid, length: {is: 5}
     validates :land_area, numericality: true, presence: true
     validates :water_area, numericality: true, presence: true
-    validates :population, numericality: {only_integer: true}, presence: true
-    validates :housing_units, numericality: {only_integer: true}, presence: true
 
     class << self
       def load!(uri = nil)
@@ -24,19 +20,12 @@ module USGeo
         import! do
           load_data_file(location) do |row|
             load_record!(zipcode: row["ZCTA5"], urban_area_geoid: row["Urban Area GEOID"]) do |record|
-              record.population = row["Population"]
-              record.housing_units = row["Housing Units"]
-              record.land_area = area_meters_to_miles(row["Land Area"])
-              record.water_area = area_meters_to_miles(row["Water Area"])
+              record.land_area = row["Land Area"]
+              record.water_area = row["Water Area"]
             end
           end
         end
       end
-    end
-
-    # Percentage of the ZCTA population.
-    def percent_zcta_population
-      population.to_f / zcta.population.to_f
     end
 
     # Percentage of the ZCTA land area.
@@ -49,11 +38,6 @@ module USGeo
       total_area / zcta.total_area
     end
 
-    # Percentage of the urban area population.
-    def percent_urban_area_population
-      population.to_f / urban_area.population.to_f
-    end
-
     # Percentage of the urban area land area.
     def percent_urban_area_land_area
       land_area / urban_area.land_area
@@ -63,6 +47,5 @@ module USGeo
     def percent_urban_area_total_area
       total_area / urban_area.total_area
     end
-
   end
 end

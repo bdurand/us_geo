@@ -1,5 +1,6 @@
-class CreatePlaceCounties < ActiveRecord::Migration[5.0]
+# frozen_string_literal: true
 
+class CreatePlaceCounties < ActiveRecord::Migration[5.0]
   def up
     create_table :us_geo_place_counties do |t|
       t.string :place_geoid, limit: 7, null: false
@@ -14,5 +15,4 @@ class CreatePlaceCounties < ActiveRecord::Migration[5.0]
   def down
     drop_table :us_geo_place_counties
   end
-
 end

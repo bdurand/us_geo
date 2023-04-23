@@ -1,5 +1,6 @@
-class CreateCounties < ActiveRecord::Migration[5.0]
+# frozen_string_literal: true
 
+class CreateCounties < ActiveRecord::Migration[5.0]
   def up
     create_table :us_geo_counties, id: false do |t|
       t.string :geoid, primary_key: true, limit: 5, null: false
@@ -12,7 +13,6 @@ class CreateCounties < ActiveRecord::Migration[5.0]
       t.boolean :central, default: false
       t.string :fips_class_code, null: false, limit: 2
       t.string :time_zone_name, null: true, limit: 30
-      t.string :dma_code, limit: 3, null: true, index: true
       t.float :land_area, null: true
       t.float :water_area, null: true
       t.integer :population, null: true
@@ -30,5 +30,4 @@ class CreateCounties < ActiveRecord::Migration[5.0]
   def down
     drop_table :us_geo_counties
   end
-
 end

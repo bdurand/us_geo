@@ -1,5 +1,6 @@
-class CreateCoreBasedStatisticalAreas < ActiveRecord::Migration[5.0]
+# frozen_string_literal: true
 
+class CreateCoreBasedStatisticalAreas < ActiveRecord::Migration[5.0]
   def up
     create_table :us_geo_core_based_statistical_areas, id: false do |t|
       t.string :geoid, primary_key: true, null: false, limit: 5
@@ -20,5 +21,4 @@ class CreateCoreBasedStatisticalAreas < ActiveRecord::Migration[5.0]
   def down
     drop_table :us_geo_core_based_statistical_areas
   end
-
 end

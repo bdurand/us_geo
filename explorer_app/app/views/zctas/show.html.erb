@@ -1,0 +1,104 @@
+<%= breadcrumbs @zcta.zipcode, active: @zcta %>
+
+<h1>ZIP Code <%= @zcta.zipcode %></h1>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>Primary County</th>
+      <td>
+        <% if @zcta.primary_county %>
+          <%= link_to @zcta.primary_county.full_name, county_path(@zcta.primary_county, breadcrumb_params) %>
+        <% else %>
+          -
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>Primary Place</th>
+      <td>
+        <% if @zcta.primary_place %>
+          <%= link_to @zcta.primary_place.full_name, place_path(@zcta.primary_place, breadcrumb_params) %>
+        <% else %>
+          -
+        <% end %>
+      </td>
+    </tr>
+    <% if @zcta.combined_statistical_area %>
+      <tr>
+        <th>Combined Statistical Area</th>
+        <td><%= link_to @zcta.combined_statistical_area.name, combined_statistical_area_path(@zcta.combined_statistical_area, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <% if @zcta.core_based_statistical_area %>
+      <tr>
+        <th>Core Based Statistical Area</th>
+        <td><%= link_to @zcta.core_based_statistical_area.name, core_based_statistical_area_path(@zcta.core_based_statistical_area, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <% if @zcta.metropolitan_division %>
+      <tr>
+        <th>Metropolitan Division</th>
+        <td><%= link_to @zcta.metropolitan_division.name, metropolitan_division_path(@zcta.metropolitan_division, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <% if @zcta.primary_urban_area %>
+      <tr>
+        <th>Primary Urban Area</th>
+        <td><%= link_to @zcta.primary_urban_area.name, urban_area_path(@zcta.primary_urban_area, breadcrumb_params) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Population</th>
+      <td><%= formatted_number(@zcta.population) %></td>
+    </tr>
+    <tr>
+      <th>Population Density</th>
+      <td><%= population_density(@zcta) %></td>
+    </tr>
+    <tr>
+      <th>Housing Units</th>
+      <td><%= formatted_number(@zcta.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Land Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@zcta.land_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Water Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@zcta.water_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Coordinates</th>
+      <td><%= google_maps_link(@zcta) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<% if @zcta.urban_areas.size > 1 %>
+  <br>
+
+  <h2><%= pluralize(@zcta.urban_areas.count, "Urban Area") %></h2>
+
+  <%= render "urban_areas/table", urban_areas: @zcta.urban_areas, zcta: @zcta %>
+<% end %>
+
+<% if @zcta.counties.size > 1 %>
+  <br>
+
+  <h2><%= pluralize(@zcta.counties.count, "County") %></h2>
+
+  <%= render "counties/table", counties: @zcta.counties, zcta: @zcta %>
+<% end %>
+
+<br>
+
+<h2><%= pluralize(@zcta.county_subdivisions.count, "County Subdivision") %></h2>
+
+<%= render "county_subdivisions/table", county_subdivisions: @zcta.county_subdivisions, zcta: @zcta %>
+
+<br>
+
+<h2><%= pluralize(@zcta.places.count, "Place") %></h2>
+
+<%= render "places/table", places: @zcta.places, zcta: @zcta %>

@@ -1,0 +1,42 @@
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>GEOID</th>
+      <th>Name</th>
+      <% unless defined?(core_based_statistical_area) && core_based_statistical_area %>
+        <th>Core Based Statistical Area</th>
+      <% end %>
+      <% unless defined?(combined_statistical_area) && combined_statistical_area %>
+        <th>Combined Statistical Area</th>
+      <% end %>
+      <%= demographics_headers %>
+    </th>
+  </thead>
+  <tbody>
+    <% metropolitan_divisions.each do |metropolitan_division| %>
+      <tr>
+        <td><%= metropolitan_division.geoid %></td>
+        <td><%= link_to metropolitan_division.name, metropolitan_division_path(metropolitan_division, breadcrumb_params) %></td>
+        <% unless defined?(core_based_statistical_area) && core_based_statistical_area %>
+          <td>
+            <% if metropolitan_division.core_based_statistical_area %>
+              <%= link_to metropolitan_division.core_based_statistical_area.name, core_based_statistical_area_path(metropolitan_division.core_based_statistical_area, breadcrumb_params) %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+        <% end %>
+        <% unless defined?(combined_statistical_area) && combined_statistical_area %>
+          <td>
+            <% if metropolitan_division.combined_statistical_area %>
+              <%= link_to metropolitan_division.combined_statistical_area.name, combined_statistical_area_path(metropolitan_division.combined_statistical_area) %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+        <% end %>
+        <%= demographics_cells(metropolitan_division, round_area: 0) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

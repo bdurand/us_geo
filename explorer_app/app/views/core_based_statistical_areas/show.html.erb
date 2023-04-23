@@ -1,0 +1,60 @@
+<%= breadcrumbs @core_based_statistical_area.name, active: @core_based_statistical_area %>
+
+<h1><%= @core_based_statistical_area.name %></h1>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>GEOID</th>
+      <td><%= @core_based_statistical_area.geoid %></td>
+    </tr>
+    <tr>
+      <th>Short Name</th>
+      <td><%= @core_based_statistical_area.short_name %></td>
+    </tr>
+    <tr>
+      <th>Type</th>
+      <td><%= @core_based_statistical_area.metropolitan? ? "Metropolitan" : "Micropolitan" %> Area</td>
+    </tr>
+    <% if @core_based_statistical_area.combined_statistical_area %>
+      <tr>
+        <th>Combined Statistical Area</th>
+        <td><%= link_to @core_based_statistical_area.combined_statistical_area.name, combined_statistical_area_path(@core_based_statistical_area.combined_statistical_area) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Population</th>
+      <td><%= formatted_number(@core_based_statistical_area.population) %></td>
+    </tr>
+    <tr>
+      <th>Housing Units</th>
+      <td><%= formatted_number(@core_based_statistical_area.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Land Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@core_based_statistical_area.land_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Water Area (mi<sup>2</sup>)</th>
+      <td><%= formatted_number(@core_based_statistical_area.water_area, round: 0) %></td>
+    </tr>
+    <tr>
+      <th>Coordinates</th>
+      <td><%= google_maps_link(@core_based_statistical_area) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<% if @core_based_statistical_area.metropolitan_divisions.present? %>
+  <br>
+
+  <h2><%= pluralize(@core_based_statistical_area.metropolitan_divisions.count, "Metropolitan Divisions") %></h2>
+
+  <%= render "metropolitan_divisions/table", metropolitan_divisions: @core_based_statistical_area.metropolitan_divisions, core_based_statistical_area: @core_based_statistical_area %>
+<% end %>
+
+<br>
+
+<h2><%= pluralize(@core_based_statistical_area.counties.count, "County") %></h2>
+
+<%= render "counties/table", counties: @core_based_statistical_area.counties, core_based_statistical_area: @core_based_statistical_area %>

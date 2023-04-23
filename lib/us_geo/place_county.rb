@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module USGeo
-
-  # Mapping of urban areas to counties they overlap with.
+  # Mapping of places to counties they overlap with.
   class PlaceCounty < BaseRecord
-
     belongs_to :county, foreign_key: :county_geoid, inverse_of: :place_counties
     belongs_to :place, foreign_key: :place_geoid, inverse_of: :place_counties
 
@@ -23,6 +21,5 @@ module USGeo
         end
       end
     end
-
   end
 end

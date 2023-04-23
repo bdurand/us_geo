@@ -1,33 +1,34 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe USGeo::State do
-
   describe "associations" do
     it "should belong to a region" do
       state = USGeo::State.new
       state.code = "XX"
-      expect{ state.region }.to_not raise_error
+      expect { state.region }.to_not raise_error
       expect(state.build_region).to be_a(USGeo::Region)
     end
 
     it "should belong to a division" do
       state = USGeo::State.new
       state.code = "XX"
-      expect{ state.division }.to_not raise_error
+      expect { state.division }.to_not raise_error
       expect(state.build_division).to be_a(USGeo::Division)
     end
 
     it "should have counties" do
       state = USGeo::State.new
       state.code = "XX"
-      expect{ state.counties }.to_not raise_error
+      expect { state.counties }.to_not raise_error
       expect(state.counties.build).to be_a(USGeo::County)
     end
 
     it "should have places" do
       state = USGeo::State.new
       state.code = "XX"
-      expect{ state.places }.to_not raise_error
+      expect { state.places }.to_not raise_error
       expect(state.places.build).to be_a(USGeo::Place)
     end
   end
@@ -36,10 +37,10 @@ describe USGeo::State do
     after { USGeo::State.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/states.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/states.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      mock_data_file_request("states.csv")
+
       USGeo::State.load!
-      expect(USGeo::State.imported.count).to eq 59
+      expect(USGeo::State.imported.count).to eq 56
       expect(USGeo::State.removed.count).to eq 0
 
       illinois = USGeo::State.find("IL")
@@ -48,6 +49,10 @@ describe USGeo::State do
       expect(illinois.fips).to eq "17"
       expect(illinois.region_id).to eq 2
       expect(illinois.division_id).to eq 3
+      expect(illinois.population).to be_between(10_000_000, 15_000_000)
+      expect(illinois.housing_units).to be_between(5_000_000, 7_000_000)
+      expect(illinois.land_area.round).to be_between(50_000, 60_000)
+      expect(illinois.water_area.round).to be_between(2000, 3000)
     end
   end
 
@@ -66,5 +71,4 @@ describe USGeo::State do
       expect(USGeo::State.new(type: "district").territory?).to eq false
     end
   end
-
 end

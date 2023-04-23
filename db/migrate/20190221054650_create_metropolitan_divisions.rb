@@ -1,5 +1,6 @@
-class CreateMetropolitanDivisions < ActiveRecord::Migration[5.0]
+# frozen_string_literal: true
 
+class CreateMetropolitanDivisions < ActiveRecord::Migration[5.0]
   def up
     create_table :us_geo_metropolitan_divisions, id: false do |t|
       t.string :geoid, primary_key: true, null: false, limit: 5
@@ -17,5 +18,4 @@ class CreateMetropolitanDivisions < ActiveRecord::Migration[5.0]
   def down
     drop_table :us_geo_metropolitan_divisions
   end
-
 end

@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe USGeo::PlaceCounty do
-
   describe "associations" do
     it "should have a place" do
       place_county = USGeo::PlaceCounty.new
       place_county.place_geoid = "0000001"
       place_county.county_geoid = "00001"
-      expect{ place_county.place }.to_not raise_error
+      expect { place_county.place }.to_not raise_error
       expect(place_county.build_place).to be_a(USGeo::Place)
     end
 
@@ -15,7 +16,7 @@ describe USGeo::PlaceCounty do
       place_county = USGeo::PlaceCounty.new
       place_county.place_geoid = "0000001"
       place_county.county_geoid = "00001"
-      expect{ place_county.county }.to_not raise_error
+      expect { place_county.county }.to_not raise_error
       expect(place_county.build_county).to be_a(USGeo::County)
     end
   end
@@ -24,8 +25,8 @@ describe USGeo::PlaceCounty do
     after { USGeo::PlaceCounty.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/place_counties.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/place_counties.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      mock_data_file_request("place_counties.csv")
+
       USGeo::PlaceCounty.load!
       expect(USGeo::PlaceCounty.imported.count).to be > 30_000
       expect(USGeo::PlaceCounty.removed.count).to eq 0
@@ -35,5 +36,4 @@ describe USGeo::PlaceCounty do
       expect(place_counties.collect(&:county_geoid)).to match_array(["36005", "36047", "36061", "36081", "36085"])
     end
   end
-
 end

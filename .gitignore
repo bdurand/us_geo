@@ -1,15 +1,13 @@
-/.bundle/
-/.yardoc
-/_yardoc/
-/coverage/
-/doc/
-/pkg/
-/spec/reports/
-/tmp/
-
 .DS_Store
-
-# rspec failure tracking
+.bundle/
+.rspec
 .rspec_status
-
-.bundle
+.ruby-version
+.yardoc
+.env
+Gemfile.lock
+coverage/
+gemfiles/*.gemfile.lock
+log/*.log
+pkg/
+doc/

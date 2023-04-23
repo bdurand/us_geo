@@ -1,0 +1,18 @@
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <%= demographics_headers %>
+    </th>
+  </thead>
+  <tbody>
+    <% regions.each do |region| %>
+      <tr>
+        <td><%= region.id %></td>
+        <td><%= link_to region.name, region_path(region, breadcrumb_params) %></td>
+        <%= demographics_cells(region, round_area: 0) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

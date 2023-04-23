@@ -1,0 +1,31 @@
+<table class="table table-striped sortable">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <% unless defined?(division) && division %>
+        <th>Region</th>
+        <th>Division</th>
+      <% end %>
+      <%= demographics_headers %>
+    </th>
+  </thead>
+  <tbody>
+    <% states.each do |state| %>
+      <tr>
+        <td><%= state.code %></td>
+        <td><%= link_to state.name, state_path(state, breadcrumb_params) %></td>
+        <% unless defined?(division) && division %>
+          <% if state.division %>
+            <td><%= link_to state.division.region.name, region_path(state.division.region) %></td>
+            <td><%= link_to state.division.name, division_path(state.division) %></td>
+          <% else %>
+            <td>-</td>
+            <td>-</td>
+          <% end %>
+        <% end %>
+        <%= demographics_cells(state, round_area: 0) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

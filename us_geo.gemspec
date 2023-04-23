@@ -1,24 +1,36 @@
-lib = File.expand_path("../lib", __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "us_geo/version"
+Gem::Specification.new do |spec|
+  spec.name = "us_geo"
+  spec.version = File.read(File.expand_path("../VERSION", __FILE__)).strip
+  spec.authors = ["Brian Durand"]
+  spec.email = ["bbdurand@gmail.com"]
 
-# Describe your gem and declare its dependencies:
-Gem::Specification.new do |s|
-  s.name        = "us_geo"
-  s.version     = USGeo::VERSION
-  s.authors     = ["Brian Durand"]
-  s.summary     = "Collection of geographic data for the United States for use with ActiveRecord"
-  s.license     = "MIT"
+  spec.summary = "Collection of geographic data for the United States for use with ActiveRecord"
+  spec.homepage = "https://github.com/bdurand/us_geo"
+  spec.license = "MIT"
 
-  s.files = Dir["{db,lib}/**/*", "Rakefile", "README.md", "Gemfile", "Gemfile.lock"]
-  s.test_files = Dir["spec/**/*"]
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  ignore_files = %w[
+    .
+    Appraisals
+    Gemfile
+    Gemfile.lock
+    Rakefile
+    bin/
+    gemfiles/
+    spec/
+    data/
+    sampleapp/
+  ]
+  spec.files = Dir.chdir(File.expand_path("..", __FILE__)) do
+    `git ls-files -z`.split("\x0").reject { |f| ignore_files.any? { |path| f.start_with?(path) } }
+  end
 
-  s.add_dependency 'activerecord', '>= 5.0'
+  spec.require_paths = ["lib"]
 
-  s.add_development_dependency "bundler", "~> 1.16"
-  s.add_development_dependency "rake", "~> 10.0"
-  s.add_development_dependency 'rspec', '~> 3.8'
-  s.add_development_dependency 'sqlite3', '>= 1.3'
-  s.add_development_dependency "webmock", '~> 3.4'
-  s.add_development_dependency "appraisal"
+  spec.add_dependency "activerecord", ">= 5.2"
+
+  spec.add_development_dependency "bundler"
+
+  spec.required_ruby_version = ">= 2.6"
 end

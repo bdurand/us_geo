@@ -1,0 +1,5 @@
+<%= content_tag(:td, (entity.population ? formatted_number(entity.population) : "-"), class: "text-end", data: {sort: entity.population.to_i}) %>
+<%= content_tag(:td, population_density(entity), class: "text-end", data: {sort: entity.population_density.to_f}) %>
+<%= content_tag(:td, (entity.housing_units ? formatted_number(entity.housing_units) : "-"), class: "text-end", data: {sort: entity.housing_units.to_i}) %>
+<%= content_tag(:td, (entity.land_area ? formatted_number(entity.land_area, round: round_area) : "-"), class: "text-end", data: {sort: entity.land_area.to_i}) %>
+<%= content_tag(:td, (entity.water_area ? formatted_number(entity.water_area, round: round_area) : "-"), class: "text-end", data: {sort: entity.water_area.to_i}) %>

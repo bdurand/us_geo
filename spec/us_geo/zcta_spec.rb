@@ -1,20 +1,21 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe USGeo::Zcta do
-
   describe "associations" do
     it "should have a primary county" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
-      expect{ zcta.primary_county }.to_not raise_error
+      expect { zcta.primary_county }.to_not raise_error
       expect(zcta.build_primary_county).to be_a(USGeo::County)
     end
 
     it "should have counties" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
-      expect{ zcta.counties }.to_not raise_error
-      expect{ zcta.zcta_counties }.to_not raise_error
+      expect { zcta.counties }.to_not raise_error
+      expect { zcta.zcta_counties }.to_not raise_error
       expect(zcta.zcta_counties.build).to be_a(USGeo::ZctaCounty)
     end
 
@@ -48,29 +49,108 @@ describe USGeo::Zcta do
       expect(zcta.core_based_statistical_area).to eq cbsa
     end
 
-    it "should have a designated market area via the primary county" do
+    it "should have a primary county subdivision" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
-      dma = USGeo::DesignatedMarketArea.new
-      county = USGeo::County.new
-      county.designated_market_area = dma
-      zcta.primary_county = county
-      expect(zcta.designated_market_area).to eq dma
+      expect { zcta.primary_county_subdivision }.to_not raise_error
+      expect(zcta.build_primary_county_subdivision).to be_a(USGeo::CountySubdivision)
+    end
+
+    it "should have county subdivisions" do
+      zcta = USGeo::Zcta.new
+      zcta.zipcode = "60304"
+      expect { zcta.county_subdivisions }.to_not raise_error
+      expect { zcta.zcta_county_subdivisions }.to_not raise_error
+      expect(zcta.zcta_county_subdivisions.build).to be_a(USGeo::ZctaCountySubdivision)
+    end
+
+    it "should have a primary place" do
+      zcta = USGeo::Zcta.new
+      zcta.zipcode = "60304"
+      expect { zcta.primary_place }.to_not raise_error
+      expect(zcta.build_primary_place).to be_a(USGeo::Place)
+    end
+
+    it "should have places" do
+      zcta = USGeo::Zcta.new
+      zcta.zipcode = "60304"
+      expect { zcta.places }.to_not raise_error
+      expect { zcta.zcta_places }.to_not raise_error
+      expect(zcta.zcta_places.build).to be_a(USGeo::ZctaPlace)
     end
 
     it "should have a primary urban area" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
-      expect{ zcta.primary_urban_area }.to_not raise_error
+      expect { zcta.primary_urban_area }.to_not raise_error
       expect(zcta.build_primary_urban_area).to be_a(USGeo::UrbanArea)
     end
 
     it "should have urban areas" do
       zcta = USGeo::Zcta.new
       zcta.zipcode = "60304"
-      expect{ zcta.urban_areas }.to_not raise_error
-      expect{ zcta.zcta_urban_areas }.to_not raise_error
+      expect { zcta.urban_areas }.to_not raise_error
+      expect { zcta.zcta_urban_areas }.to_not raise_error
       expect(zcta.zcta_urban_areas.build).to be_a(USGeo::ZctaUrbanArea)
+    end
+  end
+
+  describe "for_zipcode" do
+    after { USGeo::Zcta.delete_all }
+
+    it "should return a zcta with an active ZIP code" do
+      USGeo::Zcta.create!(
+        zipcode: "53211",
+        primary_county_geoid: "55079",
+        land_area: 4.5,
+        water_area: 0.2,
+        lat: 43.1,
+        lng: -87.9,
+        population: 17000,
+        housing_units: 8000
+      )
+      USGeo::Zcta.create!(
+        zipcode: "60304",
+        primary_county_geoid: "17031",
+        land_area: 4.5,
+        water_area: 0.2,
+        lat: 43.1,
+        lng: -87.9,
+        population: 17000,
+        housing_units: 8000
+      )
+
+      expect(USGeo::Zcta.for_zipcode("53211").collect(&:zipcode)).to eq ["53211"]
+      expect(USGeo::Zcta.for_zipcode("60304").collect(&:zipcode)).to eq ["60304"]
+    end
+
+    it "should return a zcta mapped from an inactive ZIP code" do
+      USGeo::Zcta.create!(
+        zipcode: "53211",
+        primary_county_geoid: "55079",
+        land_area: 4.5,
+        water_area: 0.2,
+        lat: 43.1,
+        lng: -87.9,
+        population: 17000,
+        housing_units: 8000
+      )
+      USGeo::Zcta.create!(
+        zipcode: "60304",
+        primary_county_geoid: "17031",
+        land_area: 4.5,
+        water_area: 0.2,
+        lat: 43.1,
+        lng: -87.9,
+        population: 17000,
+        housing_units: 8000
+      )
+      USGeo::ZctaMapping.create!(zipcode: "53211", zcta_zipcode: "53211")
+      USGeo::ZctaMapping.create!(zipcode: "60301", zcta_zipcode: "60304")
+
+      expect(USGeo::Zcta.for_zipcode("53211").collect(&:zipcode)).to eq ["53211"]
+      expect(USGeo::Zcta.for_zipcode("60304").collect(&:zipcode)).to eq ["60304"]
+      expect(USGeo::Zcta.for_zipcode("60301").collect(&:zipcode)).to eq ["60304"]
     end
   end
 
@@ -78,22 +158,23 @@ describe USGeo::Zcta do
     after { USGeo::Zcta.delete_all }
 
     it "should load the fixture data" do
-      data = File.read(File.expand_path("../../data/dist/zctas.csv", __dir__))
-      stub_request(:get, "#{USGeo.base_data_uri}/zctas.csv").to_return(body: data, headers: {"Content-Type": "text/csv; charset=UTF-8"})
+      mock_data_file_request("zctas.csv")
+
       USGeo::Zcta.load!
       expect(USGeo::Zcta.imported.count).to be > 30_000
       expect(USGeo::Zcta.removed.count).to eq 0
 
-      zcta = USGeo::Zcta.find("60305")
-      expect(zcta.primary_county_geoid).to eq "17031"
-      expect(zcta.primary_urban_area_geoid).to eq "16264"
-      expect(zcta.population).to be > 10_000
-      expect(zcta.housing_units).to be > 4000
-      expect(zcta.land_area.round(1)).to eq 2.5
-      expect(zcta.water_area.round(3)).to eq 0.002
-      expect(zcta.lat.round).to eq 42
-      expect(zcta.lng.round).to eq -88
+      zcta = USGeo::Zcta.find("53211")
+      expect(zcta.primary_county_geoid).to eq "55079"
+      expect(zcta.primary_county_subdivision_geoid).to eq "5507953000"
+      expect(zcta.primary_place_geoid).to eq "5553000"
+      expect(zcta.primary_urban_area_geoid).to eq "57466"
+      expect(zcta.population).to be_between(30_000, 40_000)
+      expect(zcta.housing_units).to be_between(15_000, 20_000)
+      expect(zcta.land_area.round(2)).to eq 3.97
+      expect(zcta.water_area.round(2)).to eq 0.64
+      expect(zcta.lat.round(1)).to eq 43.1
+      expect(zcta.lng.round(1)).to eq(-87.9)
     end
   end
-
 end

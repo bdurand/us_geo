@@ -1,16 +1,11 @@
 # frozen_string_literal: true
 
-require "csv"
-require "open-uri"
-
 module USGeo
-
   class LoadError < StandardError
   end
 
   # Base class that all models inherit from.
   class BaseRecord < ::ActiveRecord::Base
-
     self.abstract_class = true
     self.table_name_prefix = "us_geo_"
 
@@ -23,7 +18,7 @@ module USGeo
     scope :imported, -> { where(status: STATUS_IMPORTED) }
     scope :removed, -> { where(status: STATUS_REMOVED) }
     scope :manual, -> { where(status: STATUS_MANUAL) }
-    scope :not_removed, -> { where(status: [STATUS_IMPORTED, STATUS_MANUAL]) }
+    scope :not_removed, -> { where.not(status: STATUS_REMOVED) }
 
     class << self
       def load!(location = nil, gzipped: true)
@@ -61,11 +56,13 @@ module USGeo
       end
 
       def load_data_file(location, &block)
-        file = nil
-        if location.include?(":")
-          file = URI.parse(location).open(read_timeout: 5, open_timeout: 5)
+        require "open-uri"
+        require "csv"
+
+        file = if location.include?(":")
+          URI.parse(location).open(read_timeout: 5, open_timeout: 5)
         else
-          file = File.open(location)
+          File.open(location)
         end
         begin
           rows = []
@@ -81,24 +78,33 @@ module USGeo
           file.close if file && !file.closed?
         end
       end
-
-      # Convert square meters to square miles
-      def area_meters_to_miles(square_meters)
-        (square_meters.to_f / (1609.34 ** 2)).round(6)
-      end
     end
 
+    # @!attribute status
+    #   @return [Integer]
+
+    # @!attribute updated_at
+    #   @return [Time]
+
+    # Return true if the record was imported from the data source distributed with the gem.
+    #
+    # @return [Boolean]
     def imported?
       status == STATUS_IMPORTED
     end
 
+    # Return true if the record was removed from the data source distributed with the gem.
+    #
+    # @return [Boolean]
     def removed?
       status == STATUS_REMOVED
     end
 
+    # Return true if the record was manually added to the database.
+    #
+    # @return [Boolean]
     def manual?
       status == STATUS_MANUAL
     end
-
   end
 end
