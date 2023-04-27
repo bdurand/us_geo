@@ -2,6 +2,8 @@
 
 class CreateZctaMappings < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_zcta_mappings)
+
     create_table :us_geo_zcta_mappings, id: false do |t|
       t.string :zipcode, primary_key: true, null: false, limit: 5
       t.string :zcta_zipcode, null: false, limit: 5, index: true

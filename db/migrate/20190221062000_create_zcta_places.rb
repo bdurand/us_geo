@@ -2,6 +2,8 @@
 
 class CreateZctaPlaces < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_zcta_places)
+
     create_table :us_geo_zcta_places do |t|
       t.string :zipcode, limit: 5, null: false
       t.string :place_geoid, limit: 7, null: false, index: true

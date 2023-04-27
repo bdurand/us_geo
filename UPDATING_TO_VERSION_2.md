@@ -2,40 +2,40 @@
 
 ## Update Data
 
-When updating from version 1.x of the gem, first install and run the new database migrations:
+When updating from version 1.x of the gem, first install and run the new database migrations (note: if you are not using Rails, then replace all the references to `rails` with `rake`):
 
 ```bash
-rake us_geo_engine:install:migrations
-rake db:migrate
+rails us_geo_engine:install:migrations
+rails db:migrate
 ```
 
 Then re-import the data:
 
 ```bash
-rake us_geo:import:all
+rails us_geo:import:all
 ```
 
 Or, if you only want to import some subset of the data, you can run any number of the following:
 
 ```bash
-rake us_geo:import:regions
-rake us_geo:import:divisions
-rake us_geo:import:states
-rake us_geo:import:combined_statistical_areas
-rake us_geo:import:core_based_statistical_areas
-rake us_geo:import:metropolitan_divisions
-rake us_geo:import:counties
-rake us_geo:import:county_subdivisions
-rake us_geo:import:places
-rake us_geo:import:zctas
-rake us_geo:import:urban_areas
-rake us_geo:import:place_counties
-rake us_geo:import:zcta_counties
-rake us_geo:import:zcta_county_subdivisions
-rake us_geo:import:zcta_places
-rake us_geo:import:zcta_urban_areas
-rake us_geo:import:urban_area_counties
-rake us_geo:import:urban_area_county_subdivisions
+rails us_geo:import:regions
+rails us_geo:import:divisions
+rails us_geo:import:states
+rails us_geo:import:combined_statistical_areas
+rails us_geo:import:core_based_statistical_areas
+rails us_geo:import:metropolitan_divisions
+rails us_geo:import:counties
+rails us_geo:import:county_subdivisions
+rails us_geo:import:places
+rails us_geo:import:zctas
+rails us_geo:import:urban_areas
+rails us_geo:import:place_counties
+rails us_geo:import:zcta_counties
+rails us_geo:import:zcta_county_subdivisions
+rails us_geo:import:zcta_places
+rails us_geo:import:zcta_urban_areas
+rails us_geo:import:urban_area_counties
+rails us_geo:import:urban_area_county_subdivisions
 ```
 
 ## Data Changes
@@ -47,19 +47,19 @@ For instance, if a County Subdivision was removed in the new data set, you could
 You can see how many removed rows are in each table by running:
 
 ```bash
-rake us_geo:import:removed_counts
+rails us_geo:import:removed_counts
 ```
 
 You can export data from the removed rows to JSON by running:
 
 ```bash
-rake us_geo:import:dump_removed
+rails us_geo:import:dump_removed
 ```
 
 You can delete the removed rows by running:
 
 ```bash
-rake us_geo:import:cleanup
+rails us_geo:import:cleanup
 ```
 
 ## Database Changes

@@ -2,6 +2,8 @@
 
 class CreateCoreBasedStatisticalAreas < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_core_based_statistical_areas)
+
     create_table :us_geo_core_based_statistical_areas, id: false do |t|
       t.string :geoid, primary_key: true, null: false, limit: 5
       t.string :csa_geoid, limit: 5, index: true

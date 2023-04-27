@@ -2,6 +2,8 @@
 
 class CreateZctaUrbanAreas < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_zcta_urban_areas)
+
     create_table :us_geo_zcta_urban_areas do |t|
       t.string :zipcode, limit: 5, null: false, index: true
       t.string :urban_area_geoid, limit: 5, null: false

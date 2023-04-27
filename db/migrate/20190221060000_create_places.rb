@@ -2,6 +2,8 @@
 
 class CreatePlaces < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_places)
+
     create_table :us_geo_places, id: false do |t|
       t.string :geoid, primary_key: true, limit: 7, null: false
       t.integer :gnis_id, null: false, index: true
