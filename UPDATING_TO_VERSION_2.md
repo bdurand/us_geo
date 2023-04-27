@@ -2,7 +2,9 @@
 
 ## Update Data
 
-When updating from version 1.x of the gem, first install and run the new database migrations (note: if you are not using Rails, then replace all the references to `rails` with `rake`):
+When updating from version 1.x of the gem, first install and run the new database migrations:
+
+_Note: if you are not using Rails, then replace all the `rails` commands below with `rake`_
 
 ```bash
 rails us_geo_engine:install:migrations
