@@ -2,6 +2,8 @@
 
 class CreateZctaCountySubdivisions < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_zcta_county_subdivisions)
+
     create_table :us_geo_zcta_county_subdivisions do |t|
       t.string :zipcode, limit: 5, null: false
       t.string :county_subdivision_geoid, limit: 10, null: false, index: {name: :index_us_geo_zcta_county_subdivisions_on_geoid}

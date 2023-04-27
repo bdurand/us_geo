@@ -2,6 +2,8 @@
 
 class CreateDivisions < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_divisions)
+
     create_table :us_geo_divisions, id: false do |t|
       t.integer :id, primary_key: true, null: false, limit: 1
       t.integer :region_id, null: false, limit: 1, index: true

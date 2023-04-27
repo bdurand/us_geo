@@ -2,6 +2,8 @@
 
 class CreateCombinedStatisticalAreas < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_combined_statistical_areas)
+
     create_table :us_geo_combined_statistical_areas, id: false do |t|
       t.string :geoid, primary_key: true, null: false, limit: 3
       t.string :name, null: false, limit: 60, index: {unique: true}

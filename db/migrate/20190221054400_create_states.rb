@@ -2,6 +2,8 @@
 
 class CreateStates < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_states)
+
     create_table :us_geo_states, id: false do |t|
       t.string :code, primary_key: true, null: false, limit: 2
       t.string :name, null: false, limit: 30, index: {unique: true}

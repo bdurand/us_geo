@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class AddUniqueNameIndexToCountySubdivisions < ActiveRecord::Migration[5.0]
-  disable_ddl_transaction!
-
   def up
+    return if index_exists?(:us_geo_county_subdivisions, [:name, :county_geoid], name: "index_us_geo_county_subdivisions_on_unique_name")
+
     duplicates_sql = <<~SQL
       SELECT t2.geoid, t2.name
       FROM us_geo_county_subdivisions t1,

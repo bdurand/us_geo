@@ -2,6 +2,8 @@
 
 class CreateUrbanAreas < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_urban_areas)
+
     create_table :us_geo_urban_areas, id: false do |t|
       t.string :geoid, primary_key: true, null: false, limit: 5
       t.string :name, null: false, limit: 90, index: {unique: true}

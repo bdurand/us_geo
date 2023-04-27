@@ -105,6 +105,8 @@ The U.S. Postal Service adds and removes ZIP Codes as necessary for the efficien
 
 ## Installation
 
+_Note: if you are not using Rails, then replace all the `rails` commands below with `rake`_
+
 First add to you Gemfile:
 
 `gem us_geo`
@@ -112,36 +114,36 @@ First add to you Gemfile:
 Install the migrations.
 
 ```bash
-rake us_geo_engine:install:migrations
-rake db:migrate
+rails us_geo_engine:install:migrations
+rails db:migrate
 ```
 
 Import the data.
 
 ```bash
-rake us_geo:import:all
+rails us_geo:import:all
 ```
 
 Or, if you only want to import some subset of the data, you can run any number of the following.
 
 ```bash
-rake us_geo:import:regions
-rake us_geo:import:divisions
-rake us_geo:import:states
-rake us_geo:import:combined_statistical_areas
-rake us_geo:import:core_based_statistical_areas
-rake us_geo:import:metropolitan_divisions
-rake us_geo:import:counties
-rake us_geo:import:county_subdivisions
-rake us_geo:import:urban_areas
-rake us_geo:import:places
-rake us_geo:import:zctas
-rake us_geo:import:urban_area_counties
-rake us_geo:import:urban_area_county_subdivisions
-rake us_geo:import:place_counties
-rake us_geo:import:zcta_counties
-rake us_geo:import:zcta_county_subdivisions
-rake us_geo:import:zcta_places
+rails us_geo:import:regions
+rails us_geo:import:divisions
+rails us_geo:import:states
+rails us_geo:import:combined_statistical_areas
+rails us_geo:import:core_based_statistical_areas
+rails us_geo:import:metropolitan_divisions
+rails us_geo:import:counties
+rails us_geo:import:county_subdivisions
+rails us_geo:import:urban_areas
+rails us_geo:import:places
+rails us_geo:import:zctas
+rails us_geo:import:urban_area_counties
+rails us_geo:import:urban_area_county_subdivisions
+rails us_geo:import:place_counties
+rails us_geo:import:zcta_counties
+rails us_geo:import:zcta_county_subdivisions
+rails us_geo:import:zcta_places
 ```
 
 By default this will download the data from files hosted with the project on GitHub and insert/update into the database. If any entity records are found that don't exist in the data files, the `removed` flag on the database rows will be set to `TRUE`.
@@ -155,7 +157,7 @@ All records imported from the data files will have their status set to 1 (import
 You can cleanup all previously imported records that are no longer in the current data set by running:
 
 ```bash
-rake us_geo:import:cleanup
+rails us_geo:import:cleanup
 ```
 
 ## Contributing

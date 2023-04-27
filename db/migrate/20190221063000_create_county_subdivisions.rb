@@ -2,6 +2,8 @@
 
 class CreateCountySubdivisions < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_county_subdivisions)
+
     create_table :us_geo_county_subdivisions, id: false do |t|
       t.string :geoid, primary_key: true, limit: 10, null: false
       t.integer :gnis_id, null: false, index: true

@@ -2,6 +2,8 @@
 
 class CreateMetropolitanDivisions < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_metropolitan_divisions)
+
     create_table :us_geo_metropolitan_divisions, id: false do |t|
       t.string :geoid, primary_key: true, null: false, limit: 5
       t.string :cbsa_geoid, limit: 5, index: true

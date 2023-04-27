@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class AddShortNameToCombinedStatisticalAreas < ActiveRecord::Migration[5.0]
-  disable_ddl_transaction!
-
   def up
+    return if column_exists?(:us_geo_combined_statistical_areas, :short_name)
+
     add_column :us_geo_combined_statistical_areas, :short_name, :string, null: true
 
     select_all("SELECT geoid, name FROM us_geo_combined_statistical_areas").each do |row|

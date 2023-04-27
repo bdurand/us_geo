@@ -2,6 +2,8 @@
 
 class CreateRegions < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_regions)
+
     create_table :us_geo_regions, id: false do |t|
       t.integer :id, primary_key: true, null: false, limit: 1
       t.string :name, null: false, limit: 30, index: {unique: true}

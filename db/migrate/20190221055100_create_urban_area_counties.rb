@@ -2,6 +2,8 @@
 
 class CreateUrbanAreaCounties < ActiveRecord::Migration[5.0]
   def up
+    return if table_exists?(:us_geo_urban_area_counties)
+
     create_table :us_geo_urban_area_counties do |t|
       t.string :urban_area_geoid, limit: 5, null: false
       t.string :county_geoid, limit: 5, null: false, index: true
