@@ -13,8 +13,10 @@ class AddUniqueNameIndexToCountySubdivisions < ActiveRecord::Migration[5.0]
         AND t1.name = t2.name
     SQL
 
+    update_sql = "UPDATE us_geo_county_subdivisions SET name = ? WHERE geoid = ?"
+
     select_all(duplicates_sql).each do |row|
-      update("UPDATE us_geo_county_subdivisions SET name = ? WHERE geoid = ?", nil, ["#{row["name"]} (duplicate)", row["geoid"]])
+      update ActiveRecord::Base.sanitize_sql([update_sql, "#{row["name"]} (duplicate)", row["geoid"]])
     end
 
     add_index :us_geo_county_subdivisions, [:name, :county_geoid], unique: true, name: "index_us_geo_county_subdivisions_on_unique_name"
