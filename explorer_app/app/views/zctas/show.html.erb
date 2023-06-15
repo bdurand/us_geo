@@ -54,11 +54,15 @@
     </tr>
     <tr>
       <th>Population Density</th>
-      <td><%= population_density(@zcta) %></td>
+      <td><%= density(@zcta.population_density) %></td>
     </tr>
     <tr>
       <th>Housing Units</th>
       <td><%= formatted_number(@zcta.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Housing Density</th>
+      <td><%= density(@zcta.housing_density) %></td>
     </tr>
     <tr>
       <th>Land Area (mi<sup>2</sup>)</th>

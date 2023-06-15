@@ -25,8 +25,7 @@ module ApplicationHelper
     render "shared/demographics_cells", entity: entity, round_area: round_area
   end
 
-  def population_density(entity)
-    density = entity.population_density
+  def density(density)
     return nil unless density
 
     round = if density < 1

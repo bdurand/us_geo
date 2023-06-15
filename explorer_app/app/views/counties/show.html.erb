@@ -48,11 +48,15 @@
     </tr>
     <tr>
       <th>Population Density</th>
-      <td><%= population_density(@county) %></td>
+      <td><%= density(@county.population_density) %></td>
     </tr>
     <tr>
       <th>Housing Units</th>
       <td><%= formatted_number(@county.housing_units) %></td>
+    </tr>
+    <tr>
+      <th>Housing Density</th>
+      <td><%= density(@county.housing_density) %></td>
     </tr>
     <tr>
       <th>Land Area (mi<sup>2</sup>)</th>
