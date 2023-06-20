@@ -113,9 +113,9 @@ module USGeoData
     private
 
     def short_name(name)
-      name = name.sub(/\s+Urban (?:Area|Cluster)/, "")
+      name = name.sub(/\s+Urban(?:ized)? (?:Area|Cluster)/, "")
       city, state = name.split(", ", 2)
-      "#{city.split("-").first}, #{state.split("-").first}"
+      "#{city.split("-").first.split("/").first}, #{state.split("-").first}"
     end
 
     def add_demographics(urban_areas)

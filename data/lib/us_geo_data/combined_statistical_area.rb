@@ -62,7 +62,7 @@ module USGeoData
 
     def short_name(name)
       city, state = name.split(", ", 2)
-      "#{city.split("-").first}, #{state.split("-").first}"
+      "#{city.split("-").first.split("/").first}, #{state.split("-").first}"
     end
 
     def add_county_data(combined_statistical_areas)
