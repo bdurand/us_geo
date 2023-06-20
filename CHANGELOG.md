@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.4
+
+- Remove "Urbanized Area" from short name for urban areas.
+- Fix short name for Louisville, KY in the in the CBSA's, CSA's, and Urban Areas to omit "Jefferson County" so it matches convention for other short names of only showing the major city.
+
+
+
 ## 2.0.3
 
 ### Added
