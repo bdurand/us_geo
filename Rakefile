@@ -10,6 +10,12 @@ end
 
 begin
   require "bundler/gem_tasks"
+  task :release do
+    unless `git rev-parse --abbrev-ref HEAD`.chomp == "master"
+      warn "Gem can only be released from the master branch"
+      exit 1
+    end
+  end
 rescue Bundler::GemspecError
   warn "Gem tasks not available because gemspec not defined"
 end
