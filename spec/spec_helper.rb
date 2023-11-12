@@ -19,7 +19,7 @@ ActiveRecord::Base.establish_connection("adapter" => "sqlite3", "database" => ":
 
 Dir.glob(File.expand_path("../db/migrate/*.rb", __dir__)).sort.each do |path|
   require(path)
-  class_name = File.basename(path).sub(/\.rb/, "").split("_", 2).last.camelcase
+  class_name = File.basename(path).sub(".rb", "").split("_", 2).last.camelcase
   class_name.constantize.migrate(:up)
 end
 
