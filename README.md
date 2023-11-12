@@ -1,7 +1,8 @@
 # USGeo
 
-[![Build Status](https://travis-ci.com/bdurand/us_geo.svg?branch=master)](https://travis-ci.com/bdurand/us_geo)
+[![Continuous Integration](https://github.com/bdurand/us_geo/actions/workflows/continuous_integration.yml/badge.svg)](https://github.com/bdurand/us_geo/actions/workflows/continuous_integration.yml)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
+[![Gem Version](https://badge.fury.io/rb/us_geo.svg)](https://badge.fury.io/rb/us_geo)
 
 This gem provides a variety of U.S. geographic data ActiveRecord models. It is designed to provide a normalized way to access the data from a relational database. This is by no means a complete set of data.
 
