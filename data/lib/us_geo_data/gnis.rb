@@ -56,25 +56,25 @@ module USGeoData
         place_counties_csv << ["Place GEOID", "County GEOID"]
 
         foreach(data_file(USGeoData::GNIS_DATA_FILE), col_sep: "|", quote_char: nil) do |row|
-          fips_class_code = row["CENSUS_CLASS_CODE"]
-          gnis_id = row["FEATURE_ID"].to_i
-          name = row["FEATURE_NAME"]
-          state_fips = row["STATE_NUMERIC"]
-          state_code = row["STATE_ALPHA"]
-          geoid = "#{state_fips}#{row["CENSUS_CODE"]}"
-          county_geoid = "#{state_fips}#{row["COUNTY_NUMERIC"]}"
-          lat = row["PRIMARY_LATITUDE"]
-          lng = row["PRIMARY_LONGITUDE"]
-          county_num = row["COUNTY_SEQUENCE"].to_i
+          fips_class_code = row["census_class_code"]
+          gnis_id = row["feature_id"].to_i
+          name = row["feature_name"]
+          state_fips = row["state_numeric"]
+          state_code = lookup_state_code(row["state_name"])
+          geoid = "#{state_fips}#{row["census_code"]}"
+          county_geoid = "#{state_fips}#{row["county_numeric"]}"
+          lat = row["prim_lat_dec"]
+          lng = row["prim_long_dec"]
+          county_num = row["county_sequence"].to_i
 
           if county?(fips_class_code)
-            county_name = row["COUNTY_NAME"].to_s
+            county_name = row["county_name"].to_s
             county_name = name if county_name.empty?
             counties_csv << [gnis_id, county_geoid, name, county_name, state_code, fips_class_code, lat, lng]
           end
 
           if subdivision?(fips_class_code) && county_num == 1
-            geoid = "#{state_fips}#{row["COUNTY_NUMERIC"]}#{row["CENSUS_CODE"]}"
+            geoid = "#{state_fips}#{row["county_numeric"]}#{row["census_code"]}"
             subdivisions_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
           end
 
@@ -94,6 +94,16 @@ module USGeoData
     end
 
     private
+
+    def lookup_state_code(state_name)
+      unless @states
+        @states = {}
+        foreach(data_file(USGeoData::STATES_FILE)) do |row|
+          @states[row["Name"].upcase] = row["Code"]
+        end
+      end
+      @states[state_name.upcase]
+    end
 
     def county?(fips_class_code)
       FIPS_CLASSIFICATIONS[fips_class_code]&.include?(:county)

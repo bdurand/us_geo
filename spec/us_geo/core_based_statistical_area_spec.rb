@@ -38,14 +38,14 @@ describe USGeo::CoreBasedStatisticalArea do
 
       chicagoarea = USGeo::CoreBasedStatisticalArea.find("16980")
       expect(chicagoarea).to be_a(USGeo::MetropolitanArea)
-      expect(chicagoarea.name).to eq "Chicago-Naperville-Elgin, IL-IN-WI"
+      expect(chicagoarea.name).to eq "Chicago-Naperville-Elgin, IL-IN"
       expect(chicagoarea.short_name).to eq "Chicago, IL"
       expect(chicagoarea.csa_geoid).to eq "176"
       expect(chicagoarea.lat.round).to eq 42
       expect(chicagoarea.lng.round).to eq(-88)
       expect(chicagoarea.population).to be_between(8_000_000, 12_000_000)
       expect(chicagoarea.housing_units).to be_between(3_000_000, 5_000_000)
-      expect(chicagoarea.land_area.round).to be_between(7000, 9000)
+      expect(chicagoarea.land_area.round).to be_between(6500, 9000)
       expect(chicagoarea.water_area.round).to be_between(1500, 2500)
 
       centralia = USGeo::CoreBasedStatisticalArea.find("16460")

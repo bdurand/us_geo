@@ -54,7 +54,7 @@ describe USGeo::UrbanArea do
       expect(USGeo::UrbanArea.removed.count).to eq 0
 
       chicago = USGeo::UrbanizedArea.find("16264")
-      expect(chicago.name).to eq "Chicago, IL--IN Urbanized Area"
+      expect(chicago.name).to eq "Chicago, IL--IN Urban Area"
       expect(chicago.short_name).to eq "Chicago, IL"
       expect(chicago.primary_county_geoid).to eq "17031"
       expect(chicago.population).to be_between(8_000_000, 10_000_000)
@@ -67,10 +67,10 @@ describe USGeo::UrbanArea do
       expect(chicago.cluster?).to eq false
 
       clinton = USGeo::UrbanCluster.find("17884")
-      expect(clinton.name).to eq "Clinton, IL Urban Cluster"
+      expect(clinton.name).to eq "Clinton, IL Urban Area"
       expect(clinton.short_name).to eq "Clinton, IL"
-      expect(chicago.urbanized?).to eq true
-      expect(chicago.cluster?).to eq false
+      expect(clinton.urbanized?).to eq false
+      expect(clinton.cluster?).to eq true
     end
   end
 end

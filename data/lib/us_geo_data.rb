@@ -30,13 +30,12 @@ module USGeoData
   DIVISIONS_FILE = File.join("info", "divisions.csv")
 
   # Gazetteer files
-  CBSA_GAZETTEER_FILE = File.join("gazetteer", "2021_Gaz_cbsa_national.txt")
-  ZCTA_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_zcta_national.txt")
-  COUNTY_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_counties_national.txt")
-  OLD_COUNTY_GAZETTEER_FILE = File.join("gazetteer", "2018_Gaz_counties_national.txt")
-  SUBDIVISION_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_cousubs_national.txt")
-  PLACE_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_place_national.txt")
-  URBAN_AREA_GAZETTEER_FILE = File.join("gazetteer", "2022_Gaz_ua_national.txt")
+  CBSA_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_cbsa_national.txt")
+  ZCTA_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_zcta_national.txt")
+  COUNTY_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_counties_national.txt")
+  SUBDIVISION_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_cousubs_national.txt")
+  PLACE_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_place_national.txt")
+  URBAN_AREA_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_ua_national.txt")
 
   # Relationship files
   ZCTA_COUNTY_REL_FILE = File.join("relationships", "tab20_zcta520_county20_natl.txt")
@@ -47,21 +46,21 @@ module USGeoData
   PLACE_URBAN_AREA_REL_FILE = File.join("relationships", "tab20_ua20_place20_natl.txt")
   URBAN_AREA_COUNTY_REL_FILE = File.join("relationships", "tab20_ua20_county20_natl.txt")
   URBAN_AREA_COUNTY_SUBDIVISION_REL_FILE = File.join("relationships", "tab20_ua20_cousub20_natl.txt")
-  CBSA_DELINEATION_FILE = File.join("relationships", "list1_Mar_2020.csv")
+  CBSA_DELINEATION_FILE = File.join("relationships", "list1_Jul_2023.csv")
 
   # Population and housing unit files
-  COUNTY_POPULATION_FILE = File.join("demographics", "Counties-ACSDT5Y2021.B01003-Data.csv")
-  COUNTY_HOUSING_UNITS_FILE = File.join("demographics", "Counties-ACSDT5Y2021.B25001-Data.csv")
-  COUSUB_POPULATION_FILE = File.join("demographics", "CountySubdivisions-ACSDT5Y2021.B01003-Data.csv")
-  COUSUB_HOUSING_UNITS_FILE = File.join("demographics", "CountySubdivisions-ACSDT5Y2021.B25001-Data.csv")
-  PLACE_POPULATION_FILE = File.join("demographics", "Places-ACSDT5Y2021.B01003-Data.csv")
-  PLACE_HOUSING_UNITS_FILE = File.join("demographics", "Places-ACSDT5Y2021.B25001-Data.csv")
-  ZCTA_POPULATION_FILE = File.join("demographics", "ZCTA5-ACSDT5Y2021.B01003-Data.csv")
-  ZCTA_HOUSING_UNITS_FILE = File.join("demographics", "ZCTA5-ACSDT5Y2021.B25001-Data.csv")
-  URBAN_AREA_DEMOGRAPHICS_FILE = File.join("demographics", "urban_areas.json")
+  COUNTY_POPULATION_FILE = File.join("demographics", "Counties-ACSDT5Y2022.B01003-Data.csv")
+  COUNTY_HOUSING_UNITS_FILE = File.join("demographics", "Counties-ACSDT5Y2022.B25001-Data.csv")
+  COUSUB_POPULATION_FILE = File.join("demographics", "CountySubdivisions-ACSDT5Y2022.B01003-Data.csv")
+  COUSUB_HOUSING_UNITS_FILE = File.join("demographics", "CountySubdivisions-ACSDT5Y2022.B25001-Data.csv")
+  PLACE_POPULATION_FILE = File.join("demographics", "Places-ACSDT5Y2022.B01003-Data.csv")
+  PLACE_HOUSING_UNITS_FILE = File.join("demographics", "Places-ACSDT5Y2022.B25001-Data.csv")
+  ZCTA_POPULATION_FILE = File.join("demographics", "ZCTA5-ACSDT5Y2022.B01003-Data.csv")
+  ZCTA_HOUSING_UNITS_FILE = File.join("demographics", "ZCTA5-ACSDT5Y2022.B25001-Data.csv")
+  URBAN_AREA_DEMOGRAPHICS_FILE = File.join("demographics", "urban_areas_2022.json")
 
   # U.S.G.S names file
-  GNIS_DATA_FILE = File.join("gnis", "NationalFedCodes_20210825.txt")
+  GNIS_DATA_FILE = File.join("gnis", "FederalCodes_National_20240329.txt")
 
   class << self
     def preprocess
