@@ -55,7 +55,7 @@ module USGeoData
     def demographics(file)
       data = {}
 
-      foreach(file, col_sep: ",") do |row|
+      foreach(file, col_sep: ",", skip_lines: /\A"GEO_ID"/) do |row|
         geoid = row["Geography"].split("US", 2).last
         data[geoid] = row["Estimate!!Total"].to_i
       end

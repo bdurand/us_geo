@@ -10,13 +10,12 @@ module USGeoData
 
     def dump_csv(output)
       csv = CSV.new(output)
-      csv << ["GEOID", "Name", "Short Name", "Type", "Primary County GEOID", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      csv << ["GEOID", "Name", "Short Name", "Primary County GEOID", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       urban_area_data.each_value do |data|
         csv << [
           data[:geoid],
           data[:name],
           data[:short_name],
-          data[:type],
           data[:primary_county],
           data[:population],
           data[:housing_units],
@@ -87,7 +86,6 @@ module USGeoData
             geoid: urban_area_geoid,
             name: row["NAME"],
             short_name: short_name(row["NAME"]),
-            type: ((row["UATYPE"] == "U") ? "UrbanizedArea" : "UrbanCluster"),
             lat: row["INTPTLAT"]&.to_f,
             lng: row["INTPTLONG"]&.to_f,
             land_area: row["ALAND_SQMI"]&.to_f,

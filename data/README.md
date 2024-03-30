@@ -26,14 +26,14 @@ URL: https://www.census.gov/geographies/reference-files.html
 
 ### Population Files
 
-https://data.census.gov/table?t=Population+Total
+https://data.census.gov/table
 
 Populations are based on the American Community Survey 5 year estimate population totals (B01003).
 Housing units are based on the American Community Survey 5 year estimate population totals (B25001).
 
 Urban Area populations are from the Census API:
 
-https://api.census.gov/data/2021/acs/acs5?get=NAME,B01003_001E,B25001_001E&for=urban%20area:*
+https://api.census.gov/data/2022/acs/acs5?get=NAME,B01003_001E,B25001_001E&for=urban%20area:*
 
 ### Names File
 

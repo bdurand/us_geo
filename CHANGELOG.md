@@ -4,12 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.1.0
+
+### Changed
+
+- Lazy load ActiveRecord classes so they don't add overhead during application initialization.
+- Update distribution data files with latest Census data as of March 2024.
+  - Geographic data is based on 2023 Gazetteer files.
+  - Population and housing data are based on 2022 ACS estimates.
+  - Some of the Core Based Statistical Area, Combined Statisical Area, and Metropolitan Division names have changed.
+  - All Urban Areas now include "Urban Area" in their name. The Census Bureau no longer distinguishes between Urbanized Areas and Urban Clusters and the data now reflects the official names.
+
+### Deprecated
+
+- The USGeo::UrbanizedArea and USGeo::UrbanCluster classes are deprecated. These classes are now just aliases for USGeo::UrbanArea. You can still use the `urbanized?` and `cluster?` methods to determine the size of an UrbanArea based on the pre-2020 definition of greater or less then 50,000 residents.
+
 ## 2.0.4
+
+### Fixed
 
 - Remove "Urbanized Area" from short name for urban areas.
 - Fix short name for Louisville, KY in the in the CBSA's, CSA's, and Urban Areas to omit "Jefferson County" so it matches convention for other short names of only showing the major city.
-
-
 
 ## 2.0.3
 

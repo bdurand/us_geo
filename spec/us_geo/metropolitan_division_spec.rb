@@ -30,7 +30,7 @@ describe USGeo::MetropolitanDivision do
       expect(USGeo::MetropolitanDivision.removed.count).to eq 0
 
       division = USGeo::MetropolitanDivision.find("16984")
-      expect(division.name).to eq "Chicago-Naperville-Evanston, IL"
+      expect(division.name).to eq "Chicago-Naperville-Schaumburg, IL"
       expect(division.cbsa_geoid).to eq "16980"
       expect(division.population).to be_between(7_000_000, 10_000_000)
       expect(division.housing_units).to be_between(2_000_000, 4_000_000)
