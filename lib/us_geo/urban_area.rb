@@ -85,12 +85,18 @@ module USGeo
       end
     end
 
+    # Return true if the population is greater than or equal to 50,000.
+    #
+    # @return [Boolean]
     def urbanized?
-      raise NotImplementedError
+      population >= 50_000
     end
 
+    # Return true if the population is less than 50,000.
+    #
+    # @return [Boolean]
     def cluster?
-      raise NotImplementedError
+      population < 50_000
     end
   end
 end

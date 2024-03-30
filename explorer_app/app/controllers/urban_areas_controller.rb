@@ -5,13 +5,10 @@ class UrbanAreasController < ApplicationController
     urban_areas = USGeo::UrbanArea.not_removed
 
     @tab = params[:tab]
-    if @tab.present?
-      type = if @tab == "urbanized"
-        "UrbanizedArea"
-      elsif @tab == "cluster"
-        "UrbanCluster"
-      end
-      urban_areas = urban_areas.where(type: type)
+    if @tab == "urbanized"
+      urban_areas = urban_areas.where(population: 50_000..)
+    elsif @tab == "cluster"
+      urban_areas = urban_areas.where(population: ...50_000)
     end
 
     @urban_areas = urban_areas.order(:name)
