@@ -1,8 +1,8 @@
 PATH
   remote: ..
   specs:
-    us_geo (2.0.0a)
-      activerecord (>= 5.0)
+    us_geo (2.1.0)
+      activerecord (>= 5.2)
 
 GEM
   remote: https://rubygems.org/
@@ -93,6 +93,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
+    yard (0.9.36)
     zeitwerk (2.6.0)
 
 PLATFORMS
@@ -109,6 +110,7 @@ DEPENDENCIES
   standard (~> 1.0)
   us_geo!
   webmock
+  yard
 
 BUNDLED WITH
    2.2.22
