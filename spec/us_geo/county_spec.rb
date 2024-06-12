@@ -105,6 +105,9 @@ describe USGeo::County do
       clinton = USGeo::County.find("17027")
       expect(clinton.name).to eq "Clinton County"
       expect(clinton.central?).to eq false
+
+      culberson = USGeo::County.find("48109")
+      expect(culberson.time_zones.size).to eq 2
     end
   end
 
