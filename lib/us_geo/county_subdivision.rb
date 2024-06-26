@@ -8,7 +8,7 @@ module USGeo
 
     self.primary_key = "geoid"
 
-    belongs_to :county, foreign_key: :county_geoid, inverse_of: :subdivisions
+    belongs_to :county, foreign_key: :county_geoid, optional: true, inverse_of: :subdivisions
 
     has_many :zcta_county_subdivisions, -> { not_removed }, foreign_key: :county_subdivision_geoid, inverse_of: :county_subdivision, dependent: :destroy
     has_many :zctas, -> { not_removed }, through: :zcta_county_subdivisions
