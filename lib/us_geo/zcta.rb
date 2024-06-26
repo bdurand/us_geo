@@ -36,7 +36,7 @@ module USGeo
 
     # @!method primary_county
     #   @return [USGeo::County] County that contains most of the ZCTA's land area.
-    belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
+    belongs_to :primary_county, foreign_key: :primary_county_geoid, optional: true, class_name: "USGeo::County"
 
     # @!method zcta_urban_areas
     #   @return [ActiveRecord::Relation] ZCTA to urban area mappings.
@@ -48,7 +48,7 @@ module USGeo
 
     # @!method primary_urban_area
     #   @return [USGeo::UrbanArea] Urban area that contains most of the ZCTA's land area.
-    belongs_to :primary_urban_area, foreign_key: :primary_urban_area_geoid, class_name: "USGeo::UrbanArea"
+    belongs_to :primary_urban_area, foreign_key: :primary_urban_area_geoid, optional: true, class_name: "USGeo::UrbanArea"
 
     # @!method zcta_county_subdivisions
     #   @return [ActiveRecord::Relation] ZCTA to county subdivision mappings.
@@ -60,7 +60,7 @@ module USGeo
 
     # @!method primary_county_subdivision
     #   @return [USGeo::CountySubdivision] County subdivision that contains most of the ZCTA's land area.
-    belongs_to :primary_county_subdivision, foreign_key: :primary_county_subdivision_geoid, class_name: "USGeo::CountySubdivision"
+    belongs_to :primary_county_subdivision, foreign_key: :primary_county_subdivision_geoid, optional: true, class_name: "USGeo::CountySubdivision"
 
     # @!method zcta_places
     #   @return [ActiveRecord::Relation] ZCTA to place mappings.
@@ -72,7 +72,7 @@ module USGeo
 
     # @!method primary_place
     #   @return [USGeo::Place] Place that contains most of the ZCTA's land area.
-    belongs_to :primary_place, foreign_key: :primary_place_geoid, class_name: "USGeo::Place"
+    belongs_to :primary_place, foreign_key: :primary_place_geoid, optional: true, class_name: "USGeo::Place"
 
     # @!method zcta_mappings
     #   @return [ActiveRecord::Relation] 2010 ZCTA to current ZCTA mappings.

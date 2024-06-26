@@ -26,7 +26,7 @@ module USGeo
 
     # !@method primary_county
     #   @return [County] County that contains most of the place.
-    belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
+    belongs_to :primary_county, foreign_key: :primary_county_geoid, optional: true, class_name: "USGeo::County"
 
     # !@method urban_area
     #   @return [UrbanArea] Urban area that the place is a part of.
@@ -34,7 +34,7 @@ module USGeo
 
     # !@method state
     #   @return [State] State that the place is in.
-    belongs_to :state, foreign_key: :state_code, inverse_of: :places
+    belongs_to :state, foreign_key: :state_code, optional: true, inverse_of: :places
 
     validates :geoid, length: {is: 7}
     validates :state_code, length: {is: 2}

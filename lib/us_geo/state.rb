@@ -13,8 +13,8 @@ module USGeo
     self.primary_key = "code"
     self.inheritance_column = :_type_disabled
 
-    belongs_to :region, optional: -> { territory? }, inverse_of: :states
-    belongs_to :division, optional: -> { territory? }, inverse_of: :states
+    belongs_to :region, optional: true, inverse_of: :states
+    belongs_to :division, optional: true, inverse_of: :states
 
     has_many :counties, -> { not_removed }, foreign_key: :state_code, inverse_of: :state
     has_many :places, -> { not_removed }, foreign_key: :state_code, inverse_of: :state

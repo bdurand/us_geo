@@ -19,7 +19,7 @@ module USGeo
 
     # !@method primary_county
     #   @return [USGeo::County] Primary county that contains most of the urban area.
-    belongs_to :primary_county, foreign_key: :primary_county_geoid, class_name: "USGeo::County"
+    belongs_to :primary_county, foreign_key: :primary_county_geoid, optional: true, class_name: "USGeo::County"
 
     # !@method urban_area_county_subdivisions
     #   @return [ActiveRecord::Relation<USGeo::UrbanAreaCountySubdivision>] County subdivision to urban area mapping.

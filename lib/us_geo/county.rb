@@ -12,7 +12,7 @@ module USGeo
 
     belongs_to :core_based_statistical_area, foreign_key: :cbsa_geoid, optional: true, inverse_of: :counties
     belongs_to :metropolitan_division, foreign_key: :metropolitan_division_geoid, optional: true, inverse_of: :counties
-    belongs_to :state, foreign_key: :state_code, inverse_of: :counties
+    belongs_to :state, foreign_key: :state_code, optional: true, inverse_of: :counties
 
     has_many :subdivisions, -> { not_removed }, foreign_key: :county_geoid, inverse_of: :county, class_name: "USGeo::CountySubdivision"
 
