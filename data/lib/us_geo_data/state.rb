@@ -61,6 +61,14 @@ module USGeoData
       @state_data
     end
 
+    def fips_codes
+      codes = {}
+      foreach(data_file(USGeoData::STATES_FILE)) do |row|
+        codes[row["FIPS"]] = row["Name"]
+      end
+      codes
+    end
+
     private
 
     def add_county_data(data, code_to_name)

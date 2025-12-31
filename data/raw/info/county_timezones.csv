@@ -227,6 +227,15 @@ GEOID,Full Name,State,Time Zone,Time Zone 2
 09009,New Haven County,CT,America/New_York
 09011,New London County,CT,America/New_York
 09015,Windham County,CT,America/New_York
+09110,Capitol Planning Region,CT,America/New_York
+09120,Greater Bridgeport Planning Region,CT,America/New_York
+09130,Lower Connecticut River Valley Planning Region,CT,America/New_York
+09140,Naugatuck Valley Planning Region,CT,America/New_York
+09150,Northeastern Connecticut Planning Region,CT,America/New_York
+09160,Northwest Hills Planning Region,CT,America/New_York
+09170,South Central Connecticut Planning Region,CT,America/New_York
+09180,Southeastern Connecticut Planning Region,CT,America/New_York
+09190,Western Connecticut Planning Region,CT,America/New_York
 10005,Sussex County,DE,America/New_York
 10003,New Castle County,DE,America/New_York
 10001,Kent County,DE,America/New_York

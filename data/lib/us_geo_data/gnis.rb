@@ -14,18 +14,21 @@ module USGeoData
       "C5" => [:place, :subdivision],
       "C6" => [:place, :subdivision],
       "C7" => [:county, :place],
-      "M1" => [:place],
-      "M2" => [:place],
-      "U1" => [:place],
-      "U2" => [:place],
       "H1" => [:county],
       "H4" => [:county],
       "H5" => [:county],
       "H6" => [:county],
+      "M1" => [:place],
+      "M2" => [:place],
+      "P1" => [:place],
+      "P2" => [:place],
       "T1" => [:subdivision],
       "T2" => [:subdivision],
       "T5" => [:subdivision],
       "T9" => [:subdivision],
+      "U1" => [:place],
+      "U2" => [:place],
+      "U6" => [:non_census_place],
       "Z1" => [:subdivision],
       "Z2" => [:subdivision],
       "Z3" => [:subdivision],
@@ -43,18 +46,24 @@ module USGeoData
       subdivisions_file = File.open(processed_file(SUBDIVISIONS_FILE), "w")
       places_file = File.open(processed_file(PLACES_FILE), "w")
       place_counties_file = File.open(processed_file(PLACE_COUNTIES_FILE), "w")
+      non_census_places_file = File.open(processed_file("gnis_non_census_places.csv"), "w")
+
+      zctas_gis = ZCTAShape.new(data_file(USGeoData::ZCTA_GIS_DB_FILE))
 
       begin
         counties_csv = CSV.new(counties_file)
         subdivisions_csv = CSV.new(subdivisions_file)
         places_csv = CSV.new(places_file)
         place_counties_csv = CSV.new(place_counties_file)
+        non_census_places_csv = CSV.new(non_census_places_file)
 
         counties_csv << ["GNIS ID", "GEOID", "Name", "Short Name", "State", "FIPS Class", "Latitude", "Longitude"]
         subdivisions_csv << ["GNIS ID", "GEOID", "Name", "State", "FIPS Class", "County GEOID", "Latitude", "Longitude"]
         places_csv << ["GNIS ID", "GEOID", "Name", "State", "FIPS Class", "County GEOID", "Latitude", "Longitude"]
         place_counties_csv << ["Place GEOID", "County GEOID"]
+        non_census_places_csv << ["GNIS ID", "GEOID", "Name", "State", "FIPS Class", "County GEOID", "ZCTA", "Latitude", "Longitude"]
 
+        # TODO: make this multi-threaded for performance
         foreach(data_file(USGeoData::GNIS_DATA_FILE), col_sep: "|", quote_char: nil) do |row|
           fips_class_code = row["census_class_code"]
           gnis_id = row["feature_id"].to_i
@@ -83,6 +92,11 @@ module USGeoData
               places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
             end
             place_counties_csv << [geoid, county_geoid]
+          elsif non_census_place?(fips_class_code)
+            if county_num == 1
+              zcta = zctas_gis.including(lat.to_f, lng.to_f)
+              non_census_places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, zcta, lat, lng]
+            end
           end
         end
       ensure
@@ -115,6 +129,10 @@ module USGeoData
 
     def place?(fips_class_code)
       FIPS_CLASSIFICATIONS[fips_class_code]&.include?(:place)
+    end
+
+    def non_census_place?(fips_class_code)
+      FIPS_CLASSIFICATIONS[fips_class_code]&.include?(:non_census_place)
     end
   end
 end

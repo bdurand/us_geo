@@ -86,7 +86,7 @@ module USGeoData
       unless defined?(@zcta_data)
         data = {}
 
-        foreach(data_file(USGeoData::ZCTA_GAZETTEER_FILE), col_sep: "\t") do |row|
+        foreach(data_file(USGeoData::ZCTA_GAZETTEER_FILE), col_sep: "|") do |row|
           zcta5 = row["GEOID"]
           data[zcta5] = empty_zcta(zcta5).merge(
             land_area: row["ALAND_SQMI"]&.to_f,
@@ -100,7 +100,7 @@ module USGeoData
         add_county_subdivisions(data)
         add_places(data)
         add_urban_areas(data)
-        add_demographics(data)
+        add_demographics(data, USGeoData::ZCTA_DEMOGRAPHICS_FILE, "zip code tabulation area")
 
         @zcta_data = data
       end
@@ -135,18 +135,6 @@ module USGeoData
     end
 
     private
-
-    def add_demographics(data)
-      demographics(data_file(USGeoData::ZCTA_POPULATION_FILE)).each do |zcta5, population|
-        info = data[zcta5]
-        info[:population] = population if info
-      end
-
-      demographics(data_file(USGeoData::ZCTA_HOUSING_UNITS_FILE)).each do |zcta5, housing_units|
-        info = data[zcta5]
-        info[:housing_units] = housing_units if info
-      end
-    end
 
     def add_counties(data)
       foreach(data_file(USGeoData::ZCTA_COUNTY_REL_FILE), col_sep: "|") do |row|

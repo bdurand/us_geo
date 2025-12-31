@@ -1,0 +1,44 @@
+#! /bin/bash
+
+# Check if exactly one argument is provided
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <path_to_shp_file>"
+    echo "Example: $0 /path/to/data/file.shp"
+    exit 1
+fi
+
+# Get the shp file path from the first argument
+shp_file="$1"
+
+# Check if the file exists
+if [ ! -f "$shp_file" ]; then
+    echo "Error: File '$shp_file' does not exist"
+    exit 1
+fi
+
+# Check if the file has .shp extension
+if [[ "$shp_file" != *.shp ]]; then
+    echo "Error: File must have .shp extension"
+    exit 1
+fi
+
+# Extract directory and base filename
+local_dir=$(realpath $(dirname "$shp_file"))
+base_name=$(basename "$shp_file" .shp)
+
+# Remove existing database file if it exists
+if [ -f "${local_dir}/${base_name}.db" ]; then
+    echo "Removing existing database file: ${base_name}.db"
+    rm "${local_dir}/${base_name}.db"
+fi
+
+docker run --rm -v "${local_dir}:/data" ghcr.io/osgeo/gdal:alpine-normal-latest \
+  ogr2ogr -f "SQLite" /data/${base_name}.db /data/${base_name}.shp \
+  -dsco SPATIALITE=YES \
+  -nlt PROMOTE_TO_MULTI \
+  -nln zctas \
+  -select "zcta5ce20"
+
+target_file=$(dirname "$0")/../raw/tiger/zcta_gis.db
+rm -rf $target_file
+mv "${local_dir}/${base_name}.db" $target_file

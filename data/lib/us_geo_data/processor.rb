@@ -51,16 +51,20 @@ module USGeoData
       end
     end
 
-    # Read a Census data file and return a hash of geoids to values.
-    def demographics(file)
-      data = {}
+    def add_demographics(entities, file, key)
+      keys = Array(key)
+      data = JSON.parse(File.read(data_file(file)))
+      headers = {}
+      data.shift.each_with_index { |h, i| headers[h] = i }
 
-      foreach(file, col_sep: ",", skip_lines: /\A"GEO_ID"/) do |row|
-        geoid = row["Geography"].split("US", 2).last
-        data[geoid] = row["Estimate!!Total"].to_i
+      data.each do |row|
+        geoid = keys.map { |k| row[headers[k]] || (raise "Missing key #{k}") }.join
+        info = entities[geoid]
+        if info
+          info[:population] = row[headers["B01003_001E"]]&.to_i
+          info[:housing_units] = row[headers["B25001_001E"]]&.to_i
+        end
       end
-
-      data
     end
   end
 end

@@ -54,6 +54,12 @@ namespace :data do
     require_relative "data/lib/us_geo_data"
     USGeoData.dump_all
   end
+
+  desc "Fetch the latest demographics data from the Census API"
+  task :fetch_demographics do
+    require_relative "data/lib/us_geo_data"
+    USGeoData.fetch_demographics_files
+  end
 end
 
 namespace :db do

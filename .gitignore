@@ -11,3 +11,5 @@ gemfiles/*.gemfile.lock
 log/*.log
 pkg/
 doc/
+
+data/raw/tiger/*

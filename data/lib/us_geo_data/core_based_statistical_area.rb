@@ -55,7 +55,7 @@ module USGeoData
           data[:counties] << county_geoid unless county_geoid.to_s.empty?
         end
 
-        foreach(data_file(USGeoData::CBSA_GAZETTEER_FILE), col_sep: "\t") do |row|
+        foreach(data_file(USGeoData::CBSA_GAZETTEER_FILE), col_sep: "|") do |row|
           cbsa_geoid = row["GEOID"]
           next if cbsa_geoid.to_s.empty?
           data = core_based_statistical_areas[cbsa_geoid]
