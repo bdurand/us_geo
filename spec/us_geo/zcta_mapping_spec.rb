@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::ZctaMapping do
+RSpec.describe USGeo::ZctaMapping do
   describe "associations" do
     it "should have a zcta" do
       zcta_mapping = USGeo::ZctaMapping.new

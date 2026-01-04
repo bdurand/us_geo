@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::Zcta do
+RSpec.describe USGeo::Zcta do
   describe "associations" do
     it "should have a primary county" do
       zcta = USGeo::Zcta.new

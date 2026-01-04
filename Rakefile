@@ -1,46 +1,25 @@
 begin
   require "bundler/setup"
 rescue LoadError
-  warn "You must `gem install bundler` and `bundle install` to run rake tasks"
+  puts "You must `gem install bundler` and `bundle install` to run rake tasks"
 end
 
-if defined?(YARD::Rake::YardocTask)
-  YARD::Rake::YardocTask.new(:yard)
-end
+require "bundler/gem_tasks"
 
-begin
-  require "bundler/gem_tasks"
-  task :release do
-    unless `git rev-parse --abbrev-ref HEAD`.chomp == "master"
-      warn "Gem can only be released from the master branch"
-      exit 1
-    end
-  end
-rescue Bundler::GemspecError
-  warn "Gem tasks not available because gemspec not defined"
-end
-
-begin
-  require "rspec/core/rake_task"
-  RSpec::Core::RakeTask.new(:spec)
-  task default: :spec
-rescue LoadError
-  warn "You must install rspec to run the spec rake tasks"
-end
-
-require "standard/rake"
-
-desc "run the specs using appraisal"
-task :appraisals do
-  exec "bundle exec appraisal rake spec"
-end
-
-namespace :appraisals do
-  desc "install all the appraisal gemspecs"
-  task :install do
-    exec "bundle exec appraisal install"
+task :verify_release_branch do
+  unless `git rev-parse --abbrev-ref HEAD`.chomp == "main"
+    warn "Gem can only be released from the main branch"
+    exit 1
   end
 end
+
+Rake::Task[:release].enhance([:verify_release_branch])
+
+require "rspec/core/rake_task"
+
+RSpec::Core::RakeTask.new(:spec)
+
+task default: :spec
 
 namespace :data do
   desc "Process the raw USGS GNIS file into separate CSV files"

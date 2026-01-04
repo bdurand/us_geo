@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::MetropolitanDivision do
+RSpec.describe USGeo::MetropolitanDivision do
   describe "associations" do
     it "should have a core_based_statistical_area" do
       division = USGeo::MetropolitanDivision.new

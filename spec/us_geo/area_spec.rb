@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::Area do
+RSpec.describe USGeo::Area do
   let(:record) { USGeo::County.new(land_area: 45.0, water_area: 5.0) }
   let(:nil_record) { USGeo::County.new }
 

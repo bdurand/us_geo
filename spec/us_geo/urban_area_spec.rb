@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe USGeo::UrbanArea do
+RSpec.describe USGeo::UrbanArea do
   describe "associations" do
     it "should have zctas" do
       urban_area = USGeo::UrbanArea.new

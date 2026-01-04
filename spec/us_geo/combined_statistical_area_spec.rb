@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::CombinedStatisticalArea do
+RSpec.describe USGeo::CombinedStatisticalArea do
   describe "associations" do
     it "should have core_based_statistical_areas" do
       csa = USGeo::CombinedStatisticalArea.new

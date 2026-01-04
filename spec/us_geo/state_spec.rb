@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::State do
+RSpec.describe USGeo::State do
   describe "associations" do
     it "should belong to a region" do
       state = USGeo::State.new

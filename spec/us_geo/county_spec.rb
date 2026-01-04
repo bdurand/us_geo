@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::County do
+RSpec.describe USGeo::County do
   describe "associations" do
     it "should have a state" do
       county = USGeo::County.new
