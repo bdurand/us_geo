@@ -25,7 +25,7 @@ module USGeoData
     def dump_csv(output)
       CSV.new(output).tap do |csv|
         csv << ["ID", "Name", "Region ID", "Population", "Housing Units", "Land Area", "Water Area"]
-        division_data.each_value do |data|
+        division_data.values.sort_by { |data| data[:id] }.each do |data|
           csv << [
             data[:id],
             data[:name],

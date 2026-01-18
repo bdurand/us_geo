@@ -11,7 +11,7 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["GEOID", "Name", "Short Name", "CSA", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
-      core_based_statistical_area_data.each_value do |data|
+      core_based_statistical_area_data.values.sort_by { |data| data[:geoid] }.each do |data|
         csv << [
           data[:geoid],
           data[:name],

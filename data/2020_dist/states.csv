@@ -1,14 +1,17 @@
 Name,Code,Type,FIPS,Region ID,Region,Division ID,Division,Population,Housing Units,Land Area,Water Area
 Alabama,AL,state,01,3,South,6,East South Central,5054253,2316192,50645.0,1775.0
 Alaska,AK,state,02,4,West,9,Pacific,733971,327610,570641.0,94743.0
+American Samoa,AS,territory,60,,,,,55519,10963,76.0,505.0
 Arizona,AZ,state,04,4,West,8,Mountain,7268175,3142443,113594.0,396.0
 Arkansas,AR,state,05,3,South,7,West South Central,3032651,1382664,52035.0,1143.0
 California,CA,state,06,4,West,9,Pacific,39242785,14532683,155779.0,7916.0
 Colorado,CO,state,08,4,West,8,Mountain,5810774,2545124,103642.0,452.0
 Connecticut,CT,state,09,1,Northeast,1,New England,3598348,1536049,4842.0,701.0
 Delaware,DE,state,10,3,South,5,South Atlantic,1005872,457958,1949.0,540.0
+District of Columbia,DC,district,11,3,South,5,South Atlantic,672079,356101,61.0,7.0
 Florida,FL,state,12,3,South,5,South Atlantic,21928881,10082356,53625.0,12133.0
 Georgia,GA,state,13,3,South,5,South Atlantic,10822590,4483873,57513.0,1912.0
+Guam,GU,territory,66,,,,,159358,50567,210.0,361.0
 Hawaii,HI,state,15,4,West,9,Pacific,1445635,564905,6423.0,4509.0
 Idaho,ID,state,16,4,West,8,Mountain,1893296,776683,82643.0,926.0
 Illinois,IL,state,17,2,Midwest,3,East North Central,12692653,5443501,55519.0,2395.0
@@ -33,15 +36,18 @@ New Mexico,NM,state,35,4,West,8,Mountain,2114768,949524,121298.0,292.0
 New York,NY,state,36,1,Northeast,2,Middle Atlantic,19872319,8539536,47126.0,7429.0
 North Carolina,NC,state,37,3,South,5,South Atlantic,10584340,4815195,48618.0,5201.0
 North Dakota,ND,state,38,2,Midwest,4,West North Central,779361,374866,69001.0,1698.0
+Northern Mariana Islands,MP,territory,69,,,,,53883,20850,182.0,1793.0
 Ohio,OH,state,39,2,Midwest,3,East North Central,11780046,5271573,40861.0,3965.0
 Oklahoma,OK,state,40,3,South,7,West South Central,3995260,1763036,68595.0,1304.0
 Oregon,OR,state,41,4,West,9,Pacific,4238714,1838631,95988.0,2391.0
 Pennsylvania,PA,state,42,1,Northeast,2,Middle Atlantic,12986518,5779663,44743.0,1312.0
+Puerto Rico,PR,territory,72,,,,,3254885,1575105,3424.0,1901.0
 Rhode Island,RI,state,44,1,Northeast,1,New England,1095371,484615,1034.0,511.0
 South Carolina,SC,state,45,3,South,5,South Atlantic,5212774,2401638,30061.0,1960.0
 South Dakota,SD,state,46,2,Midwest,4,West North Central,899194,402364,75811.0,1305.0
 Tennessee,TN,state,47,3,South,6,East South Central,6986082,3095472,41235.0,909.0
 Texas,TX,state,48,3,South,7,West South Central,29640343,11890808,261232.0,7365.0
+U.S. Virgin Islands,VI,territory,74,,,,,106405,55901,134.0,599.0
 Utah,UT,state,49,4,West,8,Mountain,3331187,1193082,82170.0,2727.0
 Vermont,VT,state,50,1,Northeast,1,New England,645254,337072,9217.0,400.0
 Virginia,VA,state,51,3,South,5,South Atlantic,8657499,3654784,39490.0,3285.0
@@ -49,9 +55,3 @@ Washington,WA,state,53,4,West,9,Pacific,7740984,3262667,66456.0,4842.0
 West Virginia,WV,state,54,3,South,5,South Atlantic,1784462,859653,24038.0,192.0
 Wisconsin,WI,state,55,2,Midwest,3,East North Central,5892023,2750750,54158.0,11339.0
 Wyoming,WY,state,56,4,West,8,Mountain,579761,275131,97093.0,720.0
-District of Columbia,DC,district,11,3,South,5,South Atlantic,672079,356101,61.0,7.0
-Puerto Rico,PR,territory,72,,,,,3254885,1575105,3424.0,1901.0
-U.S. Virgin Islands,VI,territory,74,,,,,106405,55901,134.0,599.0
-American Samoa,AS,territory,60,,,,,55519,10963,76.0,505.0
-Guam,GU,territory,66,,,,,159358,50567,210.0,361.0
-Northern Mariana Islands,MP,territory,69,,,,,53883,20850,182.0,1793.0

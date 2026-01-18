@@ -102,7 +102,7 @@ module USGeoData
       csv = CSV.new(output)
       csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "County GEOID", "Urban Area GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
 
-      place_data.each_value do |data|
+      place_data.values.sort_by { |data| data[:geoid] }.each do |data|
         unless data[:gnis_id] && data[:fips_class]
           puts "Missing data for place #{data[:geoid]} #{data[:name]}, #{data[:state]}: #{data.inspect}"
           next

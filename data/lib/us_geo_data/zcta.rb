@@ -7,7 +7,7 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["ZCTA5", "Primary County", "Primary County Subdivision", "Primary Place", "Primary Urban Area", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
-      zcta_data.each_value do |data|
+      zcta_data.values.sort_by { |data| data[:zcta] }.each do |data|
         csv << [
           data[:zcta],
           data[:primary_county],

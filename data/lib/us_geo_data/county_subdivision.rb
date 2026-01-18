@@ -7,7 +7,7 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["GEOID", "GNIS ID", "Name", "County GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
-      subdivision_data.each do |geoid, data|
+      subdivision_data.values.sort_by { |data| data[:geoid] }.each do |data|
         unless data[:gnis_id] && data[:fips_class]
           puts "Missing data for subdivision #{data[:geoid]} #{data[:name]}: #{data.inspect}"
           next

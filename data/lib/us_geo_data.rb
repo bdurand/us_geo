@@ -4,7 +4,6 @@ require "csv"
 require "json"
 require "net/http"
 require "uri"
-require "simple_thread_pool"
 
 require_relative "us_geo_data/processor"
 
