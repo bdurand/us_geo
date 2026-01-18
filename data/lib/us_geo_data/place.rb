@@ -93,7 +93,10 @@ module USGeoData
       /\bSpring(?:s)?\b/i => "Spg.",
       /\bCountry Club\b/i => "CC",
       /\bSubdivision\b/i => "Subd.",
-      /\bProvidencia\b/i => "Prov."
+      /\bProvidencia\b/i => "Prov.",
+      /\bJunction\b/i => "Jct.",
+      /\bCenter\b/i => "Ctr.",
+      /\bNational\b/i => "Natl.",
     }.freeze
 
     INACTIVE_FUNCSTAT_CODES = ["I", "L", "F", "N"].freeze
@@ -171,6 +174,7 @@ module USGeoData
         places = {}
 
         gnis_places = gnis_place_mapping
+
         foreach(data_file(USGeoData::PLACE_GAZETTEER_FILE), col_sep: "|") do |row|
           next if INACTIVE_FUNCSTAT_CODES.include?(row["FUNCSTAT"])
 
@@ -186,6 +190,23 @@ module USGeoData
           data[:lng] ||= row["INTPTLONG"]&.to_f
           data[:counties] = [data[:county_geoid]].compact
           places[geoid] = data
+        end
+
+        foreach(processed_file(Gnis::NON_CENSUS_PLACES_FILE), col_sep: ",") do |row|
+          geoid = row["GEOID"]
+          next if places.include?(geoid)
+
+          places[geoid] = {
+            geoid: geoid,
+            gnis_id: row["GNIS ID"].to_i,
+            name: row["Name"],
+            fips_class: row["FIPS Class"],
+            state: row["State"],
+            county_geoid: row["County GEOID"],
+            counties: [row["County GEOID"]].compact,
+            lat: row["Latitude"].to_f,
+            lng: row["Longitude"].to_f
+          }
         end
 
         add_demographics(places, USGeoData::PLACE_DEMOGRAPHICS_FILE, ["state", "place"])
