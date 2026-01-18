@@ -39,6 +39,7 @@ module USGeoData
     SUBDIVISIONS_FILE = "gnis_subdivisions.csv"
     PLACES_FILE = "gnis_places.csv"
     PLACE_COUNTIES_FILE = "gnis_place_counties.csv"
+    NON_CENSUS_PLACES_FILE = "gnis_non_census_places.csv"
 
     # Parse out the data from the USGS names with federal codes file into more manageable chunks.
     def preprocess
@@ -46,7 +47,7 @@ module USGeoData
       subdivisions_file_path = processed_file(SUBDIVISIONS_FILE)
       places_file_path = processed_file(PLACES_FILE)
       place_counties_file_path = processed_file(PLACE_COUNTIES_FILE)
-      non_census_places_file_path = processed_file("gnis_non_census_places.csv")
+      non_census_places_file_path = processed_file(NON_CENSUS_PLACES_FILE)
       gnis_data_file_path = data_file(USGeoData::GNIS_DATA_FILE)
 
       zctas_gis = ZCTAShape.new(data_file(USGeoData::ZCTA_GIS_DB_FILE))

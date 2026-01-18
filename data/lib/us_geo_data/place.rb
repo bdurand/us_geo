@@ -218,6 +218,41 @@ module USGeoData
       short_name
     end
 
+    def gnis_place_mapping
+      gnis_places = {}
+
+      foreach(processed_file(Gnis::PLACES_FILE), col_sep: ",") do |row|
+        gnis_id = row["GNIS ID"].to_i
+        gnis_places[gnis_id] = {
+          gnis_id: gnis_id,
+          geoid: row["GEOID"],
+          fips_class: row["FIPS Class"],
+          name: row["Name"],
+          state: row["State"],
+          county_geoid: row["County GEOID"],
+          lat: row["Latitude"].to_f,
+          lng: row["Longitude"].to_f
+        }
+      end
+
+      foreach(processed_file(Gnis::NON_CENSUS_PLACES_FILE), col_sep: ",") do |row|
+        gnis_id = row["GNIS ID"].to_i
+        gnis_places[gnis_id] = {
+          gnis_id: gnis_id,
+          geoid: row["GEOID"],
+          fips_class: row["FIPS Class"],
+          name: row["Name"],
+          state: row["State"],
+          county_geoid: row["County GEOID"],
+          lat: row["Latitude"].to_f,
+          lng: row["Longitude"].to_f,
+          zcta: row["ZCTA"]
+        }
+      end
+
+      gnis_places
+    end
+
     private
 
     def add_counties(data)
@@ -270,24 +305,6 @@ module USGeoData
         name = name.gsub(pattern, replacement)
       end
       name
-    end
-
-    def gnis_place_mapping
-      gnis_places = {}
-      foreach(processed_file(Gnis::PLACES_FILE), col_sep: ",") do |row|
-        gnis_id = row["GNIS ID"].to_i
-        gnis_places[gnis_id] = {
-          gnis_id: gnis_id,
-          geoid: row["GEOID"],
-          fips_class: row["FIPS Class"],
-          name: row["Name"],
-          state: row["State"],
-          county_geoid: row["County GEOID"],
-          lat: row["Latitude"].to_f,
-          lng: row["Longitude"].to_f
-        }
-      end
-      gnis_places
     end
   end
 end

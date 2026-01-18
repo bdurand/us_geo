@@ -184,9 +184,25 @@ module USGeoData
         info[:places][place_geoid] = {land_area: overlap_land_area, water_area: overlap_water_area}
       end
 
-      data.each_value do |info|
-        info[:primary_place] = info[:places].max_by { |_, area| area[:land_area] }&.first
+      Place.new.gnis_place_mapping.each_value do |place_data|
+        zcta = place_data[:zcta]
+        next unless zcta
+
+        info = data[zcta]
+        next unless info
+
+        geoid = place_data[:geoid]
+        info[:places][geoid] = {land_area: 0, water_area: 0}
       end
+
+      data.each_value do |info|
+        ordered_places = info[:places].sort_by { |_, area| -area[:land_area] }
+        if ordered_places.size > 1
+          ordered_places.delete_if { |_, area| area[:land_area] == 0 }
+        end
+        info[:primary_place] = ordered_places.first&.first
+      end
+      binding.irb
     end
 
     def add_urban_areas(zctas)

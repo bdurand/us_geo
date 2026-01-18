@@ -37,11 +37,19 @@ module USGeo
       end
 
       # Mark the status of any records not updated in the block as being no longer imported.
+      #
+      # @return [Array<Integer>] Count of the number of records imported and the number of records removed
       def import!(&block)
         start_time = Time.at(Time.now.to_i.floor)
+
         yield
-        raise LoadError.new("No data found") unless where("updated_at >= ?", start_time).exists?
-        where("updated_at < ?", start_time).imported.update_all(status: STATUS_REMOVED)
+
+        imported_count = where("updated_at >= ?", start_time).count
+        raise LoadError.new("No data found") if imported_count == 0
+
+        removed_count = where("updated_at < ?", start_time).imported.update_all(status: STATUS_REMOVED)
+
+        [imported_count, removed_count]
       end
 
       def data_uri(path)
@@ -60,7 +68,7 @@ module USGeo
         require "csv"
 
         file = if location.include?(":")
-          URI.parse(location).open(read_timeout: 5, open_timeout: 5)
+          URI.parse(location).open(read_timeout: 10, open_timeout: 5)
         else
           File.open(location)
         end

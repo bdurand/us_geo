@@ -121,8 +121,6 @@ module USGeoData
         places = Place.new
         open_file("places.csv") { |file| places.dump_csv(file) }
         open_file("place_counties.csv") { |file| places.dump_counties_csv(file) }
-
-        open_file("non_census_places.csv") { |file| places.dump_non_census_places_csv(file) }
       end
 
       if files.empty? || files.include?(:urban_areas)
