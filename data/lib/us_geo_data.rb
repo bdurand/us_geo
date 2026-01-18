@@ -4,6 +4,7 @@ require "csv"
 require "json"
 require "net/http"
 require "uri"
+require "simple_thread_pool"
 
 require_relative "us_geo_data/processor"
 
@@ -61,7 +62,7 @@ module USGeoData
   ZCTA_DEMOGRAPHICS_FILE = File.join("demographics", "zip_code_tabulation_area_2023.json")
 
   # USGS names file
-  GNIS_DATA_FILE = File.join("gnis", "FederalCodes_National_20251121.txt")
+  GNIS_DATA_FILE = File.join("gnis", "FederalCodes_National_20260116.txt")
 
   # SQLite database file for ZCTA GIS data.
   ZCTA_GIS_DB_FILE = File.join("tiger", "zcta_gis.db")

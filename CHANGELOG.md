@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### TODO
 
 - U6 place import should be optional
-- Use Tiger data to put U6 places into ZCTA, county, and urban area.
 
 ### Added
 
@@ -17,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated data set with 2025 population estimates from the Census Bureau.
+- Updated data set with 2023 population estimates from the Census Bureau.
 
 ## 2.1.1
 

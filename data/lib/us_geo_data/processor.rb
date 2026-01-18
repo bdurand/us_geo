@@ -38,11 +38,14 @@ module USGeoData
               header_mapping[key.strip] = key unless key.to_s.strip == key.to_s
             end
           end
+
           unless header_mapping.empty?
             header_mapping.each do |key, raw_key|
               hash[key] = hash.delete(raw_key)
             end
           end
+
+          next if hash.values.all?(&:nil?)
 
           yield hash
         end
@@ -64,6 +67,16 @@ module USGeoData
           info[:population] = row[headers["B01003_001E"]]&.to_i
           info[:housing_units] = row[headers["B25001_001E"]]&.to_i
         end
+      end
+    end
+
+    def sort_csv_rows(csv_file_path)
+      rows = File.readlines(csv_file_path)
+      headers = rows.shift
+      rows.sort!
+      File.open(csv_file_path, "w") do |file|
+        file.write(headers)
+        rows.each { |row| file.write(row) }
       end
     end
   end

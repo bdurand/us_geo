@@ -32,13 +32,24 @@ if [ -f "${local_dir}/${base_name}.db" ]; then
     rm "${local_dir}/${base_name}.db"
 fi
 
-docker run --rm -v "${local_dir}:/data" ghcr.io/osgeo/gdal:alpine-normal-latest \
+# Check for container runtime (container or docker)
+if command -v container &> /dev/null; then
+    CONTAINER_CLI="container"
+elif command -v docker &> /dev/null; then
+    CONTAINER_CLI="docker"
+else
+    echo "Error: Neither container nor docker found. Please install one of them."
+    exit 1
+fi
+
+$CONTAINER_CLI run --rm -v "${local_dir}:/data" ghcr.io/osgeo/gdal:alpine-normal-latest \
   ogr2ogr -f "SQLite" /data/${base_name}.db /data/${base_name}.shp \
   -dsco SPATIALITE=YES \
   -nlt PROMOTE_TO_MULTI \
   -nln zctas \
   -select "zcta5ce20"
 
-target_file=$(dirname "$0")/../raw/tiger/zcta_gis.db
+target_file=$(realpath $(dirname "$0")/../raw/tiger/zcta_gis.db)
 rm -rf $target_file
 mv "${local_dir}/${base_name}.db" $target_file
+echo "Created ZCTA GIS database at: $target_file"

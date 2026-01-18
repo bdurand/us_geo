@@ -42,13 +42,20 @@ module USGeoData
 
     # Parse out the data from the USGS names with federal codes file into more manageable chunks.
     def preprocess
-      counties_file = File.open(processed_file(COUNTIES_FILE), "w")
-      subdivisions_file = File.open(processed_file(SUBDIVISIONS_FILE), "w")
-      places_file = File.open(processed_file(PLACES_FILE), "w")
-      place_counties_file = File.open(processed_file(PLACE_COUNTIES_FILE), "w")
-      non_census_places_file = File.open(processed_file("gnis_non_census_places.csv"), "w")
+      counties_file_path = processed_file(COUNTIES_FILE)
+      subdivisions_file_path = processed_file(SUBDIVISIONS_FILE)
+      places_file_path = processed_file(PLACES_FILE)
+      place_counties_file_path = processed_file(PLACE_COUNTIES_FILE)
+      non_census_places_file_path = processed_file("gnis_non_census_places.csv")
+      gnis_data_file_path = data_file(USGeoData::GNIS_DATA_FILE)
 
       zctas_gis = ZCTAShape.new(data_file(USGeoData::ZCTA_GIS_DB_FILE))
+
+      counties_file = File.open(counties_file_path, "w")
+      subdivisions_file = File.open(subdivisions_file_path, "w")
+      places_file = File.open(places_file_path, "w")
+      place_counties_file = File.open(place_counties_file_path, "w")
+      non_census_places_file = File.open(non_census_places_file_path, "w")
 
       begin
         counties_csv = CSV.new(counties_file)
@@ -63,8 +70,18 @@ module USGeoData
         place_counties_csv << ["Place GEOID", "County GEOID"]
         non_census_places_csv << ["GNIS ID", "GEOID", "Name", "State", "FIPS Class", "County GEOID", "ZCTA", "Latitude", "Longitude"]
 
-        # TODO: make this multi-threaded for performance
-        foreach(data_file(USGeoData::GNIS_DATA_FILE), col_sep: "|", quote_char: nil) do |row|
+        lock = Mutex.new
+        row_count = File.readlines(gnis_data_file_path).size - 1
+        current_row = 0
+        t = Time.now
+
+        foreach(gnis_data_file_path, col_sep: "|", quote_char: nil) do |row|
+          if current_row % 1000 == 0
+            elapsed = (Time.now - t).round
+            puts("Processing GNIS file (#{((current_row.to_f / row_count.to_f) * 100.0).round(1)}% - #{elapsed}s)")
+          end
+          current_row += 1
+
           fips_class_code = row["census_class_code"]
           gnis_id = row["feature_id"].to_i
           name = row["feature_name"]
@@ -79,32 +96,49 @@ module USGeoData
           if county?(fips_class_code)
             county_name = row["county_name"].to_s
             county_name = name if county_name.empty?
-            counties_csv << [gnis_id, county_geoid, name, county_name, state_code, fips_class_code, lat, lng]
+            lock.synchronize do
+              counties_csv << [gnis_id, county_geoid, name, county_name, state_code, fips_class_code, lat, lng]
+            end
           end
 
           if subdivision?(fips_class_code) && county_num == 1
             geoid = "#{state_fips}#{row["county_numeric"]}#{row["census_code"]}"
-            subdivisions_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
+            lock.synchronize do
+              subdivisions_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
+            end
           end
 
           if place?(fips_class_code)
             if county_num == 1
-              places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
+              lock.synchronize do
+                places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
+                place_counties_csv << [geoid, county_geoid]
+              end
             end
-            place_counties_csv << [geoid, county_geoid]
           elsif non_census_place?(fips_class_code)
             if county_num == 1
               zcta = zctas_gis.including(lat.to_f, lng.to_f)
-              non_census_places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, zcta, lat, lng]
+              lock.synchronize do
+                non_census_places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, zcta, lat, lng]
+              end
             end
           end
+        rescue => e
+          warn "Error processing GNIS row: #{row.inspect}: #{e.message}"
         end
       ensure
         counties_file.close
         subdivisions_file.close
         places_file.close
         place_counties_file.close
+        non_census_places_file.close
       end
+
+      sort_csv_rows(counties_file_path)
+      sort_csv_rows(subdivisions_file_path)
+      sort_csv_rows(places_file_path)
+      sort_csv_rows(place_counties_file_path)
+      sort_csv_rows(non_census_places_file_path)
     end
 
     private
