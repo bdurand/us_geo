@@ -177,12 +177,8 @@ module USGeoData
           geoid = row["GEOID"]
           gnis_id ||= row["ANSICODE"].gsub(/\A0+/, "").to_i
           data = gnis_places[gnis_id]&.dup
-          data ||= {
-            name: row["NAME"],
-            state: row["USPS"],
-            gnis_id: gnis_id,
-            fips_class: "XX"
-          }
+          next unless data
+
           data[:geoid] = geoid
           data[:land_area] = row["ALAND_SQMI"]&.to_f
           data[:water_area] = row["AWATER_SQMI"]&.to_f

@@ -41,7 +41,7 @@ namespace :us_geo do
 
     desc <<~DOC
       Import data for all USGeo models". Set US_GEO_BASE_DATA_URI to override the data source location.
-      The default data location is https://github.com/bdurand/us_geo_data/tree/master/data/2020_dist
+      The default data location is https://raw.githubusercontent.com/bdurand/us_geo/master/data/2020_dist
     DOC
     task all: :environment do
       klasses.each_key do |name|

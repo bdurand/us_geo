@@ -88,6 +88,7 @@ module USGeo
 
         import! do
           load_data_file(location) do |row|
+            puts row["GEOID"]
             load_record!(geoid: row["GEOID"]) do |record|
               record.gnis_id = row["GNIS ID"]
               record.name = row["Name"]

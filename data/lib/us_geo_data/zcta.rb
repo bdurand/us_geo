@@ -202,7 +202,6 @@ module USGeoData
         end
         info[:primary_place] = ordered_places.first&.first
       end
-      binding.irb
     end
 
     def add_urban_areas(zctas)
