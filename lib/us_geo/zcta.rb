@@ -22,7 +22,6 @@ module USGeo
     #   This scope will search for ZCTA's via the ZCTAMappings table. This is useful
     #   when you have a retired ZIP code and want to find the current ZCTA for that ZIP code.
     #
-    #   @param zipcode [String] ZIP code to search for.
     #   @return [ActiveRecord::Relation] ZCTA's matching the given ZIP code.
     scope :for_zipcode, ->(zipcode) { left_outer_joins(:zcta_mappings).where(ZctaMapping.table_name => {zipcode: zipcode}).or(left_outer_joins(:zcta_mappings).where(zipcode: zipcode)).distinct }
 
