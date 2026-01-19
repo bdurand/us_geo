@@ -3,6 +3,7 @@
 require "bundler/setup"
 require_relative "../lib/us_geo"
 
+require "logger"
 require "active_record"
 require "webmock/rspec"
 
