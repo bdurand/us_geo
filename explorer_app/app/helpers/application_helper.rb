@@ -42,7 +42,7 @@ module ApplicationHelper
   end
 
   def overlap_percentage(entity, other_entity, association)
-    return nil unless entity && other_entity && entity.total_area > 0
+    return nil unless entity && other_entity && entity.total_area.to_f > 0
 
     belongs_to = other_entity.class.base_class.to_s.demodulize.underscore
     overlap = entity.send(association).detect { |r| r.send(belongs_to) == other_entity }
