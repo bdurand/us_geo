@@ -71,7 +71,6 @@ module USGeoData
         place_counties_csv << ["Place GEOID", "County GEOID"]
         non_census_places_csv << ["GNIS ID", "GEOID", "Name", "State", "FIPS Class", "County GEOID", "ZCTA", "Latitude", "Longitude"]
 
-        lock = Mutex.new
         row_count = File.readlines(gnis_data_file_path).size - 1
         current_row = 0
         t = Time.now
@@ -94,34 +93,28 @@ module USGeoData
           lng = row["prim_long_dec"]
           county_num = row["county_sequence"].to_i
 
+          next unless state_code && county_geoid
+
           if county?(fips_class_code)
             county_name = row["county_name"].to_s
             county_name = name if county_name.empty?
-            lock.synchronize do
-              counties_csv << [gnis_id, county_geoid, name, county_name, state_code, fips_class_code, lat, lng]
-            end
+            counties_csv << [gnis_id, county_geoid, name, county_name, state_code, fips_class_code, lat, lng]
           end
 
           if subdivision?(fips_class_code) && county_num == 1
             geoid = "#{state_fips}#{row["county_numeric"]}#{row["census_code"]}"
-            lock.synchronize do
-              subdivisions_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
-            end
+            subdivisions_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
           end
 
           if place?(fips_class_code)
             if county_num == 1
-              lock.synchronize do
-                places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
-                place_counties_csv << [geoid, county_geoid]
-              end
+              places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
+              place_counties_csv << [geoid, county_geoid]
             end
           elsif non_census_place?(fips_class_code)
             if county_num == 1
               zcta = zctas_gis.including(lat.to_f, lng.to_f)
-              lock.synchronize do
-                non_census_places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, zcta, lat, lng]
-              end
+              non_census_places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, zcta, lat, lng]
             end
           end
         rescue => e

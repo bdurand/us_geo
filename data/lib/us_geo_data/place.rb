@@ -196,7 +196,7 @@ module USGeoData
           geoid = row["GEOID"]
           next if places.include?(geoid)
 
-          places[geoid] = {
+          data = {
             geoid: geoid,
             gnis_id: row["GNIS ID"].to_i,
             name: row["Name"],
@@ -207,6 +207,8 @@ module USGeoData
             lat: row["Latitude"].to_f,
             lng: row["Longitude"].to_f
           }
+
+          places[geoid] = data
         end
 
         add_demographics(places, USGeoData::PLACE_DEMOGRAPHICS_FILE, ["state", "place"])
