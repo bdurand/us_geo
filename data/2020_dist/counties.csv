@@ -3231,6 +3231,6 @@ GEOID,GNIS ID,Name,Short Name,State,CBSA,Metropolitan Division,Central,Time Zone
 72149,1804555,Villalba Municipio,Villalba,PR,38660,,F,America/Puerto_Rico,,H1,21778,9188,35.599,1.388,18.128174,-66.4728039
 72151,1804556,Yabucoa Municipio,Yabucoa,PR,41980,,T,America/Puerto_Rico,,H1,29868,14165,55.215,28.028,18.0559663,-65.8633023
 72153,1804557,Yauco Municipio,Yauco,PR,38660,,F,America/Puerto_Rico,,H1,33509,17199,67.737,0.627,18.079565,-66.8582828
-78010,2378248,Saint Croix Island,St. Croix,VI,,,F,America/St_Thomas,,H4,50601,25275,83.3,,17.7356134,-64.7479357
-78020,2378249,Saint John Island,St. John,VI,,,F,America/St_Thomas,,H4,4170,3453,19.7,,18.3275819,-64.7377154
-78030,2378250,Saint Thomas Island,St. Thomas,VI,,,F,America/St_Thomas,,H4,51634,27173,32.0,,18.3286017,-64.9670828
+78010,2378248,Saint Croix Island,Saint Croix,VI,,,F,America/St_Thomas,,H4,50601,25275,83.3,,17.733509,-64.783864
+78020,2378249,Saint John Island,Saint John,VI,,,F,America/St_Thomas,,H4,4170,3453,19.7,,18.333333,-64.733333
+78030,2378250,Saint Thomas Island,Saint Thomas,VI,,,F,America/St_Thomas,,H4,51634,27173,32.0,,18.333333,-64.916667
