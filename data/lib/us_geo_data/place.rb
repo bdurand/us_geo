@@ -96,7 +96,7 @@ module USGeoData
       /\bProvidencia\b/i => "Prov.",
       /\bJunction\b/i => "Jct.",
       /\bCenter\b/i => "Ctr.",
-      /\bNational\b/i => "Natl.",
+      /\bNational\b/i => "Natl."
     }.freeze
 
     INACTIVE_FUNCSTAT_CODES = ["I", "L", "F", "N"].freeze

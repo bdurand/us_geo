@@ -137,14 +137,14 @@ module USGeoData
 
       ["county", "urban area", "zip code tabulation area", "place"].each do |geo|
         uri = "#{base_uri}&for=#{URI.encode_www_form_component(geo)}:*"
-        file_name = File.join(__dir__, "..", "raw", "demographics", "#{geo.gsub(" ", "_")}_#{year}.json")
+        file_name = File.join(__dir__, "..", "raw", "demographics", "#{geo.tr(" ", "_")}_#{year}.json")
 
         puts "Fetching #{geo} demographics data"
         response = fetch_uri(uri)
-        File.open(file_name, "w") { |file| file.write(response) }
+        File.write(file_name, response)
       end
 
-      cousub_data =[]
+      cousub_data = []
       State.new.fips_codes.each do |state_fips, state_name|
         uri = "#{base_uri}&for=county subdivision:*&in=state:#{state_fips}"
         puts "Fetching county subdivision demographics data for #{state_name} (FIPS #{state_fips})"
@@ -158,9 +158,7 @@ module USGeoData
       end
 
       cousub_file_name = File.join(__dir__, "..", "raw", "demographics", "county_subdivision_#{year}.json")
-      File.open(cousub_file_name, "w") do |file|
-        file.write(JSON.generate(cousub_data, array_nl: "\n", object_nl: ""))
-      end
+      File.write(cousub_file_name, JSON.generate(cousub_data, array_nl: "\n", object_nl: ""))
     end
 
     private
@@ -172,7 +170,7 @@ module USGeoData
     def fetch_uri(uri)
       uri = URI(uri)
       http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true if uri.scheme == 'https'
+      http.use_ssl = true if uri.scheme == "https"
 
       request = Net::HTTP::Get.new(uri.request_uri)
       response = http.request(request)

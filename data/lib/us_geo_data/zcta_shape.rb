@@ -55,14 +55,22 @@ module USGeoData
       @db.execute("PRAGMA cache_size = -65536")
 
       # Use WAL mode for better concurrent access
-      @db.execute("PRAGMA journal_mode = WAL") rescue nil
+      begin
+        @db.execute("PRAGMA journal_mode = WAL")
+      rescue
+        nil
+      end
 
       # Optimize for read-heavy workloads
       @db.execute("PRAGMA temp_store = MEMORY")
       @db.execute("PRAGMA mmap_size = 268435456") # 256MB memory mapping
 
       # Ensure spatial cache is enabled for better spatial index performance
-      @db.execute("SELECT EnableSpatialIndex('geographies', 'geometry')") rescue nil
+      begin
+        @db.execute("SELECT EnableSpatialIndex('geographies', 'geometry')")
+      rescue
+        nil
+      end
     end
   end
 end
