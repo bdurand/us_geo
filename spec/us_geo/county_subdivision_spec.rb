@@ -41,7 +41,7 @@ RSpec.describe USGeo::CountySubdivision do
       subdivision = USGeo::CountySubdivision.find("2600545180")
       expect(subdivision.name).to eq "Township of Laketown"
       expect(subdivision.county_geoid).to eq "26005"
-      expect(subdivision.population).to be_between(5000, 6000)
+      expect(subdivision.population).to be_between(5500, 6500)
       expect(subdivision.housing_units).to be_between(2000, 3000)
       expect(subdivision.fips_class_code).to eq "T1"
       expect(subdivision.land_area.round).to eq 22

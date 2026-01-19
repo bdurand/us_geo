@@ -109,8 +109,8 @@ module USGeoData
           if place?(fips_class_code)
             if county_num == 1
               places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
-              place_counties_csv << [geoid, county_geoid]
             end
+            place_counties_csv << [geoid, county_geoid]
           elsif non_census_place?(fips_class_code)
             if county_num == 1
               zcta = zctas_gis.including(lat.to_f, lng.to_f)
