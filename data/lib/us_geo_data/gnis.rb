@@ -71,6 +71,7 @@ module USGeoData
         place_counties_csv << ["Place GEOID", "County GEOID"]
         non_census_places_csv << ["GNIS ID", "GEOID", "Name", "State", "FIPS Class", "County GEOID", "ZCTA", "Latitude", "Longitude"]
 
+        place_counties_recorded = {}
         row_count = File.readlines(gnis_data_file_path).size - 1
         current_row = 0
         t = Time.now
@@ -110,7 +111,10 @@ module USGeoData
             if county_num == 1
               places_csv << [gnis_id, geoid, name, state_code, fips_class_code, county_geoid, lat, lng]
             end
-            place_counties_csv << [geoid, county_geoid]
+            unless place_counties_recorded["#{geoid}-#{county_geoid}"]
+              place_counties_recorded["#{geoid}-#{county_geoid}"] = true
+              place_counties_csv << [geoid, county_geoid]
+            end
           elsif non_census_place?(fips_class_code)
             if county_num == 1
               zcta = zctas_gis.including(lat.to_f, lng.to_f)
