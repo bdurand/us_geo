@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::Division do
+RSpec.describe USGeo::Division do
   describe "associations" do
     it "should have a region" do
       division = USGeo::Division.new

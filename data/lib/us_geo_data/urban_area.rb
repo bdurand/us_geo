@@ -11,7 +11,7 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["GEOID", "Name", "Short Name", "Primary County GEOID", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
-      urban_area_data.each_value do |data|
+      urban_area_data.values.sort_by { |data| data[:geoid] }.each do |data|
         csv << [
           data[:geoid],
           data[:name],
@@ -80,7 +80,7 @@ module USGeoData
       unless defined?(@urban_area_data)
         urban_areas = {}
 
-        foreach(data_file(USGeoData::URBAN_AREA_GAZETTEER_FILE), col_sep: "\t") do |row|
+        foreach(data_file(USGeoData::URBAN_AREA_GAZETTEER_FILE), col_sep: "|") do |row|
           urban_area_geoid = row["GEOID"]
           urban_areas[urban_area_geoid] = {
             geoid: urban_area_geoid,
@@ -99,7 +99,7 @@ module USGeoData
         add_counties(urban_areas)
         add_county_subdivisions(urban_areas)
         add_zctas(urban_areas)
-        add_demographics(urban_areas)
+        add_demographics(urban_areas, USGeoData::URBAN_AREA_DEMOGRAPHICS_FILE, "urban area")
 
         @urban_area_data = urban_areas.reject do |_, info|
           info[:counties].empty? || info[:population].nil? || info[:housing_units].nil?
@@ -114,21 +114,6 @@ module USGeoData
       name = name.sub(/\s+Urban(?:ized)? (?:Area|Cluster)/, "")
       city, state = name.split(", ", 2)
       "#{city.split("-").first.split("/").first}, #{state.split("-").first}"
-    end
-
-    def add_demographics(urban_areas)
-      info = JSON.parse(File.read(data_file(USGeoData::URBAN_AREA_DEMOGRAPHICS_FILE)))
-      headers = {}
-      info.shift.each_with_index { |h, i| headers[h] = i }
-
-      info.each do |row|
-        urban_area_geoid = row[headers["urban area"]]
-        info = urban_areas[urban_area_geoid]
-        if info
-          info[:population] = row[headers["B01003_001E"]].to_i
-          info[:housing_units] = row[headers["B25001_001E"]].to_i
-        end
-      end
     end
 
     def add_counties(urban_areas)

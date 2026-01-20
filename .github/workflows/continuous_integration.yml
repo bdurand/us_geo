@@ -22,14 +22,15 @@ jobs:
         include:
           - ruby: "ruby"
             standardrb: true
-          - ruby: "3.1"
-            appraisal: "activerecord_7.0"
+            yard: true
+          - ruby: "4.0"
+            appraisal: "activerecord_8"
+          - ruby: "3.3"
+            appraisal: "activerecord_7"
           - ruby: "3.0"
-            appraisal: "activerecord_6.1"
-          - ruby: "2.7"
-            appraisal: "activerecord_6.0"
+            appraisal: "activerecord_6"
           - ruby: "2.6"
-            appraisal: "activerecord_5.2"
+            appraisal: "activerecord_5"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -48,6 +49,11 @@ jobs:
       - name: Run specs
         run: |
           bundle exec rake spec
-      - name: Run standardrb
+      - name: standardrb
         if:   matrix.standardrb == true
-        run:  bundle exec rake standard
+        run:  bundle exec standardrb
+      - name: yard
+        if: matrix.yard == true
+        run:  bundle exec yard doc --fail-on-warning
+
+

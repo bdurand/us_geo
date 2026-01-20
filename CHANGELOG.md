@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.2.0
+
+### Added
+
+- Added places with `U6` FIPS classification. This adds more places in rural areas where not all settlements were previously included in the data set because they were not classified as places by the Census Bureau. These are places that are not incorporated and do not have many businesses or services, but are still recognized places where people live. These places do not have any demographic data associated with them since they are not included in the Census population estimates.
+
+### Changed
+
+- Updated data set with 2023 population estimates from the Census Bureau.
+
 ## 2.1.1
 
 ### Fixed

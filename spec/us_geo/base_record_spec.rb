@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::BaseRecord do
+RSpec.describe USGeo::BaseRecord do
   describe "status" do
     it "should be marked as imported" do
       record = USGeo::County.new(status: 1)

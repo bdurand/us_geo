@@ -11,9 +11,9 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["GEOID", "Name", "Short Name", "Population", "Housing Units", "Land Area", "Water Area"]
-      combined_statistical_area_data.each do |geoid, data|
+      combined_statistical_area_data.values.sort_by { |data| data[:geoid] }.each do |data|
         csv << [
-          geoid,
+          data[:geoid],
           data[:name],
           data[:short_name],
           data[:population],
@@ -36,6 +36,7 @@ module USGeoData
           data = combined_statistical_areas[csa_code]
           unless data
             data = {
+              geoid: csa_code,
               name: row["CSA Title"],
               short_name: short_name(row["CSA Title"]),
               counties: Set.new,

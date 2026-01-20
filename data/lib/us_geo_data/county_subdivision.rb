@@ -7,7 +7,7 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["GEOID", "GNIS ID", "Name", "County GEOID", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
-      subdivision_data.each do |geoid, data|
+      subdivision_data.values.sort_by { |data| data[:geoid] }.each do |data|
         unless data[:gnis_id] && data[:fips_class]
           puts "Missing data for subdivision #{data[:geoid]} #{data[:name]}: #{data.inspect}"
           next
@@ -34,7 +34,7 @@ module USGeoData
         gnis_subdivisions = gnis_subdivision_mapping
 
         subdivisions = {}
-        foreach(data_file(USGeoData::SUBDIVISION_GAZETTEER_FILE), col_sep: "\t") do |row|
+        foreach(data_file(USGeoData::SUBDIVISION_GAZETTEER_FILE), col_sep: "|") do |row|
           geoid = row["GEOID"]
           gnis_id = row["ANSICODE"].gsub(/\A0+/, "").to_i
           data = gnis_subdivisions[gnis_id]
@@ -46,7 +46,7 @@ module USGeoData
           subdivisions[geoid] = data
         end
 
-        add_demographics(subdivisions)
+        add_demographics(subdivisions, USGeoData::COUNTY_SUBDIVISION_DEMOGRAPHICS_FILE, ["state", "county", "county subdivision"])
 
         @subdivision_data = subdivisions
       end
@@ -69,18 +69,6 @@ module USGeoData
         }
       end
       gnis_subdivisions
-    end
-
-    def add_demographics(subdivisions)
-      demographics(data_file(USGeoData::COUSUB_POPULATION_FILE)).each do |geoid, population|
-        info = subdivisions[geoid]
-        info[:population] = population if info
-      end
-
-      demographics(data_file(USGeoData::COUSUB_HOUSING_UNITS_FILE)).each do |geoid, housing_units|
-        info = subdivisions[geoid]
-        info[:housing_units] = housing_units if info
-      end
     end
   end
 end

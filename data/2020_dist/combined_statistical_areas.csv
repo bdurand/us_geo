@@ -1,185 +1,185 @@
 GEOID,Name,Short Name,Population,Housing Units,Land Area,Water Area
-101,"Abilene-Sweetwater, TX","Abilene, TX",191313,81658,3655.51,16.142
-220,"Detroit-Warren-Ann Arbor, MI","Detroit, MI",5405201,2355717,6534.267,514.373
-364,"Mayagüez-Aguadilla, PR","Mayagüez, PR",465570,237443,607.125,481.57
-184,"Cleveland-Akron-Canton, OH","Cleveland, OH",3758181,1735287,7664.211,3406.57
-440,"Portland-Vancouver-Salem, OR-WA","Portland, OR",3273561,1337127,12715.032,197.844
-104,"Albany-Schenectady, NY","Albany, NY",1193096,571260,6043.451,203.705
-172,"Charlotte-Concord, NC-SC","Charlotte, NC",3241598,1372110,8536.289,164.502
-290,"Huntsville-Decatur-Albertville, AL-TN","Huntsville, AL",855166,370569,4548.623,160.092
-105,"Albuquerque-Santa Fe-Los Alamos, NM","Albuquerque, NM",1161410,518880,23811.537,70.887
-194,"Columbus-Auburn-Opelika, GA-AL","Columbus, GA",561734,251790,4718.816,94.372
-204,"Corpus Christi-Kingsville-Alice, TX","Corpus Christi, TX",523214,230759,4474.473,829.257
-106,"Allentown-Bethlehem-East Stroudsburg, PA-NJ","Allentown, PA",1031294,437717,2061.386,31.244
-394,"Mount Pleasant-Alma, MI","Mount Pleasant, MI",106472,44640,1141.081,8.229
-107,"Altoona-Huntingdon, PA","Altoona, PA",166763,76765,1399.659,15.887
-108,"Amarillo-Borger, TX","Amarillo, TX",289873,124121,6038.406,40.324
-218,"Des Moines-West Des Moines-Ames, IA","Des Moines, IA",892309,380323,5880.654,55.19
-521,"Springfield-Amherst Town-Northampton, MA","Springfield, MA",689486,297526,1843.449,60.479
-450,"Raleigh-Durham-Cary, NC","Raleigh, NC",2248500,940299,4979.868,108.614
-372,"Midland-Odessa-Andrews, TX","Midland, TX",355283,145434,4213.884,6.727
-258,"Fort Wayne-Huntington-Auburn, IN","Fort Wayne, IN",645658,276312,3164.879,34.75
-118,"Appleton-Oshkosh-Neenah, WI","Appleton, WI",414169,177452,1390.504,229.751
-412,"North Port-Bradenton, FL","North Port, FL",1068619,589856,2616.581,909.344
-490,"San Juan-Bayamón, PR","San Juan, PR",2405288,1135854,2046.019,789.895
-556,"Wichita-Arkansas City-Winfield, KS","Wichita, KS",681455,291678,5273.879,39.873
-120,"Asheville-Waynesville-Brevard, NC","Asheville, NC",502615,252040,2410.97,10.374
-360,"Mansfield-Ashland-Bucyrus, OH","Mansfield, OH",219391,96940,1319.999,9.609
-312,"Kansas City-Overland Park-Kansas City, MO-KS","Kansas City, MO",2528098,1087929,11200.205,167.064
-198,"Columbus-Marion-Zanesville, OH","Columbus, OH",2603280,1110443,8971.138,90.003
-174,"Chattanooga-Cleveland-Dalton, TN-GA-AL","Chattanooga, TN",977932,423351,5503.693,134.692
-206,"Dallas-Fort Worth, TX-OK","Dallas, TX",8198324,3196559,16302.638,674.446
-122,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL","Atlanta, GA",6985109,2778033,13330.311,255.439
-428,"Philadelphia-Reading-Camden, PA-NJ-DE-MD","Philadelphia, PA",7367160,3123183,7336.149,1168.285
-532,"Syracuse-Auburn, NY","Syracuse, NY",734865,333254,3076.439,566.167
-462,"Rochester-Austin-Winona, MN","Rochester, MN",315785,135977,3814.61,44.646
-533,"Tallahassee-Bainbridge, FL-GA","Tallahassee, FL",415127,186655,2986.539,456.458
-548,"Washington-Baltimore-Arlington, DC-MD-VA-WV-PA","Washington, DC",9987521,4033477,13200.547,2014.163
-357,"Madison-Janesville-Beloit, WI","Madison, WI",908476,405505,4858.592,102.842
-148,"Boston-Worcester-Providence, MA-RI-NH","Boston, MA",8312297,3556280,9189.253,2760.141
-162,"Burlington-South Burlington-Barre, VT","Burlington, VT",285513,131884,1936.64,261.853
-538,"Tulsa-Bartlesville-Muskogee, OK","Tulsa, OK",1136909,492065,7496.44,228.108
-464,"Rochester-Batavia-Seneca Falls, NY","Rochester, NY",1154001,518783,3744.44,2011.239
-132,"Baton Rouge-Hammond, LA","Baton Rouge, LA",1003708,433966,5161.872,254.85
-310,"Kalamazoo-Battle Creek-Portage, MI","Kalamazoo, MI",456324,200925,1768.857,50.798
-474,"Saginaw-Midland-Bay City, MI","Saginaw, MI",377076,171626,1761.074,213.676
-288,"Houston-Pasadena, TX","Houston, TX",7361123,2856576,12405.746,1796.132
-339,"Lincoln-Beatrice, NE","Lincoln, NE",361361,153630,2260.458,21.771
-376,"Milwaukee-Racine-Waukesha, WI","Milwaukee, WI",2046099,905854,3775.072,2405.417
-144,"Bloomington-Bedford, IN","Bloomington, IN",206539,94380,1228.963,22.119
-266,"Grand Rapids-Wyoming, MI","Grand Rapids, MI",1485913,607239,5126.526,3119.22
-142,"Birmingham-Cullman-Talladega, AL","Birmingham, AL",1359064,602884,7402.244,149.22
-292,"Idaho Falls-Rexburg-Blackfoot, ID","Idaho Falls, ID",272737,96956,9623.087,111.163
-145,"Bloomington-Pontiac, IL","Bloomington, IL",207055,90731,2226.876,5.32
-146,"Bloomsburg-Berwick-Sunbury, PA","Bloomsburg, PA",257134,113396,1716.007,33.268
-406,"New Orleans-Metairie-Slidell, LA-MS","New Orleans, LA",1366222,618980,4684.79,4680.122
-147,"Boise City-Mountain Home-Ontario, ID-OR","Boise City, ID",857463,332377,25136.274,137.922
-216,"Denver-Aurora-Greeley, CO","Denver, CO",3619510,1506565,13055.972,103.527
-150,"Bowling Green-Glasgow-Franklin, KY","Bowling Green, KY",255022,111106,2625.557,41.005
-313,"Keene-Brattleboro, NH-VT","Keene, NH",122467,65684,1492.668,34.944
-500,"Seattle-Tacoma, WA","Seattle, WA",4936090,2059725,12288.882,1281.454
-408,"New York-Newark, NY-NJ-CT-PA","New York, NY",22197956,8910301,11281.338,2866.884
-482,"Salt Lake City-Provo-Orem, UT-ID","Salt Lake City, UT",2711394,932299,24762.236,1803.599
-298,"Jackson-Vicksburg-Brookhaven, MS","Jackson, MS",698536,306618,7188.984,122.324
-152,"Brookings-Crescent City, OR-CA","Brookings, OR",50866,24158,2634.585,584.336
-154,"Brownsville-Harlingen-Raymondville, TX","Brownsville, TX",442162,162392,1482.332,582.121
-160,"Buffalo-Cheektowaga-Olean, NY","Buffalo, NY",1240462,579066,2873.294,815.614
-161,"Burlington-Fort Madison, IA-IL","Burlington, IA",78640,38047,1312.472,51.42
-268,"Greensboro--Winston-Salem--High Point, NC","Greensboro, NC",1696620,749964,4959.057,72.695
-444,"Pueblo-Cañon City, CO","Pueblo, CO",217242,92666,3920.426,12.037
-427,"Peoria-Canton, IL","Peoria, IL",401702,183619,3333.332,67.354
-163,"Cape Coral-Fort Myers-Naples, FL","Cape Coral, FL",1205204,671511,4740.646,1555.845
-164,"Cape Girardeau-Sikeston, MO-IL","Cape Girardeau, MO",147982,65691,2263.416,51.406
-166,"Carbondale-Marion-Herrin, IL","Carbondale, IL",120296,59646,1003.78,42.773
-456,"Reno-Carson City-Gardnerville Ranchos, NV-CA","Reno, NV",684853,296492,15126.295,367.643
-168,"Cedar Rapids-Iowa City, IA","Cedar Rapids, IA",451587,196950,3190.555,23.507
-338,"Lima-Van Wert-Celina, OH","Lima, OH",219504,95111,1675.53,17.07
-476,"St. Louis-St. Charles-Farmington, MO-IL","St. Louis, MO",2917880,1307955,8887.917,224.78
-169,"Champaign-Urbana-Danville, IL","Champaign, IL",310820,141583,2819.208,6.191
-170,"Charleston-Huntington-Ashland, WV-OH-KY","Charleston, WV",658598,311436,5271.684,59.963
-176,"Chicago-Naperville, IL-IN-WI","Chicago, IL",9934917,4106116,10634.06,2432.87
-178,"Cincinnati-Wilmington, OH-KY-IN","Cincinnati, OH",2288564,974240,4793.913,84.212
-242,"Fairmont-Clarksburg, WV","Fairmont, WV",146505,67599,1217.287,6.903
-368,"Memphis-Clarksdale-Forrest City, TN-MS-AR","Memphis, TN",1387843,591888,6169.737,156.293
-209,"Davenport-Moline, IA-IL","Davenport, IA",472439,213829,3402.292,70.934
-434,"Ponce-Coamo, PR","Ponce, PR",331579,153806,477.517,215.667
-518,"Spokane-Spokane Valley-Coeur d'Alene, WA-ID","Spokane, WA",758881,323042,5479.107,150.884
-190,"Columbia-Jefferson City-Moberly, MO","Columbia, MO",410785,177801,5136.794,58.154
-192,"Columbia-Sumter-Orangeburg, SC","Columbia, SC",1059189,474809,6104.853,186.233
-294,"Indianapolis-Carmel-Muncie, IN","Indianapolis, IN",2598791,1112847,7811.509,54.018
-523,"Starkville-Columbus, MS","Starkville, MS",130138,61967,2080.003,21.602
-458,"Richmond-Connersville, IN","Richmond, IN",89913,41678,616.776,2.729
-371,"Middlesborough-Corbin, KY","Middlesborough, KY",173867,76142,2086.25,22.56
-539,"Tupelo-Corinth, MS","Tupelo, MS",166893,75036,1797.789,15.395
-236,"Elmira-Corning, NY","Elmira, NY",177168,86542,1797.841,16.956
-296,"Ithaca-Cortland, NY","Ithaca, NY",149310,67531,973.418,19.649
-380,"Mobile-Daphne-Fairhope, AL","Mobile, AL",647298,309958,2819.237,852.088
-212,"Dayton-Springfield-Kettering, OH","Dayton, OH",1086994,490933,3112.214,19.715
-422,"Orlando-Lakeland-Deltona, FL","Orlando, FL",4223394,1822034,7434.613,1170.408
-324,"Lake Charles-DeRidder, LA","Lake Charles, LA",285047,126796,4157.717,697.847
-221,"Dixon-Sterling, IL","Dixon, IL",89790,40853,1408.868,16.086
-222,"Dothan-Enterprise-Ozark, AL","Dothan, AL",253983,117927,2956.302,15.808
-524,"State College-DuBois, PA","State College, PA",238372,103869,2252.319,13.676
-228,"Duluth-Grand Rapids, MN-WI","Duluth, MN",325630,168004,11081.092,1062.073
-334,"Lawton-Duncan, OK","Lawton, OK",170454,75644,2572.171,44.97
-232,"Eau Claire-Menomonie, WI","Eau Claire, WI",217172,92754,2496.436,53.921
-233,"Edwards-Rifle, CO","Edwards, CO",134658,70667,5602.596,18.203
-545,"Virginia Beach-Chesapeake, VA-NC","Virginia Beach, VA",1855988,805059,3811.978,2572.548
-350,"Louisville/Jefferson County--Elizabethtown, KY-IN","Louisville, KY",1485238,646518,4845.747,87.994
-555,"Weatherford-Elk City, OK","Weatherford, OK",61616,28197,2893.543,21.015
-515,"South Bend-Elkhart-Mishawaka, IN-MI","South Bend, IN",811421,358429,2953.897,1069.377
-238,"El Paso-Las Cruces, TX-NM","El Paso, TX",1087031,409102,9392.187,9.4
-240,"Erie-Meadville, PA","Erie, PA",354371,162144,1811.256,784.429
-241,"Evansville-Henderson, IN-KY","Evansville, IN",326912,147597,1795.803,52.935
-244,"Fargo-Wahpeton, ND-MN","Fargo, ND",274637,123460,4996.823,20.181
-378,"Minneapolis-St. Paul, MN-WI","Minneapolis, MN",4067222,1670184,10972.278,584.254
-246,"Fayetteville-Lumberton-Pinehurst, NC","Fayetteville, NC",683522,294620,3480.459,24.957
-248,"Findlay-Tiffin, OH","Findlay, OH",130134,57693,1082.348,4.095
-250,"Florence-Muscle Shoals-Russellville, AL","Florence, AL",183610,86354,1894.93,94.711
-320,"Lafayette-West Lafayette-Frankfort, IN","Lafayette, IN",282165,121485,2552.434,12.667
-336,"Lexington-Fayette--Richmond--Frankfort, KY","Lexington, KY",761633,335442,3566.618,39.684
-484,"San Antonio-New Braunfels-Kerrville, TX","San Antonio, TX",2650625,1055277,9474.724,65.097
-466,"Rockford-Freeport-Rochelle, IL","Rockford, IL",434204,189264,2116.692,12.728
-420,"Omaha-Fremont, NE-IA","Omaha, NE",1003863,418954,4874.394,75.806
-260,"Fresno-Hanford-Corcoran, CA","Fresno, CA",1318038,435650,9486.273,70.288
-273,"Greenville-Spartanburg-Anderson, SC","Greenville, SC",1517334,666462,5997.889,170.937
-264,"Gainesville-Lake City, FL","Gainesville, FL",410899,182137,3140.971,575.351
-276,"Harrisburg-York-Lebanon, PA","Harrisburg, PA",1298231,545445,3406.695,52.236
-366,"Medford-Grants Pass, OR","Medford, OR",310598,135225,4421.901,20.234
-267,"Green Bay-Shawano, WI","Green Bay, WI",373138,168884,3120.863,1002.361
-304,"Johnson City-Kingsport-Bristol, TN-VA","Johnson City, TN",586227,278615,3486.53,48.993
-274,"Greenville-Washington, NC","Greenville, NC",215907,105062,1485.102,133.296
-448,"Quincy-Hannibal, IL-MO","Quincy, IL",114451,52484,2266.878,43.324
-277,"Harrisonburg-Staunton-Stuarts Draft, VA","Harrisonburg, VA",261044,109547,1869.094,8.041
-405,"New Haven-Hartford-Waterbury, CT","New Haven, CT",2664270,1157015,4170.089,487.421
-279,"Hattiesburg-Laurel, MS","Hattiesburg, MS",237325,103002,2981.05,16.648
-430,"Pittsburgh-Weirton-Steubenville, PA-OH-WV","Pittsburgh, PA",2761938,1311156,7720.185,93.453
-496,"Savannah-Hinesville-Statesboro, GA","Savannah, GA",609794,259007,3766.643,331.212
-284,"Hot Springs-Malvern, AR","Hot Springs, AR",133150,66630,1292.559,64.162
-361,"Marinette-Iron Mountain, WI-MI","Marinette, WI",95771,61191,3692.481,469.611
-300,"Jacksonville-Kingsland-Palatka, FL-GA","Jacksonville, FL",1742296,754811,4560.393,746.868
-522,"Springfield-Jacksonville-Lincoln, IL","Springfield, IL",308107,143199,3329.905,22.295
-540,"Tyler-Jacksonville, TX","Tyler, TX",285491,118470,1974.428,37.466
-306,"Johnstown-Somerset, PA","Johnstown, PA",207065,102318,1763.01,11.871
-308,"Jonesboro-Paragould, AR","Jonesboro, AR",179989,76734,2042.797,12.929
-309,"Joplin-Miami, MO-OK-KS","Joplin, MO",231659,100521,2321.644,21.831
-314,"Kennewick-Richland-Walla Walla, WA","Kennewick, WA",366402,135259,4211.757,111.868
-370,"Miami-Port St. Lucie-Fort Lauderdale, FL","Miami, FL",6900930,3031180,8437.668,5882.635
-315,"Knoxville-Morristown-Sevierville, TN","Knoxville, TN",1162196,534673,4965.918,214.815
-317,"La Crosse-Onalaska-Sparta, WI-MN","La Crosse, WI",216061,95180,2696.387,76.964
-318,"Lafayette-New Iberia-Opelousas, LA","Lafayette, LA",562439,250951,4332.366,922.6
-330,"Lansing-East Lansing-Owosso, MI","Lansing, MI",538985,236080,2229.612,26.041
-332,"Las Vegas-Henderson, NV","Las Vegas, NV",2317624,948292,26073.575,185.944
-400,"Nashville-Davidson--Murfreesboro, TN","Nashville, TN",2252964,947831,8880.827,107.0
-512,"Sioux City-Le Mars, IA-NE-SD","Sioux City, IA",169155,68748,2460.757,15.296
-438,"Portland-Lewiston-South Portland, ME","Portland, ME",664448,331451,2549.322,805.003
-340,"Little Rock-North Little Rock, AR","Little Rock, AR",900890,405603,6588.021,167.986
-558,"Williamsport-Lock Haven, PA","Williamsport, PA",151882,71294,2118.55,23.977
-348,"Los Angeles-Long Beach, CA","Los Angeles, CA",18563976,6608460,33971.302,1342.831
-352,"Lubbock-Plainview, TX","Lubbock, TX",389955,167708,7261.381,11.726
-356,"Macon-Bibb County--Warner Robins, GA","Macon, GA",425505,182815,2249.921,18.982
-359,"Mankato-New Ulm, MN","Mankato, MN",129282,54490,1807.462,43.239
-425,"Parkersburg-Marietta-Vienna, WV-OH","Parkersburg, WV",149113,71027,1230.985,20.547
-542,"Union City-Martin, TN","Union City, TN",63616,29337,1125.201,12.029
-424,"Paducah-Mayfield, KY-IL","Paducah, KY",139913,66090,1787.212,94.718
-365,"McAllen-Edinburg, TX","McAllen, TX",938883,319114,2794.374,17.578
-488,"San Jose-San Francisco-Oakland, CA","San Jose, CA",9144574,3407848,11994.747,1350.855
-508,"Shreveport-Bossier City-Minden, LA","Shreveport, LA",428718,198895,3188.812,124.65
-384,"Monroe-Ruston, LA","Monroe, LA",274423,121708,3309.462,70.464
-388,"Montgomery-Selma, AL","Montgomery, AL",423066,190547,3693.149,87.086
-404,"New Bern-Morehead City, NC","New Bern, NC",191031,110022,2022.06,1116.959
-446,"Pullman-Moscow, WA-ID","Pullman, WA",87013,38275,3235.129,19.543
-393,"Moses Lake-Othello, WA","Moses Lake, WA",119702,45625,4604.536,116.713
-396,"Myrtle Beach-Conway, SC","Myrtle Beach, SC",420172,242983,1946.76,334.333
-536,"Tucson-Nogales, AZ","Tucson, AZ",1090231,489869,10424.943,3.159
-480,"Salisbury-Ocean Pines, MD","Salisbury, MD",181314,111045,1162.581,542.84
-416,"Oklahoma City-Shawnee, OK","Oklahoma City, OK",1501657,638693,6299.516,75.672
-429,"Phoenix-Mesa, AZ","Phoenix, AZ",4917628,2029456,19326.265,69.243
-544,"Victoria-Port Lavaca, TX","Victoria, TX",118428,53202,2241.029,539.838
-452,"Rapid City-Spearfish, SD","Rapid City, SD",174918,81444,8604.695,21.942
-454,"Redding-Red Bluff, CA","Redding, CA",247336,107066,6724.788,84.783
-468,"Rocky Mount-Wilson-Roanoke Rapids, NC","Rocky Mount, NC",289049,138477,2673.902,29.724
-472,"Sacramento-Roseville, CA","Sacramento, CA",2677801,1054072,7285.655,245.348
-566,"Youngstown-Warren-Salem, OH","Youngstown, OH",531451,248942,1560.983,34.961
-517,"Spencer-Spirit Lake, IA","Spencer, IA",34115,21939,947.77,28.783
-554,"Wausau-Stevens Point-Wisconsin Rapids, WI","Wausau, WI",282239,125803,3139.085,69.319
+101,"Abilene-Sweetwater, TX","Abilene, TX",192809,82293,3655.508,16.143
+104,"Albany-Schenectady, NY","Albany, NY",1192308,573801,6043.463,203.692
+105,"Albuquerque-Santa Fe-Los Alamos, NM","Albuquerque, NM",1164493,522495,23811.516,70.91
+106,"Allentown-Bethlehem-East Stroudsburg, PA-NJ","Allentown, PA",1034548,439591,2061.381,31.243
+107,"Altoona-Huntingdon, PA","Altoona, PA",165698,76720,1399.659,15.887
+108,"Amarillo-Borger, TX","Amarillo, TX",290620,124916,6038.431,40.3
+118,"Appleton-Oshkosh-Neenah, WI","Appleton, WI",415520,178833,1390.504,229.751
+120,"Asheville-Waynesville-Brevard, NC","Asheville, NC",506492,255184,2410.979,10.366
+122,"Atlanta--Athens-Clarke County--Sandy Springs, GA-AL","Atlanta, GA",7063923,2819968,13328.892,255.321
+132,"Baton Rouge-Hammond, LA","Baton Rouge, LA",1006597,438988,5158.989,257.735
+142,"Birmingham-Cullman-Talladega, AL","Birmingham, AL",1362388,606694,7402.382,149.085
+144,"Bloomington-Bedford, IN","Bloomington, IN",206333,95248,1228.964,22.117
+145,"Bloomington-Pontiac, IL","Bloomington, IL",206541,91050,2226.876,5.32
+146,"Bloomsburg-Berwick-Sunbury, PA","Bloomsburg, PA",256340,113478,1716.009,33.266
+147,"Boise City-Mountain Home-Ontario, ID-OR","Boise City, ID",877577,342630,25136.313,137.884
+148,"Boston-Worcester-Providence, MA-RI-NH","Boston, MA",8327255,3575519,9189.493,2759.904
+150,"Bowling Green-Glasgow-Franklin, KY","Bowling Green, KY",258022,112977,2625.587,40.974
+152,"Brookings-Crescent City, OR-CA","Brookings, OR",50756,24279,2634.597,584.324
+154,"Brownsville-Harlingen-Raymondville, TX","Brownsville, TX",443410,164419,1482.334,582.119
+160,"Buffalo-Cheektowaga-Olean, NY","Buffalo, NY",1237864,580601,2873.294,815.614
+161,"Burlington-Fort Madison, IA-IL","Burlington, IA",78056,37960,1312.472,51.42
+162,"Burlington-South Burlington-Barre, VT","Burlington, VT",286561,133036,1936.662,261.832
+163,"Cape Coral-Fort Myers-Naples, FL","Cape Coral, FL",1233495,687226,4740.972,1555.519
+164,"Cape Girardeau-Sikeston, MO-IL","Cape Girardeau, MO",147859,66018,2263.417,51.405
+166,"Carbondale-Marion-Herrin, IL","Carbondale, IL",119608,59707,1003.79,42.764
+168,"Cedar Rapids-Iowa City, IA","Cedar Rapids, IA",453380,198815,3190.558,23.505
+169,"Champaign-Urbana-Danville, IL","Champaign, IL",309375,142384,2819.209,6.189
+170,"Charleston-Huntington-Ashland, WV-OH-KY","Charleston, WV",653375,311240,5271.736,59.933
+172,"Charlotte-Concord, NC-SC","Charlotte, NC",3288196,1399153,8536.165,164.684
+174,"Chattanooga-Cleveland-Dalton, TN-GA-AL","Chattanooga, TN",985203,427288,5503.693,134.691
+176,"Chicago-Naperville, IL-IN-WI","Chicago, IL",9894618,4123259,10634.215,2432.71
+178,"Cincinnati-Wilmington, OH-KY-IN","Cincinnati, OH",2297271,979763,4793.944,84.18
+184,"Cleveland-Akron-Canton, OH","Cleveland, OH",3750144,1739030,7664.231,3406.472
+190,"Columbia-Jefferson City-Moberly, MO","Columbia, MO",412209,178594,5136.777,58.171
+192,"Columbia-Sumter-Orangeburg, SC","Columbia, SC",1066373,480237,6104.93,186.161
+194,"Columbus-Auburn-Opelika, GA-AL","Columbus, GA",563820,255090,4718.87,94.319
+198,"Columbus-Marion-Zanesville, OH","Columbus, OH",2617886,1121210,8971.222,89.92
+204,"Corpus Christi-Kingsville-Alice, TX","Corpus Christi, TX",523276,232905,4474.802,828.929
+206,"Dallas-Fort Worth, TX-OK","Dallas, TX",8341640,3267096,16290.444,686.639
+209,"Davenport-Moline, IA-IL","Davenport, IA",470982,214378,3402.423,70.804
+212,"Dayton-Springfield-Kettering, OH","Dayton, OH",1087487,492180,3112.214,19.715
+216,"Denver-Aurora-Greeley, CO","Denver, CO",3646113,1536195,13056.111,103.389
+218,"Des Moines-West Des Moines-Ames, IA","Des Moines, IA",901188,386328,5881.003,54.838
+220,"Detroit-Warren-Ann Arbor, MI","Detroit, MI",5393925,2366678,6534.883,513.757
+221,"Dixon-Sterling, IL","Dixon, IL",89250,40843,1408.868,16.086
+222,"Dothan-Enterprise-Ozark, AL","Dothan, AL",255551,118789,2956.419,15.691
+228,"Duluth-Grand Rapids, MN-WI","Duluth, MN",325851,168340,11081.062,1062.103
+232,"Eau Claire-Menomonie, WI","Eau Claire, WI",218235,93647,2496.512,53.845
+233,"Edwards-Rifle, CO","Edwards, CO",134527,71445,5602.596,18.203
+236,"Elmira-Corning, NY","Elmira, NY",175839,86708,1797.844,16.954
+238,"El Paso-Las Cruces, TX-NM","El Paso, TX",1091271,413344,9392.221,9.365
+240,"Erie-Meadville, PA","Erie, PA",352733,162207,1811.26,784.426
+241,"Evansville-Henderson, IN-KY","Evansville, IN",327087,148294,1795.805,52.933
+242,"Fairmont-Clarksburg, WV","Fairmont, WV",145759,67508,1217.289,6.901
+244,"Fargo-Wahpeton, ND-MN","Fargo, ND",277877,125267,4996.823,20.181
+246,"Fayetteville-Lumberton-Pinehurst, NC","Fayetteville, NC",686720,296321,3480.477,24.938
+248,"Findlay-Tiffin, OH","Findlay, OH",129746,57839,1082.35,4.093
+250,"Florence-Muscle Shoals-Russellville, AL","Florence, AL",184663,86653,1894.961,94.68
+258,"Fort Wayne-Huntington-Auburn, IN","Fort Wayne, IN",649841,278471,3164.886,34.743
+260,"Fresno-Hanford-Corcoran, CA","Fresno, CA",1323772,439066,9486.263,70.297
+264,"Gainesville-Lake City, FL","Gainesville, FL",415276,184662,3140.999,575.316
+266,"Grand Rapids-Wyoming, MI","Grand Rapids, MI",1490932,611929,5127.326,3118.418
+267,"Green Bay-Shawano, WI","Green Bay, WI",374558,170024,3120.869,1002.355
+268,"Greensboro--Winston-Salem--High Point, NC","Greensboro, NC",1709224,757559,4959.08,72.673
+273,"Greenville-Spartanburg-Anderson, SC","Greenville, SC",1539933,677972,5997.998,170.774
+274,"Greenville-Washington, NC","Greenville, NC",216876,106041,1485.077,133.321
+276,"Harrisburg-York-Lebanon, PA","Harrisburg, PA",1305981,549101,3406.566,52.385
+277,"Harrisonburg-Staunton-Stuarts Draft, VA","Harrisonburg, VA",262283,110386,1869.096,8.039
+279,"Hattiesburg-Laurel, MS","Hattiesburg, MS",237617,103465,2981.042,16.655
+284,"Hot Springs-Malvern, AR","Hot Springs, AR",133204,66829,1292.559,64.162
+288,"Houston-Pasadena, TX","Houston, TX",7467087,2922910,12406.616,1795.262
+290,"Huntsville-Decatur-Albertville, AL-TN","Huntsville, AL",867911,375590,4548.652,160.064
+292,"Idaho Falls-Rexburg-Blackfoot, ID","Idaho Falls, ID",278216,98905,9623.087,111.163
+294,"Indianapolis-Carmel-Muncie, IN","Indianapolis, IN",2617571,1124199,7811.523,53.982
+296,"Ithaca-Cortland, NY","Ithaca, NY",149280,68204,973.424,19.643
+298,"Jackson-Vicksburg-Brookhaven, MS","Jackson, MS",694361,308113,7188.995,122.313
+300,"Jacksonville-Kingsland-Palatka, FL-GA","Jacksonville, FL",1775978,773639,4560.528,746.734
+304,"Johnson City-Kingsport-Bristol, TN-VA","Johnson City, TN",589433,279769,3486.564,48.96
+306,"Johnstown-Somerset, PA","Johnstown, PA",205610,102294,1763.01,11.871
+308,"Jonesboro-Paragould, AR","Jonesboro, AR",181019,77821,2042.809,12.917
+309,"Joplin-Miami, MO-OK-KS","Joplin, MO",232618,101346,2321.643,21.833
+310,"Kalamazoo-Battle Creek-Portage, MI","Kalamazoo, MI",456153,201337,1768.857,50.798
+312,"Kansas City-Overland Park-Kansas City, MO-KS","Kansas City, MO",2538698,1098043,11200.237,167.029
+313,"Keene-Brattleboro, NH-VT","Keene, NH",122858,65881,1492.684,34.928
+314,"Kennewick-Richland-Walla Walla, WA","Kennewick, WA",370002,137499,4211.757,111.868
+315,"Knoxville-Morristown-Sevierville, TN","Knoxville, TN",1175623,541168,4965.954,214.777
+317,"La Crosse-Onalaska-Sparta, WI-MN","La Crosse, WI",216114,95846,2696.388,76.964
+318,"Lafayette-New Iberia-Opelousas, LA","Lafayette, LA",562205,253280,4331.805,923.16
+320,"Lafayette-West Lafayette-Frankfort, IN","Lafayette, IN",282695,122753,2552.469,12.663
+324,"Lake Charles-DeRidder, LA","Lake Charles, LA",282619,127984,4157.826,697.739
+330,"Lansing-East Lansing-Owosso, MI","Lansing, MI",538495,236857,2229.766,25.887
+332,"Las Vegas-Henderson, NV","Las Vegas, NV",2346971,961146,26073.575,185.944
+334,"Lawton-Duncan, OK","Lawton, OK",170488,75665,2572.171,44.97
+336,"Lexington-Fayette--Richmond--Frankfort, KY","Lexington, KY",764612,338497,3566.633,39.667
+338,"Lima-Van Wert-Celina, OH","Lima, OH",219156,95328,1675.53,17.07
+339,"Lincoln-Beatrice, NE","Lincoln, NE",362955,155760,2260.459,21.77
+340,"Little Rock-North Little Rock, AR","Little Rock, AR",904271,408770,6588.302,167.705
+348,"Los Angeles-Long Beach, CA","Los Angeles, CA",18488453,6655785,33971.76,1342.283
+350,"Louisville/Jefferson County--Elizabethtown, KY-IN","Louisville, KY",1488327,651696,4845.81,87.934
+352,"Lubbock-Plainview, TX","Lubbock, TX",392323,170226,7261.423,11.683
+356,"Macon-Bibb County--Warner Robins, GA","Macon, GA",429211,184700,2250.031,18.873
+357,"Madison-Janesville-Beloit, WI","Madison, WI",913670,410880,4858.593,102.841
+359,"Mankato-New Ulm, MN","Mankato, MN",129562,54876,1807.45,43.23
+360,"Mansfield-Ashland-Bucyrus, OH","Mansfield, OH",219201,96977,1319.999,9.609
+361,"Marinette-Iron Mountain, WI-MI","Marinette, WI",95759,61233,3692.488,469.604
+364,"Mayagüez-Aguadilla, PR","Mayagüez, PR",463917,237939,607.116,481.573
+365,"McAllen-Edinburg, TX","McAllen, TX",946730,325181,2794.396,17.555
+366,"Medford-Grants Pass, OR","Medford, OR",310632,136300,4421.904,20.231
+368,"Memphis-Clarksdale-Forrest City, TN-MS-AR","Memphis, TN",1385154,596291,6160.303,165.728
+370,"Miami-Port St. Lucie-Fort Lauderdale, FL","Miami, FL",6931522,3057667,8437.937,5882.366
+371,"Middlesborough-Corbin, KY","Middlesborough, KY",173503,76337,2086.25,22.558
+372,"Midland-Odessa-Andrews, TX","Midland, TX",358450,148377,4213.884,6.727
+376,"Milwaukee-Racine-Waukesha, WI","Milwaukee, WI",2043381,908591,3775.082,2405.408
+378,"Minneapolis-St. Paul, MN-WI","Minneapolis, MN",4083584,1692204,10972.376,584.118
+380,"Mobile-Daphne-Fairhope, AL","Mobile, AL",653107,313931,2819.325,852.0
+384,"Monroe-Ruston, LA","Monroe, LA",272865,122326,3309.257,70.669
+388,"Montgomery-Selma, AL","Montgomery, AL",422695,191391,3693.156,87.08
+393,"Moses Lake-Othello, WA","Moses Lake, WA",121118,46340,4604.543,116.706
+394,"Mount Pleasant-Alma, MI","Mount Pleasant, MI",105953,44651,1141.082,8.228
+396,"Myrtle Beach-Conway, SC","Myrtle Beach, SC",433137,248390,1946.816,334.116
+400,"Nashville-Davidson--Murfreesboro, TN","Nashville, TN",2284210,973284,8881.137,106.672
+404,"New Bern-Morehead City, NC","New Bern, NC",191286,110933,2022.029,1116.99
+405,"New Haven-Hartford-Waterbury, CT","New Haven, CT",2650820,1160263,4170.192,487.317
+406,"New Orleans-Metairie-Slidell, LA-MS","New Orleans, LA",1360113,622505,4685.095,4679.818
+408,"New York-Newark, NY-NJ-CT-PA","New York, NY",22109467,8965189,11281.508,2866.721
+412,"North Port-Bradenton, FL","North Port, FL",1094833,605316,2616.662,909.262
+416,"Oklahoma City-Shawnee, OK","Oklahoma City, OK",1518133,645678,6299.583,75.605
+420,"Omaha-Fremont, NE-IA","Omaha, NE",1009986,423957,4874.522,75.678
+422,"Orlando-Lakeland-Deltona, FL","Orlando, FL",4309458,1866970,7436.924,1168.099
+424,"Paducah-Mayfield, KY-IL","Paducah, KY",139536,66055,1787.224,94.705
+425,"Parkersburg-Marietta-Vienna, WV-OH","Parkersburg, WV",148278,70998,1231.173,20.501
+427,"Peoria-Canton, IL","Peoria, IL",399032,183692,3333.36,67.326
+428,"Philadelphia-Reading-Camden, PA-NJ-DE-MD","Philadelphia, PA",7379769,3143322,7336.165,1168.276
+429,"Phoenix-Mesa, AZ","Phoenix, AZ",4994816,2063337,19326.283,69.217
+430,"Pittsburgh-Weirton-Steubenville, PA-OH-WV","Pittsburgh, PA",2752552,1314411,7720.026,93.454
+434,"Ponce-Coamo, PR","Ponce, PR",328097,154497,477.598,215.601
+438,"Portland-Lewiston-South Portland, ME","Portland, ME",670087,334683,2549.36,804.965
+440,"Portland-Vancouver-Salem, OR-WA","Portland, OR",3283306,1354684,12715.053,197.825
+444,"Pueblo-Cañon City, CO","Pueblo, CO",218120,93480,3920.387,12.077
+446,"Pullman-Moscow, WA-ID","Pullman, WA",87357,38661,3235.129,19.543
+448,"Quincy-Hannibal, IL-MO","Quincy, IL",113998,52520,2266.892,43.31
+450,"Raleigh-Durham-Cary, NC","Raleigh, NC",2287314,966203,4980.201,108.28
+452,"Rapid City-Spearfish, SD","Rapid City, SD",177638,82974,8604.695,21.942
+454,"Redding-Red Bluff, CA","Redding, CA",247074,107204,6724.788,84.783
+456,"Reno-Carson City-Gardnerville Ranchos, NV-CA","Reno, NV",691836,302514,15126.306,367.632
+458,"Richmond-Connersville, IN","Richmond, IN",89767,41658,616.776,2.729
+462,"Rochester-Austin-Winona, MN","Rochester, MN",317026,137278,3814.667,44.589
+464,"Rochester-Batavia-Seneca Falls, NY","Rochester, NY",1149943,520775,3744.412,2011.234
+466,"Rockford-Freeport-Rochelle, IL","Rockford, IL",432183,189197,2116.699,12.72
+468,"Rocky Mount-Wilson-Roanoke Rapids, NC","Rocky Mount, NC",288307,138966,2673.907,29.718
+472,"Sacramento-Roseville, CA","Sacramento, CA",2691065,1064401,7286.073,244.93
+474,"Saginaw-Midland-Bay City, MI","Saginaw, MI",376086,171802,1761.651,213.101
+476,"St. Louis-St. Charles-Farmington, MO-IL","St. Louis, MO",2913572,1313547,8887.902,224.794
+480,"Salisbury-Ocean Pines, MD","Salisbury, MD",182081,111426,1162.471,542.95
+482,"Salt Lake City-Provo-Orem, UT-ID","Salt Lake City, UT",2745665,956587,24762.256,1803.58
+484,"San Antonio-New Braunfels-Kerrville, TX","San Antonio, TX",2693170,1077030,9474.837,64.985
+488,"San Jose-San Francisco-Oakland, CA","San Jose, CA",9101124,3437784,11994.816,1350.788
+490,"San Juan-Bayamón, PR","San Juan, PR",2393583,1146418,2046.165,789.715
+496,"Savannah-Hinesville-Statesboro, GA","Savannah, GA",619058,263270,3766.784,331.069
+500,"Seattle-Tacoma, WA","Seattle, WA",4962735,2089291,12289.17,1281.146
+508,"Shreveport-Bossier City-Minden, LA","Shreveport, LA",425193,199591,3188.925,124.538
+512,"Sioux City-Le Mars, IA-NE-SD","Sioux City, IA",169706,69217,2460.912,15.142
+515,"South Bend-Elkhart-Mishawaka, IN-MI","South Bend, IN",811041,359647,2953.979,1069.295
+517,"Spencer-Spirit Lake, IA","Spencer, IA",34290,22201,947.77,28.783
+518,"Spokane-Spokane Valley-Coeur d'Alene, WA-ID","Spokane, WA",769529,328746,5479.12,150.871
+521,"Springfield-Amherst Town-Northampton, MA","Springfield, MA",690370,298124,1843.451,60.477
+522,"Springfield-Jacksonville-Lincoln, IL","Springfield, IL",306408,143353,3329.905,22.295
+523,"Starkville-Columbus, MS","Starkville, MS",129738,62292,2080.213,21.602
+524,"State College-DuBois, PA","State College, PA",236943,104183,2252.319,13.676
+532,"Syracuse-Auburn, NY","Syracuse, NY",732592,333824,3076.456,566.149
+533,"Tallahassee-Bainbridge, FL-GA","Tallahassee, FL",417416,189111,2986.541,456.456
+536,"Tucson-Nogales, AZ","Tucson, AZ",1098156,494375,10424.952,3.159
+538,"Tulsa-Bartlesville-Muskogee, OK","Tulsa, OK",1145575,495896,7496.448,228.1
+539,"Tupelo-Corinth, MS","Tupelo, MS",166579,75293,1797.792,15.393
+540,"Tyler-Jacksonville, TX","Tyler, TX",289157,119636,1974.449,37.446
+542,"Union City-Martin, TN","Union City, TN",63529,29371,1125.204,12.026
+544,"Victoria-Port Lavaca, TX","Victoria, TX",118298,53522,2241.034,539.832
+545,"Virginia Beach-Chesapeake, VA-NC","Virginia Beach, VA",1860954,810863,3811.994,2572.531
+548,"Washington-Baltimore-Arlington, DC-MD-VA-WV-PA","Washington, DC",10018722,4066939,13199.809,2014.881
+554,"Wausau-Stevens Point-Wisconsin Rapids, WI","Wausau, WI",282481,126454,3139.151,69.253
+555,"Weatherford-Elk City, OK","Weatherford, OK",61391,28197,2893.543,21.015
+556,"Wichita-Arkansas City-Winfield, KS","Wichita, KS",683422,293633,5273.879,39.872
+558,"Williamsport-Lock Haven, PA","Williamsport, PA",151277,71332,2118.55,23.977
+566,"Youngstown-Warren-Salem, OH","Youngstown, OH",529633,248720,1561.043,34.979

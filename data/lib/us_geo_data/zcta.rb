@@ -7,7 +7,7 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["ZCTA5", "Primary County", "Primary County Subdivision", "Primary Place", "Primary Urban Area", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
-      zcta_data.each_value do |data|
+      zcta_data.values.sort_by { |data| data[:zcta] }.each do |data|
         csv << [
           data[:zcta],
           data[:primary_county],
@@ -86,7 +86,7 @@ module USGeoData
       unless defined?(@zcta_data)
         data = {}
 
-        foreach(data_file(USGeoData::ZCTA_GAZETTEER_FILE), col_sep: "\t") do |row|
+        foreach(data_file(USGeoData::ZCTA_GAZETTEER_FILE), col_sep: "|") do |row|
           zcta5 = row["GEOID"]
           data[zcta5] = empty_zcta(zcta5).merge(
             land_area: row["ALAND_SQMI"]&.to_f,
@@ -100,7 +100,7 @@ module USGeoData
         add_county_subdivisions(data)
         add_places(data)
         add_urban_areas(data)
-        add_demographics(data)
+        add_demographics(data, USGeoData::ZCTA_DEMOGRAPHICS_FILE, "zip code tabulation area")
 
         @zcta_data = data
       end
@@ -135,18 +135,6 @@ module USGeoData
     end
 
     private
-
-    def add_demographics(data)
-      demographics(data_file(USGeoData::ZCTA_POPULATION_FILE)).each do |zcta5, population|
-        info = data[zcta5]
-        info[:population] = population if info
-      end
-
-      demographics(data_file(USGeoData::ZCTA_HOUSING_UNITS_FILE)).each do |zcta5, housing_units|
-        info = data[zcta5]
-        info[:housing_units] = housing_units if info
-      end
-    end
 
     def add_counties(data)
       foreach(data_file(USGeoData::ZCTA_COUNTY_REL_FILE), col_sep: "|") do |row|
@@ -196,8 +184,23 @@ module USGeoData
         info[:places][place_geoid] = {land_area: overlap_land_area, water_area: overlap_water_area}
       end
 
+      Place.new.gnis_place_mapping.each_value do |place_data|
+        zcta = place_data[:zcta]
+        next unless zcta
+
+        info = data[zcta]
+        next unless info
+
+        geoid = place_data[:geoid]
+        info[:places][geoid] = {land_area: 0, water_area: 0}
+      end
+
       data.each_value do |info|
-        info[:primary_place] = info[:places].max_by { |_, area| area[:land_area] }&.first
+        ordered_places = info[:places].sort_by { |_, area| -area[:land_area] }
+        if ordered_places.size > 1
+          ordered_places.delete_if { |_, area| area[:land_area] == 0 }
+        end
+        info[:primary_place] = ordered_places.first&.first
       end
     end
 

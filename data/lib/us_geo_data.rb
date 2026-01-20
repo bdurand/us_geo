@@ -2,6 +2,8 @@
 
 require "csv"
 require "json"
+require "net/http"
+require "uri"
 
 require_relative "us_geo_data/processor"
 
@@ -17,9 +19,12 @@ require_relative "us_geo_data/region"
 require_relative "us_geo_data/state"
 require_relative "us_geo_data/urban_area"
 require_relative "us_geo_data/zcta"
+require_relative "us_geo_data/zcta_shape"
 
 module USGeoData
   SQUARE_METERS_TO_MILES = 0.0000003861021585424458
+
+  LATEST_CENSUS_API_YEAR = 2023
 
   # Information files
   STATES_FILE = File.join("info", "states.csv")
@@ -30,12 +35,12 @@ module USGeoData
   DIVISIONS_FILE = File.join("info", "divisions.csv")
 
   # Gazetteer files
-  CBSA_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_cbsa_national.txt")
-  ZCTA_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_zcta_national.txt")
-  COUNTY_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_counties_national.txt")
-  SUBDIVISION_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_cousubs_national.txt")
-  PLACE_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_place_national.txt")
-  URBAN_AREA_GAZETTEER_FILE = File.join("gazetteer", "2023_Gaz_ua_national.txt")
+  CBSA_GAZETTEER_FILE = File.join("gazetteer", "2025_Gaz_cbsa_national.txt")
+  ZCTA_GAZETTEER_FILE = File.join("gazetteer", "2025_Gaz_zcta_national.txt")
+  COUNTY_GAZETTEER_FILE = File.join("gazetteer", "2025_Gaz_counties_national.txt")
+  SUBDIVISION_GAZETTEER_FILE = File.join("gazetteer", "2025_Gaz_cousubs_national.txt")
+  PLACE_GAZETTEER_FILE = File.join("gazetteer", "2025_Gaz_place_national.txt")
+  URBAN_AREA_GAZETTEER_FILE = File.join("gazetteer", "2025_Gaz_ua_national.txt")
 
   # Relationship files
   ZCTA_COUNTY_REL_FILE = File.join("relationships", "tab20_zcta520_county20_natl.txt")
@@ -49,18 +54,17 @@ module USGeoData
   CBSA_DELINEATION_FILE = File.join("relationships", "list1_Jul_2023.csv")
 
   # Population and housing unit files
-  COUNTY_POPULATION_FILE = File.join("demographics", "Counties-ACSDT5Y2022.B01003-Data.csv")
-  COUNTY_HOUSING_UNITS_FILE = File.join("demographics", "Counties-ACSDT5Y2022.B25001-Data.csv")
-  COUSUB_POPULATION_FILE = File.join("demographics", "CountySubdivisions-ACSDT5Y2022.B01003-Data.csv")
-  COUSUB_HOUSING_UNITS_FILE = File.join("demographics", "CountySubdivisions-ACSDT5Y2022.B25001-Data.csv")
-  PLACE_POPULATION_FILE = File.join("demographics", "Places-ACSDT5Y2022.B01003-Data.csv")
-  PLACE_HOUSING_UNITS_FILE = File.join("demographics", "Places-ACSDT5Y2022.B25001-Data.csv")
-  ZCTA_POPULATION_FILE = File.join("demographics", "ZCTA5-ACSDT5Y2022.B01003-Data.csv")
-  ZCTA_HOUSING_UNITS_FILE = File.join("demographics", "ZCTA5-ACSDT5Y2022.B25001-Data.csv")
-  URBAN_AREA_DEMOGRAPHICS_FILE = File.join("demographics", "urban_areas_2022.json")
+  COUNTY_DEMOGRAPHICS_FILE = File.join("demographics", "county_2023.json")
+  COUNTY_SUBDIVISION_DEMOGRAPHICS_FILE = File.join("demographics", "county_subdivision_2023.json")
+  PLACE_DEMOGRAPHICS_FILE = File.join("demographics", "place_2023.json")
+  URBAN_AREA_DEMOGRAPHICS_FILE = File.join("demographics", "urban_area_2023.json")
+  ZCTA_DEMOGRAPHICS_FILE = File.join("demographics", "zip_code_tabulation_area_2023.json")
 
-  # U.S.G.S names file
-  GNIS_DATA_FILE = File.join("gnis", "FederalCodes_National_20240329.txt")
+  # USGS names file
+  GNIS_DATA_FILE = File.join("gnis", "FederalCodes_National_20260116.txt")
+
+  # SQLite database file for ZCTA GIS data.
+  ZCTA_GIS_DB_FILE = File.join("tiger", "zcta_gis.db")
 
   class << self
     def preprocess
@@ -128,10 +132,54 @@ module USGeoData
       end
     end
 
+    def fetch_demographics_files(year = LATEST_CENSUS_API_YEAR)
+      base_uri = "https://api.census.gov/data/#{year}/acs/acs5?get=NAME,B01003_001E,B25001_001E"
+
+      ["county", "urban area", "zip code tabulation area", "place"].each do |geo|
+        uri = "#{base_uri}&for=#{URI.encode_www_form_component(geo)}:*"
+        file_name = File.join(__dir__, "..", "raw", "demographics", "#{geo.tr(" ", "_")}_#{year}.json")
+
+        puts "Fetching #{geo} demographics data"
+        response = fetch_uri(uri)
+        File.write(file_name, response)
+      end
+
+      cousub_data = []
+      State.new.fips_codes.each do |state_fips, state_name|
+        uri = "#{base_uri}&for=county subdivision:*&in=state:#{state_fips}"
+        puts "Fetching county subdivision demographics data for #{state_name} (FIPS #{state_fips})"
+        response = fetch_uri(uri)
+        unless response.empty?
+          data = JSON.parse(response)
+          header = data.shift
+          cousub_data << header if cousub_data.empty?
+          cousub_data.concat(data)
+        end
+      end
+
+      cousub_file_name = File.join(__dir__, "..", "raw", "demographics", "county_subdivision_#{year}.json")
+      File.write(cousub_file_name, JSON.generate(cousub_data, array_nl: "\n", object_nl: ""))
+    end
+
     private
 
     def open_file(file_name, &block)
       File.open(File.join(__dir__, "..", "2020_dist", file_name), "w", &block)
+    end
+
+    def fetch_uri(uri)
+      uri = URI(uri)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true if uri.scheme == "https"
+
+      request = Net::HTTP::Get.new(uri.request_uri)
+      response = http.request(request)
+
+      unless response.is_a?(Net::HTTPSuccess)
+        raise "HTTP request failed: #{response.code} #{response.message}"
+      end
+
+      response.body.to_s
     end
   end
 end

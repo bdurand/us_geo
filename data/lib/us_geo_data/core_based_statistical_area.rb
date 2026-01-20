@@ -11,7 +11,7 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["GEOID", "Name", "Short Name", "CSA", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
-      core_based_statistical_area_data.each_value do |data|
+      core_based_statistical_area_data.values.sort_by { |data| data[:geoid] }.each do |data|
         csv << [
           data[:geoid],
           data[:name],
@@ -55,7 +55,7 @@ module USGeoData
           data[:counties] << county_geoid unless county_geoid.to_s.empty?
         end
 
-        foreach(data_file(USGeoData::CBSA_GAZETTEER_FILE), col_sep: "\t") do |row|
+        foreach(data_file(USGeoData::CBSA_GAZETTEER_FILE), col_sep: "|") do |row|
           cbsa_geoid = row["GEOID"]
           next if cbsa_geoid.to_s.empty?
           data = core_based_statistical_areas[cbsa_geoid]

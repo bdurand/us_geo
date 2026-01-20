@@ -7,7 +7,7 @@ module USGeoData
     def dump_csv(output)
       csv = CSV.new(output)
       csv << ["GEOID", "GNIS ID", "Name", "Short Name", "State", "CBSA", "Metropolitan Division", "Central", "Time Zone", "Time Zone 2", "FIPS Class", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
-      county_data.each_value do |data|
+      county_data.values.sort_by { |data| data[:geoid] }.each do |data|
         unless data[:time_zone] && data[:gnis_id] && data[:fips_class]
           puts "Missing data for county #{data[:geoid]} #{data[:name]}, #{data[:state]}: #{data.inspect}"
           next
@@ -45,7 +45,7 @@ module USGeoData
         add_timezones(counties)
         add_gazetteer_data(counties)
         add_cbsa_data(counties)
-        add_demographics(counties)
+        add_demographics(counties, USGeoData::COUNTY_DEMOGRAPHICS_FILE, ["state", "county"])
 
         @county_data = counties
       end
@@ -102,7 +102,7 @@ module USGeoData
     end
 
     def add_gazetteer_data(counties)
-      foreach(data_file(USGeoData::COUNTY_GAZETTEER_FILE), col_sep: "\t") do |row|
+      foreach(data_file(USGeoData::COUNTY_GAZETTEER_FILE), col_sep: "|") do |row|
         county_geoid = row["GEOID"]
         data = counties[county_geoid]
         unless data
@@ -131,18 +131,6 @@ module USGeoData
           data[:central] = row["Central/Outlying County"].to_s.include?("Central")
           counties[county_geoid] = data
         end
-      end
-    end
-
-    def add_demographics(counties)
-      demographics(data_file(USGeoData::COUNTY_POPULATION_FILE)).each do |geoid, population|
-        info = counties[geoid]
-        info[:population] = population if info && population
-      end
-
-      demographics(data_file(USGeoData::COUNTY_HOUSING_UNITS_FILE)).each do |geoid, housing_units|
-        info = counties[geoid]
-        info[:housing_units] = housing_units if info && housing_units
       end
     end
   end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe USGeo::UrbanAreaCountySubdivision do
+RSpec.describe USGeo::UrbanAreaCountySubdivision do
   describe "percentages" do
     it "should return the percentage of the land area of the urban area" do
       urban_area = USGeo::UrbanArea.new(land_area: 200)

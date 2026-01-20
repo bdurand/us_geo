@@ -11,7 +11,7 @@ module USGeoData
     def dump_csv(output)
       CSV.new(output).tap do |csv|
         csv << ["Name", "Code", "Type", "FIPS", "Region ID", "Region", "Division ID", "Division", "Population", "Housing Units", "Land Area", "Water Area"]
-        state_data.each_value do |data|
+        state_data.values.sort_by { |data| data[:name] }.each do |data|
           csv << [
             data[:name],
             data[:code],
@@ -59,6 +59,14 @@ module USGeoData
         @state_data = data
       end
       @state_data
+    end
+
+    def fips_codes
+      codes = {}
+      foreach(data_file(USGeoData::STATES_FILE)) do |row|
+        codes[row["FIPS"]] = row["Name"]
+      end
+      codes
     end
 
     private

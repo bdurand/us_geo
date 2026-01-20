@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe USGeo::ZctaCounty do
+RSpec.describe USGeo::ZctaCounty do
   describe "percentages" do
     it "should return the percentage of the land area of the zcta" do
       zcta = USGeo::Zcta.new(land_area: 200)

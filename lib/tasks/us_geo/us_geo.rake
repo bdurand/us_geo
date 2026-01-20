@@ -24,24 +24,28 @@ namespace :us_geo do
     }
 
     klasses.each do |name, klass|
-      desc "Import data for #{klass}"
+      desc <<~DOC
+        Import data for #{klass}. Set US_GEO_BASE_DATA_URI to override the data source location.
+      DOC
       task name => :environment do
         t = Time.now
 
-        klass.load!
-        puts "Loaded #{klass.count} rows into #{klass.table_name} in #{(Time.now - t).round(1)}s"
+        imported_count, removed_count = klass.load!
+        puts "Loaded #{imported_count} rows into #{klass.table_name} in #{(Time.now - t).round(1)}s"
 
-        removed_count = klass.removed.count
         if removed_count > 0
           puts "  #{removed_count} previously imported records in #{klass.table_name} no longer exist in the current data source"
         end
       end
+    end
 
-      desc "Import data for all USGeo models"
-      task all: :environment do
-        klasses.each_key do |name|
-          Rake::Task["us_geo:import:#{name}"].invoke
-        end
+    desc <<~DOC
+      Import data for all USGeo models". Set US_GEO_BASE_DATA_URI to override the data source location.
+      The default data location is https://raw.githubusercontent.com/bdurand/us_geo/master/data/2020_dist
+    DOC
+    task all: :environment do
+      klasses.each_key do |name|
+        Rake::Task["us_geo:import:#{name}"].invoke
       end
     end
 

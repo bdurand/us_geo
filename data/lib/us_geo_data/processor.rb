@@ -38,11 +38,14 @@ module USGeoData
               header_mapping[key.strip] = key unless key.to_s.strip == key.to_s
             end
           end
+
           unless header_mapping.empty?
             header_mapping.each do |key, raw_key|
               hash[key] = hash.delete(raw_key)
             end
           end
+
+          next if hash.values.all?(&:nil?)
 
           yield hash
         end
@@ -51,16 +54,30 @@ module USGeoData
       end
     end
 
-    # Read a Census data file and return a hash of geoids to values.
-    def demographics(file)
-      data = {}
+    def add_demographics(entities, file, key)
+      keys = Array(key)
+      data = JSON.parse(File.read(data_file(file)))
+      headers = {}
+      data.shift.each_with_index { |h, i| headers[h] = i }
 
-      foreach(file, col_sep: ",", skip_lines: /\A"GEO_ID"/) do |row|
-        geoid = row["Geography"].split("US", 2).last
-        data[geoid] = row["Estimate!!Total"].to_i
+      data.each do |row|
+        geoid = keys.map { |k| row[headers[k]] || (raise "Missing key #{k}") }.join
+        info = entities[geoid]
+        if info
+          info[:population] = row[headers["B01003_001E"]]&.to_i
+          info[:housing_units] = row[headers["B25001_001E"]]&.to_i
+        end
       end
+    end
 
-      data
+    def sort_csv_rows(csv_file_path)
+      rows = File.readlines(csv_file_path)
+      headers = rows.shift
+      rows.sort!
+      File.open(csv_file_path, "w") do |file|
+        file.write(headers)
+        rows.each { |row| file.write(row) }
+      end
     end
   end
 end
