@@ -56,7 +56,9 @@ module USGeoData
 
     def add_demographics(entities, file, key)
       keys = Array(key)
-      data = JSON.parse(File.read(data_file(file)))
+      # The demographics files contain UTF-8 encoded names, so the encoding has to be specified
+      # explicitly since Encoding.default_external depends on the shell locale.
+      data = JSON.parse(File.read(data_file(file), encoding: "UTF-8"))
       headers = {}
       data.shift.each_with_index { |h, i| headers[h] = i }
 
@@ -94,7 +96,10 @@ module USGeoData
     end
 
     def sort_csv_rows(csv_file_path)
-      rows = File.readlines(csv_file_path)
+      # Rows can contain UTF-8 encoded names, so the encoding has to be specified explicitly
+      # since Encoding.default_external depends on the shell locale. Rows are written back out
+      # unmodified, so no encoding is needed on the write.
+      rows = File.readlines(csv_file_path, encoding: "UTF-8")
       headers = rows.shift
       rows.sort!
       File.open(csv_file_path, "w") do |file|
