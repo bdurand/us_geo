@@ -95,6 +95,45 @@ RSpec.describe USGeo::Zcta do
     end
   end
 
+  describe "validations" do
+    let(:zcta) do
+      USGeo::Zcta.new(
+        zipcode: "53211",
+        primary_county_geoid: "55079",
+        land_area: 4.5,
+        water_area: 0.2,
+        lat: 43.1,
+        lng: -87.9,
+        population: 17000,
+        housing_units: 8000
+      )
+    end
+
+    it "should allow a blank USPS locality and state code" do
+      zcta.usps_locality = nil
+      zcta.usps_state_code = nil
+      expect(zcta).to be_valid
+    end
+
+    it "should not allow a USPS locality longer than 30 characters" do
+      zcta.usps_locality = "M" * 30
+      expect(zcta).to be_valid
+
+      zcta.usps_locality = "M" * 31
+      expect(zcta).to_not be_valid
+      expect(zcta.errors[:usps_locality]).to_not be_empty
+    end
+
+    it "should only allow a two character USPS state code" do
+      zcta.usps_state_code = "WI"
+      expect(zcta).to be_valid
+
+      zcta.usps_state_code = "WIS"
+      expect(zcta).to_not be_valid
+      expect(zcta.errors[:usps_state_code]).to_not be_empty
+    end
+  end
+
   describe "for_zipcode" do
     after { USGeo::Zcta.delete_all }
 
@@ -169,12 +208,48 @@ RSpec.describe USGeo::Zcta do
       expect(zcta.primary_county_subdivision_geoid).to eq "5507953000"
       expect(zcta.primary_place_geoid).to eq "5553000"
       expect(zcta.primary_urban_area_geoid).to eq "57466"
+      expect(zcta.usps_locality).to eq "MILWAUKEE"
+      expect(zcta.usps_state_code).to eq "WI"
       expect(zcta.population).to be_between(30_000, 40_000)
       expect(zcta.housing_units).to be_between(15_000, 20_000)
       expect(zcta.land_area.round(2)).to eq 3.97
       expect(zcta.water_area.round(2)).to eq 0.64
       expect(zcta.lat.round(1)).to eq 43.1
       expect(zcta.lng.round(1)).to eq(-87.9)
+    end
+
+    it "should load the USPS locality of the post office serving the ZIP code" do
+      mock_data_file_request("zctas.csv")
+
+      USGeo::Zcta.load!
+
+      # The locality is the city the post office is in rather than the name of the
+      # post office itself (i.e. not "BEVERLY HILLS CARRIER ANNEX").
+      expect(USGeo::Zcta.find("90210").usps_locality).to eq "BEVERLY HILLS"
+      expect(USGeo::Zcta.find("60304").usps_locality).to eq "OAK PARK"
+      expect(USGeo::Zcta.find("10001").usps_locality).to eq "NEW YORK"
+    end
+
+    it "should load a USPS state code that differs from the primary county's state" do
+      mock_data_file_request("zctas.csv")
+
+      USGeo::Zcta.load!
+
+      # 21875 is in a Maryland county, but is served by the Laurel, Delaware post office.
+      zcta = USGeo::Zcta.find("21875")
+      expect(zcta.primary_county_geoid).to start_with "24"
+      expect(zcta.usps_locality).to eq "LAUREL"
+      expect(zcta.usps_state_code).to eq "DE"
+    end
+
+    it "should leave the USPS locality blank for ZIP codes the postal service does not deliver to" do
+      mock_data_file_request("zctas.csv")
+
+      USGeo::Zcta.load!
+
+      zcta = USGeo::Zcta.find("01003")
+      expect(zcta.usps_locality).to be_nil
+      expect(zcta.usps_state_code).to be_nil
     end
   end
 end

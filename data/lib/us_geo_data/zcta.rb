@@ -6,7 +6,7 @@ module USGeoData
 
     def dump_csv(output)
       csv = CSV.new(output)
-      csv << ["ZCTA5", "Primary County", "Primary County Subdivision", "Primary Place", "Primary Urban Area", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
+      csv << ["ZCTA5", "Primary County", "Primary County Subdivision", "Primary Place", "Primary Urban Area", "USPS Locality", "USPS State Code", "Population", "Housing Units", "Land Area", "Water Area", "Latitude", "Longitude"]
       zcta_data.values.sort_by { |data| data[:zcta] }.each do |data|
         csv << [
           data[:zcta],
@@ -14,6 +14,8 @@ module USGeoData
           data[:primary_county_subdivision],
           data[:primary_place],
           data[:primary_urban_area],
+          data[:usps_locality],
+          data[:usps_state_code],
           data[:population],
           data[:housing_units],
           data[:land_area]&.round(3),
@@ -100,6 +102,7 @@ module USGeoData
         add_county_subdivisions(data)
         add_places(data)
         add_urban_areas(data)
+        add_usps_localities(data)
         add_demographics(data, USGeoData::ZCTA_DEMOGRAPHICS_FILE, "zip code tabulation area")
 
         @zcta_data = data
@@ -184,7 +187,7 @@ module USGeoData
         info[:places][place_geoid] = {land_area: overlap_land_area, water_area: overlap_water_area}
       end
 
-      Place.new.gnis_place_mapping.each_value do |place_data|
+      place_processor.gnis_place_mapping.each_value do |place_data|
         zcta = place_data[:zcta]
         next unless zcta
 
@@ -227,6 +230,86 @@ module USGeoData
         primary_urban_area = overlap.max_by { |_, percent| percent }.first
         zctas[zcta5][:primary_urban_area] = primary_urban_area
       end
+    end
+
+    # The USPS file lists the postal facilities that deliver mail to each ZIP code. The locale
+    # name on a row is the name of the facility (i.e. "OAK PARK SOUTH" or "BEVERLY HILLS CARRIER
+    # ANNEX") rather than a locality, so the city the facility sits in is used as the locality.
+    #
+    # A ZIP code can be served by facilities in more than one city. Candidates are narrowed to
+    # the facilities in the state the census associates with the ZCTA, then to the facilities
+    # named after the city they serve (which identifies a city's main post office), and finally
+    # to the facilities in the ZCTA's primary place. Each filter is only applied if it leaves at
+    # least one candidate. Any remaining ties are broken by the number of facilities in the city
+    # and then alphabetically so the generated data is stable between runs.
+    def add_usps_localities(data)
+      usps_facilities.each do |zcta5, facilities|
+        info = data[zcta5]
+        next unless info
+
+        state_code = state_code_for_county(info[:primary_county])
+        place_name = place_name_for(info[:primary_place])
+
+        facilities = narrow_facilities(facilities) { |facility| facility[:state] == state_code }
+        facilities = narrow_facilities(facilities) { |facility| facility[:locale] == facility[:city] }
+        facilities = narrow_facilities(facilities) { |facility| facility[:city].casecmp?(place_name.to_s) }
+
+        counts = Hash.new(0)
+        facilities.each { |facility| counts[[facility[:city], facility[:state]]] += 1 }
+        locality, locality_state_code = counts.min_by { |(city, state), count| [-count, city, state] }.first
+
+        info[:usps_locality] = locality
+        info[:usps_state_code] = locality_state_code
+      end
+    end
+
+    # Return only the facilities matching the block, or all of them if the block matches none.
+    def narrow_facilities(facilities)
+      matches = facilities.select { |facility| yield(facility) }
+      matches.empty? ? facilities : matches
+    end
+
+    # Map of ZIP code to the postal facilities that deliver mail to it.
+    def usps_facilities
+      unless defined?(@usps_facilities)
+        facilities = Hash.new { |hash, zipcode| hash[zipcode] = [] }
+
+        foreach(data_file(USGeoData::USPS_ZIP_LOCALE_FILE)) do |row|
+          zipcode = row["DELIVERY ZIPCODE"]&.strip
+          city = row["PHYSICAL CITY"]&.strip
+          state_code = row["PHYSICAL STATE"]&.strip
+          next if zipcode.nil? || city.nil? || state_code.nil? || city.empty? || state_code.empty?
+
+          facilities[zipcode] << {locale: row["LOCALE NAME"]&.strip, city: city, state: state_code}
+        end
+
+        @usps_facilities = facilities
+      end
+      @usps_facilities
+    end
+
+    def state_code_for_county(county_geoid)
+      state_codes_by_fips[county_geoid[0, 2]] if county_geoid
+    end
+
+    def state_codes_by_fips
+      unless defined?(@state_codes_by_fips)
+        codes = {}
+        foreach(data_file(USGeoData::STATES_FILE)) { |row| codes[row["FIPS"]] = row["Code"] }
+        @state_codes_by_fips = codes
+      end
+      @state_codes_by_fips
+    end
+
+    def place_name_for(place_geoid)
+      return nil unless place_geoid
+
+      place = place_processor.place_data[place_geoid]
+      place_processor.short_name(place[:name]) if place
+    end
+
+    def place_processor
+      @place_processor ||= Place.new
     end
 
     def empty_zcta(zcta)

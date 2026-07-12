@@ -28,34 +28,26 @@ module USGeo
       end
     end
 
-    # Percentage of the ZCTA population.
-    def percent_zcta_population
-      population.to_f / zcta.population.to_f
-    end
-
     # Percentage of the ZCTA land area.
     def percent_zcta_land_area
-      land_area / zcta.land_area
+      land_area / zcta.land_area if zcta.land_area.to_f > 0
     end
 
     # Percentage of the ZCTA total area.
     def percent_zcta_total_area
-      total_area / zcta.total_area
+      total_area / zcta.total_area if zcta.total_area.to_f > 0
     end
 
-    # Percentage of the place population.
-    def percent_place_population
-      population.to_f / place.population.to_f
-    end
-
-    # Percentage of the place land area.
+    # Percentage of the place land area. Returns nil if the place does not have
+    # a land area (i.e. places not included in the Census gazetteer data).
     def percent_place_land_area
-      land_area / place.land_area
+      land_area / place.land_area if place.land_area.to_f > 0
     end
 
-    # Percentage of the place total area..
+    # Percentage of the place total area. Returns nil if the place does not have
+    # a land area (i.e. places not included in the Census gazetteer data).
     def percent_place_total_area
-      total_area / place.total_area
+      total_area / place.total_area if place.total_area.to_f > 0
     end
   end
 end

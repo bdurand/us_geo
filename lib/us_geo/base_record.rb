@@ -21,7 +21,7 @@ module USGeo
     scope :not_removed, -> { where.not(status: STATUS_REMOVED) }
 
     class << self
-      def load!(location = nil, gzipped: true)
+      def load!(location = nil)
         raise NotImplementedError
       end
 

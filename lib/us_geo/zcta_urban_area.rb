@@ -30,22 +30,22 @@ module USGeo
 
     # Percentage of the ZCTA land area.
     def percent_zcta_land_area
-      land_area / zcta.land_area
+      land_area / zcta.land_area if zcta.land_area.to_f > 0
     end
 
     # Percentage of the ZCTA total area.
     def percent_zcta_total_area
-      total_area / zcta.total_area
+      total_area / zcta.total_area if zcta.total_area.to_f > 0
     end
 
     # Percentage of the urban area land area.
     def percent_urban_area_land_area
-      land_area / urban_area.land_area
+      land_area / urban_area.land_area if urban_area.land_area.to_f > 0
     end
 
     # Percentage of the urban area total area.
     def percent_urban_area_total_area
-      total_area / urban_area.total_area
+      total_area / urban_area.total_area if urban_area.total_area.to_f > 0
     end
   end
 end

@@ -139,12 +139,14 @@ rails us_geo:import:county_subdivisions
 rails us_geo:import:urban_areas
 rails us_geo:import:places
 rails us_geo:import:zctas
+rails us_geo:import:zcta_mappings
 rails us_geo:import:urban_area_counties
 rails us_geo:import:urban_area_county_subdivisions
 rails us_geo:import:place_counties
 rails us_geo:import:zcta_counties
 rails us_geo:import:zcta_county_subdivisions
 rails us_geo:import:zcta_places
+rails us_geo:import:zcta_urban_areas
 ```
 
 By default this will download the data from files hosted with the project on GitHub and insert/update into the database. If any entity records are found that don't exist in the data files, the `removed` flag on the database rows will be set to `TRUE`.

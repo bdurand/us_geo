@@ -14,6 +14,7 @@ namespace :us_geo do
       urban_areas: USGeo::UrbanArea,
       places: USGeo::Place,
       zctas: USGeo::Zcta,
+      zcta_mappings: USGeo::ZctaMapping,
       zcta_counties: USGeo::ZctaCounty,
       zcta_urban_areas: USGeo::ZctaUrbanArea,
       zcta_county_subdivisions: USGeo::ZctaCountySubdivision,
@@ -61,16 +62,13 @@ namespace :us_geo do
     task dump_removed: :environment do
       require "json"
 
-      puts "{"
+      data = {}
       klasses.each_value do |klass|
-        puts "  \"#{klass.table_name}\": ["
-        klass.removed.find_each do |record|
-          row_json JSON.dump(record.attributes.except("status", "updated_at"))
-          puts "#{row_json},"
+        data[klass.table_name] = klass.removed.collect do |record|
+          record.attributes.except("status", "updated_at")
         end
-        puts "]"
       end
-      puts "}"
+      puts JSON.pretty_generate(data)
     end
 
     desc "Remove all records from previously imported data that no longer exists in the current data source"

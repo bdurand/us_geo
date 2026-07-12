@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_21_004258) do
+ActiveRecord::Schema[7.0].define(version: 2025_10_29_215800) do
   create_table "us_geo_combined_statistical_areas", primary_key: "geoid", id: { type: :string, limit: 3 }, force: :cascade do |t|
     t.string "name", limit: 60, null: false
     t.float "land_area", null: false
@@ -296,7 +296,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_004258) do
     t.integer "status", limit: 1, default: 0, null: false
     t.string "primary_place_geoid", limit: 7
     t.string "primary_county_subdivision_geoid", limit: 10
+    t.string "usps_locality", limit: 30
+    t.string "usps_state_code", limit: 2
     t.index ["primary_county_geoid"], name: "index_us_geo_zctas_on_primary_county_geoid"
+    t.index ["primary_county_subdivision_geoid"], name: "index_us_geo_zctas_on_primary_county_subdivision_geoid"
+    t.index ["primary_place_geoid"], name: "index_us_geo_zctas_on_primary_place_geoid"
     t.index ["primary_urban_area_geoid"], name: "index_us_geo_zctas_on_primary_urban_area_geoid"
   end
 

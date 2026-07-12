@@ -30,22 +30,22 @@ module USGeo
 
     # Percentage of the urban area land area.
     def percent_urban_area_land_area
-      land_area / urban_area.land_area
+      land_area / urban_area.land_area if urban_area.land_area.to_f > 0
     end
 
     # Percentage of the urban area total area.
     def percent_urban_area_total_area
-      total_area / urban_area.total_area
+      total_area / urban_area.total_area if urban_area.total_area.to_f > 0
     end
 
-    # Percentage of the county land area.
+    # Percentage of the county subdivision land area.
     def percent_county_subdivision_land_area
-      land_area / county_subdivision.land_area
+      land_area / county_subdivision.land_area if county_subdivision.land_area.to_f > 0
     end
 
-    # Percentage of the county total area.
+    # Percentage of the county subdivision total area.
     def percent_county_subdivision_total_area
-      total_area / county_subdivision.total_area
+      total_area / county_subdivision.total_area if county_subdivision.total_area.to_f > 0
     end
   end
 end
