@@ -72,7 +72,7 @@ module USGeoData
         non_census_places_csv << ["GNIS ID", "GEOID", "Name", "State", "FIPS Class", "County GEOID", "ZCTA", "Latitude", "Longitude"]
 
         place_counties_recorded = {}
-        row_count = File.readlines(gnis_data_file_path).size - 1
+        row_count = File.foreach(gnis_data_file_path, encoding: "UTF-8").count - 1
         current_row = 0
         t = Time.now
 
