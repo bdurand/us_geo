@@ -1,15 +1,16 @@
 .DS_Store
 .bundle/
 .rspec
-.rspec_status
 .ruby-version
-.yardoc
+.yardoc/
 .env
-Gemfile.lock
 coverage/
-gemfiles/*.gemfile.lock
 log/*.log
 pkg/
+rdoc/
 doc/
+.claude/
+.conductor/
+.context/
 
 data/raw/tiger/*
