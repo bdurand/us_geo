@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed default data URL to point to the `main` branch on GitHub instead of the old `master` branch. The files on the `master` branch have not been updated since version 2.0.0.
 - Fixed `TypeError` raised by `USGeo::ZctaPlace#percent_place_land_area` and `#percent_place_total_area` when the place does not have a land area (i.e. the U6 FIPS classification places added in version 2.2.0). The `percent_*` methods on all join models now return `nil` instead of raising an error or returning `NaN`/`Infinity` when the denominator is missing or zero.
 - Fixed the `us_geo:import:dump_removed` rake task which raised a `NameError` and did not produce valid JSON output.
 - Added `USGeo::ZctaMapping` to the import rake tasks. Previously `us_geo:import:all` did not load the ZCTA mappings data needed by `USGeo::Zcta.for_zipcode`, and the `removed_counts`, `dump_removed`, and `cleanup` tasks did not include it. It can now also be loaded individually with `us_geo:import:zcta_mappings`.
