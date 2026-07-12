@@ -24,7 +24,7 @@ module USGeo
     #
     # @return [Float, nil]
     def percent_land
-      land_area / total_area if land_area
+      land_area / total_area if land_area && total_area > 0
     end
 
     # Land area in square kilometers.

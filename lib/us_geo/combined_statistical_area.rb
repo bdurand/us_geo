@@ -15,6 +15,7 @@ module USGeo
 
     validates :geoid, length: {is: 3}
     validates :name, presence: true, length: {maximum: 60}, uniqueness: true
+    validates :short_name, presence: true, length: {maximum: 60}, uniqueness: true
     validates :land_area, numericality: true, presence: true
     validates :water_area, numericality: true, presence: true
     validates :population, numericality: {only_integer: true}, presence: true

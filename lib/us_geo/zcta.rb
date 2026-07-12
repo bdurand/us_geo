@@ -11,6 +11,10 @@ module USGeo
   #
   # ZCTA's can span places, but the one with the majority of the residents is identified
   # as the primary place for when a single area is required.
+  #
+  # The city and state that the U.S. Postal Service delivers mail to for the ZIP code are
+  # available as +usps_locality+ and +usps_state_code+. These are derived from postal data
+  # rather than census data and can differ from the primary place and state.
   class Zcta < BaseRecord
     include Population
     include Area
@@ -82,9 +86,25 @@ module USGeo
     validates :water_area, numericality: true, presence: true
     validates :population, numericality: {only_integer: true}, presence: true
     validates :housing_units, numericality: {only_integer: true}, presence: true
+    validates :usps_locality, length: {maximum: 30}, allow_nil: true
+    validates :usps_state_code, length: {is: 2}, allow_nil: true
 
     # @!attribute zipcode
     #   @return [String] 5-digit ZIP code.
+
+    # @!attribute usps_locality
+    #   The city the U.S. Postal Service associates with the ZIP code. This is the city
+    #   that mail addressed to the ZIP code should be sent to and is not necessarily the
+    #   same as the name of the primary place since the Postal Service organizes ZIP codes
+    #   around mail delivery routes rather than political boundaries. It will be nil if the
+    #   Postal Service does not deliver mail to the ZIP code.
+    #   @return [String, nil] USPS city name for the ZIP code.
+
+    # @!attribute usps_state_code
+    #   The state the U.S. Postal Service associates with the ZIP code. This can differ from
+    #   the state of the primary county for ZIP codes served by a post office across a state
+    #   line. It will be nil if the Postal Service does not deliver mail to the ZIP code.
+    #   @return [String, nil] 2-letter USPS state code for the ZIP code.
 
     # @!method combined_statistical_area
     #   @return [USGeo::CombinedStatisticalArea, nil] Combined statistical area that contains the ZCTA.
@@ -124,6 +144,8 @@ module USGeo
               record.primary_urban_area_geoid = row["Primary Urban Area"]
               record.primary_county_subdivision_geoid = row["Primary County Subdivision"]
               record.primary_place_geoid = row["Primary Place"]
+              record.usps_locality = row["USPS Locality"]
+              record.usps_state_code = row["USPS State Code"]
               record.population = row["Population"]
               record.housing_units = row["Housing Units"]
               record.land_area = row["Land Area"]

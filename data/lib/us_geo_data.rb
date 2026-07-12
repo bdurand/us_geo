@@ -63,6 +63,9 @@ module USGeoData
   # USGS names file
   GNIS_DATA_FILE = File.join("gnis", "FederalCodes_National_20260116.txt")
 
+  # USPS ZIP code file mapping delivery ZIP codes to the postal facilities that serve them.
+  USPS_ZIP_LOCALE_FILE = File.join("usps", "ZIP_Locale_Detail.csv")
+
   # SQLite database file for ZCTA GIS data.
   ZCTA_GIS_DB_FILE = File.join("tiger", "zcta_gis.db")
 

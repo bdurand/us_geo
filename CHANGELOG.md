@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.3.0
+
+### Fixed
+
+- Fixed `TypeError` raised by `USGeo::ZctaPlace#percent_place_land_area` and `#percent_place_total_area` when the place does not have a land area (i.e. the U6 FIPS classification places added in version 2.2.0). The `percent_*` methods on all join models now return `nil` instead of raising an error or returning `NaN`/`Infinity` when the denominator is missing or zero.
+- Fixed the `us_geo:import:dump_removed` rake task which raised a `NameError` and did not produce valid JSON output.
+- Added `USGeo::ZctaMapping` to the import rake tasks. Previously `us_geo:import:all` did not load the ZCTA mappings data needed by `USGeo::Zcta.for_zipcode`, and the `removed_counts`, `dump_removed`, and `cleanup` tasks did not include it. It can now also be loaded individually with `us_geo:import:zcta_mappings`.
+- Removed the `delegate :region, to: :division` on `USGeo::State` which was shadowing the `belongs_to :region` association reader so that the `region_id` attribute was never used.
+- Removed the unimplemented `gzipped` keyword argument from the abstract `USGeo::BaseRecord.load!` method signature to match the subclass implementations.
+- Renaming duplicate county subdivisions during import now includes the geoid in the new name and respects the 60 character limit on names so that the rename cannot fail validation.
+- Updated `db/schema.rb` to include the `usps_locality` and `usps_state_code` columns on ZCTA's and the indexes on the ZCTA primary place and county subdivision geoid columns.
+
+### Added
+
+- `USGeo::Zcta#usps_locality` and `USGeo::Zcta#usps_state_code` are now populated by `USGeo::Zcta.load!` with the city and state that the U.S. Postal Service delivers mail to for the ZIP code. The columns were added to the schema in version 2.2.0, but were never populated. They are `nil` for ZIP codes that the Postal Service does not deliver mail to. Note that `zctas.csv` gained `USPS Locality` and `USPS State Code` columns, so the data files must be reimported to pick up the new values.
+- `USGeo::CombinedStatisticalArea` now validates presence and uniqueness of `short_name`, and `USGeo::UrbanArea` now validates presence of `name` and `short_name`, matching the database constraints.
+
+### Removed
+
+- Removed `USGeo::ZctaPlace#percent_zcta_population` and `#percent_place_population`. These methods were supposed to have been removed in version 2.0 along with the other population methods on the join models (see UPDATING_TO_VERSION_2.md). They raised `NameError` on databases created with the version 2 migrations since the population column no longer exists.
+
 ## 2.2.0
 
 ### Added

@@ -69,7 +69,9 @@ URL: https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line
 
 ### ZIP Code file
 
-The `data/raw/usps` directory contains ZIP code data from the U.S. Postal Service in order to associate the USPS preferred locale name with ZCTAs.
+The `data/raw/usps` directory contains ZIP code data from the U.S. Postal Service in order to associate the USPS locality and state with ZCTAs.
+
+Each row maps a delivery ZIP code to a postal facility that delivers mail to it. The `LOCALE NAME` column is the name of the facility (i.e. "BEVERLY HILLS CARRIER ANNEX") rather than a locality, so the `PHYSICAL CITY` and `PHYSICAL STATE` of the facility are used as the locality. A ZIP code can be served by facilities in more than one city; see `USGeoData::Zcta#add_usps_localities` for how the primary one is selected.
 
 URL: https://postalpro.usps.com/ZIP_Locale_Detail
 

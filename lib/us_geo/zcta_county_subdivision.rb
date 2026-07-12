@@ -30,22 +30,22 @@ module USGeo
 
     # Percentage of the ZCTA land area.
     def percent_zcta_land_area
-      land_area / zcta.land_area
+      land_area / zcta.land_area if zcta.land_area.to_f > 0
     end
 
     # Percentage of the ZCTA total area.
     def percent_zcta_total_area
-      total_area / zcta.total_area
+      total_area / zcta.total_area if zcta.total_area.to_f > 0
     end
 
     # Percentage of the county subdivision land area.
     def percent_county_subdivision_land_area
-      land_area / county_subdivision.land_area
+      land_area / county_subdivision.land_area if county_subdivision.land_area.to_f > 0
     end
 
     # Percentage of the county subdivision total area.
     def percent_county_subdivision_total_area
-      total_area / county_subdivision.total_area
+      total_area / county_subdivision.total_area if county_subdivision.total_area.to_f > 0
     end
   end
 end

@@ -72,7 +72,11 @@ module USGeo
               record.lng = row["Longitude"]
 
               duplicate = where.not(geoid: record.geoid).find_by(name: record.name, county_geoid: record.county_geoid)
-              duplicate&.update!(name: "#{record.name} (deleted)", status: BaseRecord::STATUS_REMOVED)
+              if duplicate
+                suffix = " (deleted #{duplicate.geoid})"
+                deleted_name = "#{record.name[0, 60 - suffix.length]}#{suffix}"
+                duplicate.update!(name: deleted_name, status: BaseRecord::STATUS_REMOVED)
+              end
             end
           end
         end

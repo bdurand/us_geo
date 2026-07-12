@@ -27,6 +27,13 @@ RSpec.describe USGeo::ZctaPlace do
       zcta_place = place.zcta_places.build(land_area: 30, water_area: 20)
       expect(zcta_place.percent_place_total_area).to eq 0.25
     end
+
+    it "should return nil for the area percentages if the place does not have a land area" do
+      place = USGeo::Place.new
+      zcta_place = place.zcta_places.build(land_area: 30, water_area: 20)
+      expect(zcta_place.percent_place_land_area).to be_nil
+      expect(zcta_place.percent_place_total_area).to be_nil
+    end
   end
 
   describe "associations" do

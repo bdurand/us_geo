@@ -11,6 +11,17 @@ RSpec.describe USGeo::State do
       expect(state.build_region).to be_a(USGeo::Region)
     end
 
+    it "should read the region from the region_id" do
+      region = USGeo::Region.create!(id: 100, name: "Test Region")
+      begin
+        state = USGeo::State.new
+        state.region_id = region.id
+        expect(state.region).to eq region
+      ensure
+        region.destroy
+      end
+    end
+
     it "should belong to a division" do
       state = USGeo::State.new
       state.code = "XX"

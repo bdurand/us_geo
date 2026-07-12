@@ -36,10 +36,6 @@ module USGeo
     # @!attribute type
     #   @return [String] Type of the state or territory.
 
-    # @!method :region
-    #   @return [Region] Region the state is in.
-    delegate :region, to: :division, allow_nil: true
-
     class << self
       def load!(uri = nil)
         location = data_uri(uri || "states.csv")
