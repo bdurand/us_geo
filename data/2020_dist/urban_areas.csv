@@ -275,7 +275,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 09973,"Brenham, TX Urban Area","Brenham, TX",48477,17631,7820,10.264,0.031,30.164008,-96.398815
 10027,"Brevard, NC Urban Area","Brevard, NC",37175,12988,6840,13.821,0.004,35.236962,-82.722868
 10081,"Brewton, AL Urban Area","Brewton, AL",01053,7179,3127,6.258,0.02,31.105736,-87.069116
-10162,"Bridgeport--Stamford, CT--NY Urban Area","Bridgeport, CT",09001,915887,366596,397.292,10.881,41.210462,-73.312649
+10162,"Bridgeport--Stamford, CT--NY Urban Area","Bridgeport, CT",09190,915887,366596,397.292,10.881,41.210462,-73.312649
 10189,"Bridgeton, NJ Urban Area","Bridgeton, NJ",34011,35491,11272,12.164,0.186,39.438984,-75.229576
 10243,"Brigham City, UT Urban Area","Brigham City, UT",49003,26444,9158,10.136,0.002,41.48781,-112.022274
 10351,"Bristol, TN--VA Urban Area","Bristol, TN",47163,71042,33916,68.687,0.178,36.607403,-82.1467
@@ -484,7 +484,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 18451,"Coeur d'Alene, ID Urban Area","Coeur d'Alene, ID",16055,127006,53247,46.756,0.774,47.764472,-116.794297
 18478,"Coffeyville, KS--OK Urban Area","Coffeyville, KS",20125,9372,4810,7.44,0.0,37.033969,-95.628824
 18532,"Colby, KS Urban Area","Colby, KS",20193,5254,2398,2.964,0.0,39.386925,-101.047313
-18559,"Colchester, CT Urban Area","Colchester, CT",09011,5486,2743,5.04,0.013,41.571299,-72.339558
+18559,"Colchester, CT Urban Area","Colchester, CT",09180,5486,2743,5.04,0.013,41.571299,-72.339558
 18586,"Cold Spring, MN Urban Area","Cold Spring, MN",27145,5230,2228,3.211,0.0,45.452442,-94.419274
 18640,"Cold Springs, NV Urban Area","Cold Springs, NV",32031,10713,3653,3.469,0.0,39.678143,-119.976003
 18667,"Coldwater, MI Urban Area","Coldwater, MI",26023,13643,5435,10.698,0.298,41.938889,-85.006418
@@ -587,7 +587,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 22015,"Dallas, OR Urban Area","Dallas, OR",41053,18053,7091,5.496,0.0,44.922399,-123.311383
 22042,"Dallas--Fort Worth--Arlington, TX Urban Area","Dallas, TX",48113,5773403,2286716,1746.896,24.768,32.810975,-96.972981
 22069,"Dalton, GA Urban Area","Dalton, GA",13313,66641,25562,57.489,0.077,34.779018,-84.975143
-22096,"Danbury, CT--NY Urban Area","Danbury, CT",09001,169915,68698,118.489,6.018,41.449654,-73.423258
+22096,"Danbury, CT--NY Urban Area","Danbury, CT",09190,169915,68698,118.489,6.018,41.449654,-73.423258
 22177,"Dansville, NY Urban Area","Dansville, NY",36051,4626,2522,3.195,0.0,42.563946,-77.703175
 22204,"Danville, IL Urban Area","Danville, IL",17183,39285,19033,27.794,0.862,40.130703,-87.62932
 22231,"Danville, KY Urban Area","Danville, KY",21021,19825,8363,13.614,0.052,37.629298,-84.778352
@@ -997,7 +997,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 37162,"Harrisonburg, VA Urban Area","Harrisonburg, VA",51660,73587,27139,31.103,0.074,38.419421,-78.886787
 37189,"Harrisonville, MO Urban Area","Harrisonville, MO",29037,9482,4143,6.833,0.035,38.648541,-94.350536
 37216,"Harrodsburg, KY Urban Area","Harrodsburg, KY",21167,10055,4789,6.527,0.016,37.76662,-84.850115
-37243,"Hartford, CT Urban Area","Hartford, CT",09003,972784,428138,535.927,9.128,41.770271,-72.70287
+37243,"Hartford, CT Urban Area","Hartford, CT",09110,972784,428138,535.969,9.104,41.770271,-72.70287
 37297,"Hartford, WI Urban Area","Hartford, WI",55131,24123,10675,14.874,1.549,43.320292,-88.378037
 37324,"Hartford City, IN Urban Area","Hartford City, IN",18009,5746,3129,3.521,0.019,40.453228,-85.371784
 37351,"Hartselle, AL Urban Area","Hartselle, AL",01103,16691,6795,13.908,0.053,34.43215,-86.936707
@@ -1148,7 +1148,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 43064,"Jersey Shore, PA Urban Area","Jersey Shore, PA",42035,9781,4150,7.303,0.06,41.183866,-77.319591
 43075,"Jerseyville, IL Urban Area","Jerseyville, IL",17083,7873,3743,4.769,0.0,39.118934,-90.330834
 43102,"Jesup, GA Urban Area","Jesup, GA",13305,13078,5533,11.903,0.067,31.608399,-81.898804
-43115,"Jewett City, CT Urban Area","Jewett City, CT",09011,4724,2137,2.591,0.239,41.612504,-71.972201
+43115,"Jewett City, CT Urban Area","Jewett City, CT",09180,4724,2137,2.591,0.239,41.612504,-71.972201
 43210,"Johnson City, TN Urban Area","Johnson City, TN",47179,129494,60511,106.029,1.027,36.336794,-82.345984
 43227,"Johnson Lane, NV Urban Area","Johnson Lane, NV",32005,5048,2240,4.145,0.0,39.038658,-119.733912
 43253,"Johnstown, CO Urban Area","Johnstown, CO",08123,21590,7268,5.74,0.066,40.338994,-104.953188
@@ -1265,7 +1265,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 46972,"Lake of the Woods, VA Urban Area","Lake of the Woods, VA",51137,11608,4854,7.027,0.805,38.345334,-77.762583
 47010,"Lake Placid, FL Urban Area","Lake Placid, FL",12055,17739,10768,23.566,3.573,27.262375,-81.341059
 47017,"Lake Placid, NY Urban Area","Lake Placid, NY",36031,3398,2722,3.462,0.208,44.281179,-73.982879
-47044,"Lake Pocotopaug, CT Urban Area","Lake Pocotopaug, CT",09007,7998,3469,7.653,0.822,41.58794,-72.506076
+47044,"Lake Pocotopaug, CT Urban Area","Lake Pocotopaug, CT",09130,7998,3469,7.653,0.822,41.58794,-72.506076
 47071,"Lakeport, CA Urban Area","Lakeport, CA",06033,8605,4199,6.203,0.045,39.059898,-122.915795
 47120,"Lake Royale, NC Urban Area","Lake Royale, NC",37069,2387,1796,3.21,0.537,35.965089,-78.199599
 47125,"Lakes of the Four Seasons, IN Urban Area","Lakes of the Four Seasons, IN",18089,13439,4654,5.4,0.482,41.415466,-87.231281
@@ -1664,7 +1664,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 62137,"New Castle, IN Urban Area","New Castle, IN",18065,18141,8847,7.671,0.018,39.915011,-85.369608
 62164,"New Castle, PA Urban Area","New Castle, PA",42073,39557,19278,28.628,0.283,41.008338,-80.350802
 62353,"New Freedom--Shrewsbury, PA Urban Area","New Freedom, PA",42133,12688,5109,6.12,0.009,39.759232,-76.672942
-62407,"New Haven, CT Urban Area","New Haven, CT",09009,556433,247129,298.012,9.897,41.320655,-72.878698
+62407,"New Haven, CT Urban Area","New Haven, CT",09170,556433,247129,298.09,9.813,41.320655,-72.878698
 62434,"New Iberia, LA Urban Area","New Iberia, LA",22045,36695,17097,24.818,0.271,29.990225,-91.821824
 62488,"New Lexington, OH Urban Area","New Lexington, OH",39127,4644,1982,2.171,0.002,39.716689,-82.209103
 62515,"New London, WI Urban Area","New London, WI",55135,7524,3458,4.581,0.082,44.38873,-88.74194
@@ -1703,7 +1703,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 63973,"North Windham, ME Urban Area","North Windham, ME",23005,10473,5630,14.003,0.192,43.83289,-70.433458
 64054,"Norwalk, OH Urban Area","Norwalk, OH",39077,19280,8891,9.911,0.008,41.253042,-82.609101
 64108,"Norwich, NY Urban Area","Norwich, NY",36017,7762,3664,3.006,0.0,42.534568,-75.518822
-64135,"Norwich--New London, CT Urban Area","Norwich, CT",09011,165500,78057,116.719,11.875,41.411386,-72.098088
+64135,"Norwich--New London, CT Urban Area","Norwich, CT",09180,165500,78057,116.723,11.871,41.411386,-72.098088
 64270,"Oakdale, CA Urban Area","Oakdale, CA",06099,25021,9359,7.353,0.039,37.77015,-120.833696
 64297,"Oakdale, LA Urban Area","Oakdale, LA",22003,6628,2689,4.75,0.022,30.816549,-92.658753
 64378,"Oak Harbor, WA Urban Area","Oak Harbor, WA",53029,37888,15859,23.651,0.089,48.295597,-122.66915
@@ -1937,7 +1937,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 72803,"Pupukea, HI Urban Area","Pupukea, HI",15003,14294,6109,7.806,0.037,21.639526,-158.040708
 72829,"Purcell, OK Urban Area","Purcell, OK",40087,7417,3147,4.793,0.011,35.012843,-97.357617
 72856,"Purcellville, VA Urban Area","Purcellville, VA",51107,16525,5241,7.516,0.027,39.13892,-77.722611
-72868,"Putnam--Killingly, CT Urban Area","Putnam, CT",09015,35778,15781,31.015,0.692,41.792088,-71.906384
+72868,"Putnam--Killingly, CT Urban Area","Putnam, CT",09150,35778,15781,30.999,0.697,41.792088,-71.906384
 72937,"Quartzsite, AZ Urban Area","Quartzsite, AZ",04012,1669,1788,3.272,0.0,33.670703,-114.219807
 73018,"Quincy, FL Urban Area","Quincy, FL",12039,8207,3638,6.154,0.0,30.580944,-84.580241
 73045,"Quincy, IL Urban Area","Quincy, IL",17001,43302,20627,22.723,0.051,39.936613,-91.373138
@@ -1984,7 +1984,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 74719,"Richmond, MO Urban Area","Richmond, MO",29177,5939,2704,4.401,0.013,39.272541,-93.971118
 74746,"Richmond, VA Urban Area","Richmond, VA",51041,1064148,454362,512.345,10.491,37.485386,-77.48408
 74827,"Ridgecrest, CA Urban Area","Ridgecrest, CA",06029,29041,12521,14.304,0.0,35.625478,-117.676309
-74837,"Ridgefield, CT Urban Area","Ridgefield, CT",09001,25644,10159,28.8,0.504,41.290933,-73.481284
+74837,"Ridgefield, CT Urban Area","Ridgefield, CT",09190,25644,10159,28.796,0.508,41.290933,-73.481284
 74840,"Ridgefield, WA Urban Area","Ridgefield, WA",53011,12686,4407,6.446,0.011,45.809131,-122.710833
 74908,"Ridgway, PA Urban Area","Ridgway, PA",42047,4289,2040,2.508,0.038,41.429462,-78.738099
 74935,"Rifle, CO Urban Area","Rifle, CO",08045,11627,4216,3.999,0.0,39.543116,-107.777586
@@ -2254,7 +2254,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 84034,"Spring Hill, KS Urban Area","Spring Hill, KS",20091,8411,3137,3.069,0.009,38.748795,-94.821055
 84061,"Springhill, LA Urban Area","Springhill, LA",22119,5442,3098,7.383,0.039,32.973287,-93.452778
 84088,"Spring Hill, TN Urban Area","Spring Hill, TN",47119,66289,24351,23.314,0.017,35.746621,-86.916833
-84169,"Stafford Springs, CT Urban Area","Stafford Springs, CT",09013,5278,2369,5.174,0.279,41.967751,-72.295411
+84169,"Stafford Springs, CT Urban Area","Stafford Springs, CT",09110,5278,2369,5.174,0.279,41.967751,-72.295411
 84304,"Stansbury Park, UT Urban Area","Stansbury Park, UT",49045,13392,3756,3.14,0.189,40.640722,-112.299399
 84385,"Stanwood, WA Urban Area","Stanwood, WA",53061,8351,3067,2.75,0.0,48.245144,-122.342232
 84429,"Star, ID Urban Area","Star, ID",16001,12201,4551,3.877,0.025,43.698416,-116.491877
@@ -2278,7 +2278,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 85033,"Stillwater, OK Urban Area","Stillwater, OK",40119,48960,22269,25.063,0.471,36.131496,-97.074464
 85087,"Stockton, CA Urban Area","Stockton, CA",06077,412606,132350,92.462,2.056,37.953268,-121.28869
 85114,"Storm Lake, IA Urban Area","Storm Lake, IA",19021,11944,4579,3.883,0.0,42.641468,-95.197198
-85141,"Storrs, CT Urban Area","Storrs, CT",09013,15141,3252,7.87,0.027,41.8137,-72.260207
+85141,"Storrs, CT Urban Area","Storrs, CT",09110,15141,3252,7.87,0.027,41.8137,-72.260207
 85181,"Stoughton, WI Urban Area","Stoughton, WI",55025,15587,7026,6.744,0.079,42.928955,-89.236249
 85195,"Strasburg, VA Urban Area","Strasburg, VA",51171,7707,3463,4.09,0.039,39.003391,-78.349543
 85222,"Streator, IL Urban Area","Streator, IL",17099,15850,8051,8.124,0.005,41.124914,-88.832925
@@ -2367,7 +2367,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 88057,"Tooele, UT Urban Area","Tooele, UT",49045,35862,11903,11.545,0.0,40.536956,-112.308455
 88084,"Topeka, KS Urban Area","Topeka, KS",20177,148520,68730,84.24,1.361,39.036179,-95.693507
 88111,"Toppenish, WA Urban Area","Toppenish, WA",53077,9882,2750,3.083,0.0,46.37809,-120.320766
-88192,"Torrington, CT Urban Area","Torrington, CT",09005,35303,17246,21.759,0.649,41.823954,-73.096739
+88192,"Torrington, CT Urban Area","Torrington, CT",09160,35303,17246,21.759,0.649,41.823954,-73.096739
 88219,"Torrington, WY Urban Area","Torrington, WY",56015,6432,3111,3.607,0.0,42.066476,-104.186793
 88246,"Towanda, PA Urban Area","Towanda, PA",42015,4120,2322,2.935,0.021,41.769274,-76.417353
 88280,"Tracy--Mountain House, CA Urban Area","Tracy, CA",06077,121583,36384,27.055,0.136,37.736143,-121.454982
@@ -2490,7 +2490,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 92404,"Washington, NC Urban Area","Washington, NC",37013,15997,8740,16.693,0.058,35.54406,-77.039633
 92431,"Washington Court House, OH Urban Area","Washington Court House, OH",39047,15194,6934,7.346,0.06,39.53339,-83.432182
 92459,"Wasilla--Knik-Fairview--North Lakes, AK Urban Area","Wasilla, AK",02170,57102,21898,57.631,2.412,61.589686,-149.367355
-92485,"Waterbury, CT Urban Area","Waterbury, CT",09009,199530,85541,92.438,1.513,41.545429,-73.042036
+92485,"Waterbury, CT Urban Area","Waterbury, CT",09140,199530,85541,92.482,1.515,41.545429,-73.042036
 92539,"Waterford, CA Urban Area","Waterford, CA",06099,9928,2893,1.966,0.003,37.637857,-120.757409
 92566,"Waterloo, IL Urban Area","Waterloo, IL",17133,9898,4359,5.411,0.033,38.341214,-90.152716
 92593,"Waterloo, IA Urban Area","Waterloo, IA",19013,114033,51607,63.709,2.221,42.495329,-92.378435
@@ -2566,7 +2566,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 95482,"Williamston, MI Urban Area","Williamston, MI",26065,4912,2293,3.151,0.1,42.687964,-84.279503
 95509,"Williamston, NC Urban Area","Williamston, NC",37117,5436,3018,4.754,0.0,35.843827,-77.069478
 95536,"Williamston, SC Urban Area","Williamston, SC",45007,10939,4768,10.205,0.034,34.621634,-82.492411
-95590,"Willimantic, CT Urban Area","Willimantic, CT",09015,23904,9800,12.849,0.381,41.719102,-72.19755
+95590,"Willimantic, CT Urban Area","Willimantic, CT",09180,23904,9800,12.849,0.381,41.719102,-72.19755
 95644,"Williston, ND Urban Area","Williston, ND",38105,27734,14591,21.857,0.038,48.172096,-103.650357
 95671,"Willits, CA Urban Area","Willits, CA",06045,8072,3087,4.368,0.0,39.416899,-123.359325
 95698,"Willmar, MN Urban Area","Willmar, MN",27067,21893,9313,13.169,3.424,45.126347,-95.043013
@@ -2590,7 +2590,7 @@ GEOID,Name,Short Name,Primary County GEOID,Population,Housing Units,Land Area,Wa
 96508,"Winnsboro, SC Urban Area","Winnsboro, SC",45039,4241,2378,3.868,0.0,34.370781,-81.088218
 96562,"Winona, MN Urban Area","Winona, MN",27169,29449,13757,13.285,0.465,44.04999,-91.673357
 96616,"Winslow, AZ Urban Area","Winslow, AZ",04017,7171,2856,3.637,0.0,35.030367,-110.70182
-96643,"Winsted, CT Urban Area","Winsted, CT",09005,7984,4485,6.123,0.701,41.925848,-73.067543
+96643,"Winsted, CT Urban Area","Winsted, CT",09160,7984,4485,6.122,0.701,41.925848,-73.067543
 96670,"Winston-Salem, NC Urban Area","Winston, NC",37067,425177,190147,310.79,2.113,36.065774,-80.254992
 96697,"Winter Haven, FL Urban Area","Winter Haven, FL",12105,274146,118409,142.719,28.612,27.959397,-81.792147
 96724,"Winters, CA Urban Area","Winters, CA",06113,7453,2587,1.638,0.025,38.525659,-121.973157

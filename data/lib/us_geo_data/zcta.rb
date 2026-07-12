@@ -98,8 +98,8 @@ module USGeoData
           )
         end
 
-        add_counties(data)
         add_county_subdivisions(data)
+        add_counties(data)
         add_places(data)
         add_urban_areas(data)
         add_usps_localities(data)
@@ -146,9 +146,22 @@ module USGeoData
         overlap_land_area = row["AREALAND_PART"].to_f * SQUARE_METERS_TO_MILES
         overlap_water_area = row["AREAWATER_PART"].to_f * SQUARE_METERS_TO_MILES
         next unless zcta5 && county_geoid && overlap_land_area > 0
+        next if county_geoid.start_with?("09")
 
         info = data[zcta5]
         info[:counties][county_geoid] = {land_area: overlap_land_area, water_area: overlap_water_area}
+      end
+
+      # The relationship file predates Connecticut's planning regions, so derive
+      # the Connecticut county overlaps from the county subdivisions instead.
+      data.each_value do |info|
+        info[:county_subdivisions].each do |county_subdivision_geoid, area|
+          next unless county_subdivision_geoid.start_with?("09")
+
+          county_area = (info[:counties][county_subdivision_geoid[0, 5]] ||= {land_area: 0.0, water_area: 0.0})
+          county_area[:land_area] += area[:land_area]
+          county_area[:water_area] += area[:water_area]
+        end
       end
 
       data.each_value do |info|
@@ -159,7 +172,7 @@ module USGeoData
     def add_county_subdivisions(data)
       foreach(data_file(USGeoData::ZCTA_COUNTY_SUBDIVISION_REL_FILE), col_sep: "|") do |row|
         zcta5 = row["GEOID_ZCTA5_20"]
-        county_subdivision_geoid = row["GEOID_COUSUB_20"]
+        county_subdivision_geoid = normalize_county_subdivision_geoid(row["GEOID_COUSUB_20"])
         overlap_land_area = row["AREALAND_PART"].to_f * SQUARE_METERS_TO_MILES
         overlap_water_area = row["AREAWATER_PART"].to_f * SQUARE_METERS_TO_MILES
         next unless zcta5 && county_subdivision_geoid && overlap_land_area > 0
