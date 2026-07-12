@@ -70,6 +70,29 @@ module USGeoData
       end
     end
 
+    # Normalize a county subdivision GEOID to the current vintage. Connecticut
+    # replaced its counties with planning regions as the county equivalents, but
+    # the 2020 relationship files still use GEOID's based on the old counties.
+    # The subdivision codes themselves did not change, so the current GEOID can
+    # be looked up from the gazetteer file by the subdivision code.
+    def normalize_county_subdivision_geoid(geoid)
+      return geoid unless geoid&.start_with?("09")
+
+      connecticut_county_subdivision_geoids[geoid[5, 5]] || geoid
+    end
+
+    def connecticut_county_subdivision_geoids
+      unless defined?(@connecticut_county_subdivision_geoids)
+        mapping = {}
+        foreach(data_file(USGeoData::SUBDIVISION_GAZETTEER_FILE), col_sep: "|") do |row|
+          cousub_geoid = row["GEOID"]
+          mapping[cousub_geoid[5, 5]] = cousub_geoid if cousub_geoid&.start_with?("09")
+        end
+        @connecticut_county_subdivision_geoids = mapping
+      end
+      @connecticut_county_subdivision_geoids
+    end
+
     def sort_csv_rows(csv_file_path)
       rows = File.readlines(csv_file_path)
       headers = rows.shift

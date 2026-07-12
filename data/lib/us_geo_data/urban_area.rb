@@ -96,8 +96,8 @@ module USGeoData
           }
         end
 
-        add_counties(urban_areas)
         add_county_subdivisions(urban_areas)
+        add_counties(urban_areas)
         add_zctas(urban_areas)
         add_demographics(urban_areas, USGeoData::URBAN_AREA_DEMOGRAPHICS_FILE, "urban area")
 
@@ -125,6 +125,7 @@ module USGeoData
         overlap_land_area = row["AREALAND_PART"].to_f * SQUARE_METERS_TO_MILES
         overlap_water_area = row["AREAWATER_PART"].to_f * SQUARE_METERS_TO_MILES
         next unless urban_area_geoid && county_geoid && overlap_land_area > 0
+        next if county_geoid.start_with?("09")
 
         info = urban_areas[urban_area_geoid]
         next unless info
@@ -132,6 +133,18 @@ module USGeoData
         info[:counties][county_geoid] = {land_area: overlap_land_area, water_area: overlap_water_area}
         info[:land_area] = urban_area_land_area
         info[:water_area] = urban_area_water_area
+      end
+
+      # The relationship file predates Connecticut's planning regions, so derive
+      # the Connecticut county overlaps from the county subdivisions instead.
+      urban_areas.each_value do |info|
+        info[:county_subdivisions].each do |county_subdivision_geoid, area|
+          next unless county_subdivision_geoid.start_with?("09")
+
+          county_area = (info[:counties][county_subdivision_geoid[0, 5]] ||= {land_area: 0.0, water_area: 0.0})
+          county_area[:land_area] += area[:land_area]
+          county_area[:water_area] += area[:water_area]
+        end
       end
 
       urban_areas.each_value do |info|
@@ -142,7 +155,7 @@ module USGeoData
     def add_county_subdivisions(urban_areas)
       foreach(data_file(USGeoData::URBAN_AREA_COUNTY_SUBDIVISION_REL_FILE), col_sep: "|") do |row|
         urban_area_geoid = row["GEOID_UA_20"]
-        county_subdivision_geoid = row["GEOID_COUSUB_20"]
+        county_subdivision_geoid = normalize_county_subdivision_geoid(row["GEOID_COUSUB_20"])
         overlap_land_area = row["AREALAND_PART"].to_f * SQUARE_METERS_TO_MILES
         overlap_water_area = row["AREAWATER_PART"].to_f * SQUARE_METERS_TO_MILES
         next unless urban_area_geoid && county_subdivision_geoid && overlap_land_area > 0
