@@ -24,6 +24,16 @@
         <% end %>
       </td>
     </tr>
+    <tr>
+      <th>USPS Locality</th>
+      <td>
+        <% if @zcta.usps_locality %>
+          <%= @zcta.usps_locality %>, <%= @zcta.usps_state_code %>
+        <% else %>
+          -
+        <% end %>
+      </td>
+    </tr>
     <% if @zcta.combined_statistical_area %>
       <tr>
         <th>Combined Statistical Area</th>

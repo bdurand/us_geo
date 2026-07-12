@@ -35,7 +35,7 @@ module USGeo
   autoload :ZctaPlace, "us_geo/zcta_place"
   autoload :ZctaUrbanArea, "us_geo/zcta_urban_area"
 
-  BASE_DATA_URI = "https://raw.githubusercontent.com/bdurand/us_geo/master/data/2020_dist"
+  BASE_DATA_URI = "https://raw.githubusercontent.com/bdurand/us_geo/main/data/2020_dist"
 
   class << self
     # The root URI as a string of where to find the data files. This can be a URL
