@@ -88,7 +88,7 @@ Subdivision of counties. These could be minor civil divisions like townships or 
 
 ### Urban Area
 
-Urbanized areas or clusters. Areas with 2,500 to 50,000 inhabitants is considered an urban cluster while more than 50,000 is an urbanized area. Urban areas can span counties, but the one with the majority of the population is identified as the primary county.
+Densely settled areas with at least 5000 people or 2000 housing units (i.e. not rural). Urban areas can span counties, but the one with the majority of the population is identified as the primary county.
 
 ### Place
 
