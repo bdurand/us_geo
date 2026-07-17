@@ -44,7 +44,7 @@ The data set currently contains:
 
 The population, number of housing units, land area, and water area is supplied for all geographic entities.
 
-In addition, there entity to entity mapping tables containing information about how entities overlap with each other:
+In addition, the entity to entity mapping tables containing information about how entities overlap with each other:
 
 * 46,953 ZCTA to County
 * 109,549 ZCTA to County Subdivision
