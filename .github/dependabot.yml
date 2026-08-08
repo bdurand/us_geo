@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: bundler
+    directory: "/"
+    schedule:
+      interval: weekly
+    allow:
+      - dependency-name: "*"
+        dependency-type: "production"
+    versioning-strategy: increase-if-necessary
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
